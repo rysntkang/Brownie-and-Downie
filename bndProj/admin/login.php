@@ -29,7 +29,7 @@
   <div class="card card-navy my-3">
     <div class="card-body">
       <p class="login-box-msg">Enter your credentials:</p>
-      <form>
+      <form action="login.php" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="username" autofocus placeholder="Username">
           <div class="input-group-append">
@@ -64,5 +64,11 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+
+<?php
+  echo $_POST["username"];
+  echo $_POST["password"];
+?>
+
 </body>
 </html>
