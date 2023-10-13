@@ -1,3 +1,16 @@
+<?php
+  require("../controller/login_controller.php");
+
+  if ($_SERVER["REQUEST_METHOD"] === "POST")
+  {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $loginUser = new loginUser($username, $password);
+    $loginUser->loginUser();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
 
@@ -21,7 +34,7 @@
       color: #fff4f4 !important;
       background: #8080801c;
     }
-  </style>
+</style>
 
 <h1 class="text-center text-white px-4 py-5" id="page-title"><b>Brownies and Downies</b></h1>
 
@@ -31,7 +44,7 @@
       <p class="login-box-msg">Enter your credentials:</p>
       <form action="login.php" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="username" autofocus placeholder="Username">
+          <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -39,7 +52,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="password" autofocus placeholder="Password">
+          <input type="password" class="form-control" id="password" name="password" autofocus placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -57,18 +70,12 @@
   </div>
 </div>
 
-
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-
-<?php
-  echo $_POST["username"];
-  echo $_POST["password"];
-?>
 
 </body>
 </html>
