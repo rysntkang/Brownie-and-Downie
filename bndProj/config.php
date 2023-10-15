@@ -1,5 +1,4 @@
 <?php
-require_once('initialize.php');
 
 function redirect($url=''){
 	if(!empty($url))
