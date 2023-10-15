@@ -2,7 +2,7 @@
 
 function redirect($url=''){
 	if(!empty($url))
-	echo '<script>location.href="'.base_url .$url.'"</script>';
+	echo '<script>location.href="bndProj/'. .$url.'"</script>';
 }
 
 ?>
