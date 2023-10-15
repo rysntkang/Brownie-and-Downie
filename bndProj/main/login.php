@@ -1,23 +1,46 @@
-<?php
-  require("../controller/login_controller.php");
-
-  if ($_SERVER["REQUEST_METHOD"] === "POST")
-  {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    $loginUser = new loginUser($username, $password);
-    $loginUser->loginUser();
-  }
-?>
-
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
+<?php require_once('../config.php') ?>
+
+<?php
+
+session_start();
+require '../controller/loginController.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Pass values t
+    $username = $_POST['logUsername'];
+    $password = $_POST['logPassword'];
+
+    $user = loginController::loginController($conn, $username, $password);
+
+    if ($user == null) {
+      $error = "Invalid username and/or password.";
+    }
+    else {
+      $_SESSION['uid'] = $user['uid'];
+      redirectHomePage($user['userProfileId']);
+    }
+
+}
+
+function redirectHomePage($userProfileId){
+  if ($userProfileId == 1){
+    redirect("main/admin");
+  }
+  elseif ($userProfileId == 2){
+    redirect("main/cafestaff");
+  }
+
+}
+?>
 
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/f2f42d264c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -34,17 +57,19 @@
       color: #fff4f4 !important;
       background: #8080801c;
     }
-</style>
-
+  </style>
+<br>
+<br>
+<br>
 <h1 class="text-center text-white px-4 py-5" id="page-title"><b>Brownies and Downies</b></h1>
 
 <div class="login-box col-md-auto align-items-center">
   <div class="card card-navy my-3">
     <div class="card-body">
       <p class="login-box-msg">Enter your credentials:</p>
-      <form action="login.php" method="post">
+      <form id="login-frm" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
+          <input type="text" class="form-control" name="logUsername" id="logUsername" autofocus placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -52,7 +77,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="password" name="password" autofocus placeholder="Password">
+          <input type="text" class="form-control" name="logPassword" id="logPassword" autofocus placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -63,12 +88,13 @@
           <div class="col-8">
           </div>
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">Log In</button>
           </div>
       </form>
     </div>
   </div>
 </div>
+
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -76,6 +102,5 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-
 </body>
 </html>
