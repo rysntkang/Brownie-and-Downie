@@ -1,24 +1,11 @@
 <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $db_name = "bad_db";
+    $conn = new mysqli($servername, $username, $password, $db_name);
 
-class DB 
-{
-    public function connectDB() 
-    {
-        $host = "localhost";
-        $dbname = "test_db";
-        $username = "root";
-        $password = "";
-
-        $mysqli = new mysqli(hostname: $host,
-                             username: $username,
-                             password: $password,
-                             database: $dbname);
-
-        if ($mysqli->connect_error) {
-            die("Connection Error: " . $mysqli->connect_error);
-        }
-
-        return $mysqli;
+    if ($conn->connect_error) {
+        die("Connection Error: " . $mysqli->connect_error);
     }
-}
 ?>
