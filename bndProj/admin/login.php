@@ -13,6 +13,44 @@
 
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
+<<<<<<< Updated upstream:bndProj/admin/login.php
+=======
+<?php require_once('../config.php') ?>
+
+<?php
+
+session_start();
+require '../controller/loginController.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Pass values t
+    $username = $_POST['logUsername'];
+    $password = $_POST['logPassword'];
+
+    $user = loginController::loginUser($conn, $username, $password);
+
+    if ($user == null) {
+      $error = "Invalid username and/or password.";
+    }
+    else {
+      $_SESSION['uid'] = $user['uid'];
+      redirectHomePage($user['userProfileId']);
+    }
+
+}
+
+function redirectHomePage($userProfileId){
+  if ($userProfileId == 1){
+    redirect("main/admin");
+  }
+  elseif ($userProfileId == 2){
+    redirect("main/cafestaff");
+  }
+
+}
+?>
+>>>>>>> Stashed changes:bndProj/main/login.php
 
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
