@@ -7,8 +7,23 @@
 <script src="https://kit.fontawesome.com/f2f42d264c.js" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    #main-content {
+        margin-left: 260px;
+        padding: 20px;
+    }
+</style>
+
 <html lang="en" class="" style="height: auto;">
 <body>
-<?php require_once('topBar.php'); ?>
-<?php require_once('sideNavBar.php'); ?>
+        <?php include('topBar.php'); ?>
+
+        <div class="row">
+            <div class="col-md-2">
+                <?php include('sideNavBar.php'); ?>
+            </div>
+
+            <div class="col-md-10" id="main-content">
+                <?php include('main-content.php'); ?>
+            </div>
 </body>
