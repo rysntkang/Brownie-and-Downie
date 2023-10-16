@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['logUsername'];
     $password = $_POST['logPassword'];
 
-    $user = loginController::loginUser($conn, $username, $password);
+    $user = LoginController::loginUser($conn, $username, $password);
 
     if ($user == null) {
       $error = "Invalid username and/or password.";
