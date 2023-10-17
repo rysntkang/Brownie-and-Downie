@@ -1,3 +1,5 @@
+<!-- Easier to implement external scripts/css (ex. Bootstrap 4, etc.) -->
+
 <!-- Remember to change the base url -->
 <?php $base_url = "http://localhost/bndProj/"; ?>
 
