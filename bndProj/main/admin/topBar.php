@@ -17,12 +17,7 @@
 
 </style>
 
-<nav class="navbar navbar-expand-lg top-navbar">
-  <ul class="navbar-nav">
-    <li class="nav-item .navbrand">
-      <a href="#" class="nav-link">Brownies and Downies - Admin</a>
-    </li>
-  </ul>
+<nav class="main-header navbar navbar-expand-lg top-navbar">
   <ul class="navbar-nav ml-auto">
     <div class="btn-group nav-link">
       <button type="button" class="btn btn-rounded badge badge-light dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -30,8 +25,8 @@
         <span class="sr-only">Toggle Dropdown</span>
       </button>
       <div class="dropdown-menu dropdown-menu-right" role="menu">
-        <a class="dropdown-item" href="#"><span class="fa fa-user"></span> My Account</a> <!-- Add View User Account -->
-        <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span> Logout</a> <!-- Add Log Out -->
+        <a class="dropdown-item" href="#"><span class="fa fa-user"></span> My Account</a>
+        <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span> Logout</a>
       </div>
     </div>
   </ul>
