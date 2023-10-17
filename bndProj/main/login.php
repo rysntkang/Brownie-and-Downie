@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
 <?php require_once('../config.php') ?>
-<?php include("../../header.php") ?>
+<?php include("../header.php") ?>
 
 <?php
 
