@@ -1,8 +1,4 @@
 <style>
-    .nav-link {
-    margin-right: 1em !important;
-    }
-
     .navbar-collapse {
     justify-content: flex-end;
     }
@@ -11,23 +7,32 @@
       background-color: #f8f9fa;
     }
 
-    .navbar-brand {
+    .navbrand {
       padding-left: 245px;
-    }
+  }
+
+    .btn-rounded{
+        border-radius: 50px;
+  }
 
 </style>
 
 <nav class="navbar navbar-expand-lg top-navbar">
-  <a class="navbar-brand" href="#">Top Navbar</a>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      </li>
-    </ul>
-  </div>
+  <ul class="navbar-nav">
+    <li class="nav-item .navbrand">
+      <a href="#" class="nav-link">Brownies and Downies - Admin</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <div class="btn-group nav-link">
+      <button type="button" class="btn btn-rounded badge badge-light dropdown-toggle dropdown-icon" data-toggle="dropdown">
+        <span>User</span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" role="menu">
+        <a class="dropdown-item" href="#"><span class="fa fa-user"></span> My Account</a> <!-- Add View User Account -->
+        <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span> Logout</a> <!-- Add Log Out -->
+      </div>
+    </div>
+  </ul>
 </nav>

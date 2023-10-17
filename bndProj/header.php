@@ -8,5 +8,6 @@
     <script src="<?php echo $base_url ?>plugins\Bootstrap 4\js\bootstrap.min.js"></script>
     <script src="<?php echo $base_url ?>plugins\jquery\jquery.min.js"></script>
     <script src="<?php echo $base_url ?>plugins\popper\popper.min.js"></script>
+    <script src="<?php echo $base_url ?>plugins\Bootstrap 4\js\bootstrap.bundle.min.js"></script>
 
 </head>
