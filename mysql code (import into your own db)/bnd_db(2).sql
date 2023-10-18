@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 04:33 AM
+-- Generation Time: Oct 18, 2023 at 02:28 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,8 +72,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `address`, `mobileNumber`, `activated`, `userProfileId`) VALUES
-(1, 'McNugget51', 'Password123', 'Connor', 'McGregor', 'Yishun', 12345678, 1, 1),
-(2, 'admin', 'admin123', 'admin', 'admin', 'Wollongong', 23456789, 1, 1);
+(1, 'admin', 'admin123', 'Admin', 'Admin', 'Admin', 11111111, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -94,8 +93,12 @@ CREATE TABLE `userprofile` (
 --
 
 INSERT INTO `userprofile` (`userProfileId`, `profileName`, `description`, `role`, `activated`) VALUES
-(1, 'Admin', 'Manage user accounts and user profiles', 'Admin', 1),
-(2, 'Cafe Owner', 'Manage workslots', 'Cafe Owner', 1);
+(1, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(2, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(3, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(4, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(5, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1);
 
 -- --------------------------------------------------------
 
@@ -143,8 +146,7 @@ ALTER TABLE `user`
 -- Indexes for table `userprofile`
 --
 ALTER TABLE `userprofile`
-  ADD PRIMARY KEY (`userProfileId`),
-  ADD UNIQUE KEY `profileName` (`profileName`);
+  ADD PRIMARY KEY (`userProfileId`);
 
 --
 -- Indexes for table `workslot`
@@ -173,13 +175,13 @@ ALTER TABLE `offer`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
 --
 ALTER TABLE `userprofile`
-  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `workslot`
