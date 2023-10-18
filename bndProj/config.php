@@ -1,9 +1,8 @@
 <?php
-require_once('initialize.php');
 
 function redirect($url=''){
 	if(!empty($url))
-	echo '<script>location.href="'.base_url .$url.'"</script>';
+	echo '<script>location.href="http://localhost/bndProj/' .$url. '"</script>';
 }
 
 ?>
