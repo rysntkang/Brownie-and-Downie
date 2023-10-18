@@ -34,7 +34,7 @@ function redirectHomePage($userProfileId){
 
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
-<body>
+
 <style>
     body{
       background-image: url('../image/michal-parzuchowski-ItaV89TNkks-unsplash.jpg');
@@ -48,7 +48,8 @@ function redirectHomePage($userProfileId){
       color: #fff4f4 !important;
       background: #8080801c;
     }
-  </style>
+</style>
+<body class="login-page">
 <br>
 <br>
 <br>
