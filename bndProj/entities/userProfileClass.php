@@ -1,53 +1,203 @@
 <?php
-require("../dbConnection.php");
 
-class UserProfile {
+class UserProfile extends Dbh
+{
+	private $profileName;
+    private $description;
+    private $role;
+    private $userProfileId;
 
-    // check if userProfile already exists in the database
-    public function checkUserProfile($conn, $name) {
-        $name = $conn->real_escape_string($name);
+    public function __construct($name = null, $description = null, $role = null, $userProfileId = null){
+            $this->name = $name;
+            $this->description = $description;
+            $this->role = $role;
+            $this->userProfileId = $userProfileId;
+    }
 
-        $stmt = $conn->prepare("
-        SELECT userProfileId FROM userprofile
-        WHERE name = ?
-        ");
-        $stmt->bind_param("s", $name);
-        if(!$stmt->execute()) {
-            $stmt = null;
-            echo "stmt failed";
-            exit();
-        }
+    public function get_userProfileId($userProfileId) {
+        return $this->userProfileId;
+    }
 
+    public function set_userProfileId($userProfileId) {
+		$this->userProfileId = $userProfileId;
+	}
+
+    public function get_profileName($profileName) {
+        return $this->profileName;
+    }
+
+    public function set_profileName($profileName) {
+        $this->profileName = $profileName;
+    }
+
+    public function get_description($description) {
+        return $this->description;
+    }
+
+    public function set_description($description) {
+        $this->description = $description;
+    }
+
+    public function get_role($role) {
+        return $this->role;
+    }
+
+    public function set_role($role) {
+        $this->role = $role;
+    }
+
+    protected function checkUserProfile($name)
+    {
         $resultCheck;
-        if($stmt->rowCount() > 0) {
-            $resultCheck = false;
-        }
-        else {
+        $conn = $this->connectDB();
+        $sql = "SELECT userProfileId FROM userprofile WHERE name = '$this->name'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
             $resultCheck = true;
         }
-
         return $resultCheck;
     }
 
-    // function to create user profile
-    public function create($conn, $name, $description, $role) {
-        $name = $conn->real_escape_string($name);
-        $description = $conn->real_escape_string($description);
-        $role = $conn->real_escape_string($role);
+    protected function checkUserProfileUsed($userProfileId)
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT userId FROM user WHERE userProfileId = '$this->userProfileId'";
+        $result = $conn->query($sql);
 
-        $stmt = $conn->prepare("
-        INSERT INTO userprofile (name, description, role
-        VALUES (?, ?, ?)
-        ");
-        $stmt->bind_param("sss", $name, $description, $role);
-        if(!$stmt->execute()) {
-            $stmt = null;
-            echo "stmt failed";
-            exit();
+        if ($result->num_rows > 0)
+        {
+            $resultCheck = false;
+        }
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
+    protected function activatedStatus($userProfileId)
+    {
+        $conn = $this->connectDB();
+        $sql = "SELECT activated FROM userProfile WHERE userProfileId = '$this->userProfileId'";
+        $result = $conn->query($sql);
+
+        $status = $result->fetch_assoc();
+
+        return $status['activated'];
+    }
+
+    protected function createProfile()
+    {
+        $error;
+		$conn = $this->connectDB();
+
+        if($this->checkUserProfile($this->name) == false) {
+            $error = "User profile name has already been used!";
+            return $error;
         }
 
-        $stmt = null;
-        // should return status code according to use case description?
+        $sql = "INSERT INTO userprofile (name, description, role) VALUES ('$this->name', '$this->description', '$this->role')";
+        $result = $conn->query($sql);
+
+		$error = "Success";
+		return $error;
+    }
+
+    protected function viewProfile()
+    {
+        $array;
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM userprofile";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userProfileId' => $row['userProfileId'],
+                    'name' => $row['profileName'],
+                    'description' => $row['description'],
+                    'role' => $row['role'],
+                    'activated' => $row['activated']
+                );
+                $array[$row['userProfileId']] = $current;
+            }
+        }
+
+        return $array;
+    }
+
+    protected function updateProfile()
+    {
+        $error;
+        $conn = $this->connectDB();
+        $sql = "UPDATE userprofile SET profileName = '$this->name', description = '$this->description', role = '$this->role'";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Update failure";
+            return $error;
+        }
+
+        $error = "Success";
+        return $error;
+    }
+
+    protected function suspendProfile()
+    {
+        $error;
+        $conn = $this->connectDB();
+
+        if($this->activatedStatus($this->userProfileId) == true && $this->checkUserProfileUsed($this->userProfileId) == false) {
+            $error = "User Profile is currently being used!";
+            return $error;
+        }
+
+        $sql = "UPDATE userprofile SET activated = NOT activated WHERE userprofileid = '$this->userProfileId'";
+        $result = $conn->query($sql);
+
+        $error = "Success";
+        return $error;
+    }
+
+    protected function searchProfile()
+    {
+        $error;
+        $array;
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM userprofile WHERE profilename = '$this->name'";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Search failure";
+            return $error;
+        }
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userProfileId' => $row['userProfileId'],
+                    'name' => $row['profileName'],
+                    'description' => $row['description'],
+                    'role' => $row['role'],
+                    'activated' => $row['activated']
+                );
+                $array[$row['userProfileId']] = $current;
+            }
+            return $array;
+        }
+        else {
+            $error = "No records found";
+            return $error;
+        }
     }
 }
 ?>

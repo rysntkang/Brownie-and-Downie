@@ -1,42 +1,39 @@
-<!DOCTYPE html>
-<html lang="en" class="" style="height: auto;">
-<?php require_once('../config.php') ?>
-<?php include("../header.php") ?>
-
 <?php
+require_once('../config.php');
+include "../dbConnection.php";
+include "../entities/userClass.php";
+include "../controller/loginController.php";
 
-session_start();
-require '../controller/loginController.php';
+if(isset($_POST["submit"]))
+{
+  $username = $_POST["logUsername"];
+  $password = $_POST["logPassword"];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $error = LoginController::loginUser($username, $password);
 
-    // Pass values t
-    $username = $_POST['logUsername'];
-    $password = $_POST['logPassword'];
-
-    $user = LoginController::loginUser($conn, $username, $password);
-
-    if ($user == null) {
-      $error = "Invalid username and/or password.";
-    }
-    else {
-      $_SESSION['uid'] = $user['uid'];
-      redirectHomePage($user['userProfileId']);
-    }
-
+  // redirect to respective pages
+  if($error == "Success")
+  {
+    redirectHomePage($_SESSION["userProfileId"]);
+  }
+  else
+  {
+    echo "<script>alert('$error');</script>";
+  }
 }
 
 function redirectHomePage($userProfileId){
-  if ($userProfileId == 1){
-    redirect("main/admin");
+  if ($userProfileId == '1'){
+    redirect("main/admin/home.php");
   }
-  elseif ($userProfileId == 2){
+  elseif ($userProfileId == '2'){
     redirect("main/cafestaff");
   }
-
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en" class="" style="height: auto;">
 <body>
 <style>
     body{
