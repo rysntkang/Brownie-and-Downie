@@ -1,20 +1,22 @@
 <?php
-session_start();
-require "../controller/createUserProfileController.php";
+require "../dbConnection.php";
+require "../entities/userClass.php";
+require "../controller/createUserController.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+if(isset($_POST["submit"]))
+{
     // pass values
-    $userprofilename = $_POST["profileName"];
-    $description = $_POST["description"];
-    $role = $_POST["role"];
-    echo $userprofilename;
-    echo $description;
-    echo $role;
+    $username = $_POST["username"];
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $address = $_POST["address"];
+    $mobileNumber = $_POST["mobileNumber"];
+    $password = $_POST["password"];
+    $profileId = $_POST["profileId"];
     
-    $userProfile = new createUserProfileController($userprofilename, $description, $role);
-    $userProfile->createUser();
-    // $result = CreateUserProfileController::createUserProfile($conn, $userprofilename, $description, $role);
+    $error = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $profileId);
+
+    echo "<script>alert('$error');</script>";
 }
 
 ?>
@@ -29,13 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <form action="test.php" method="post">
-        Profile Name    : <input type="text" name="profileName">
+        username        : <input type="text" name="username">
         <br>
-        Description     :<input type="text" name="description">
+        first name      :<input type="text" name="firstName">
         <br>
-        Role            :<input type="text" name="role">
+        last name       :<input type="text" name="lastName">
         <br>
-        <input type="submit">
+        address    : <input type="text" name="address">
+        <br>
+        mobile number    : <input type="text" name="mobileNumber">
+        <br>
+        password   : <input type="text" name="password">
+        <br>
+        Profile    : <input type="text" name="profileId">
+        <br>
+        <input type="submit" name="submit">
     </form>
     <br><br>
 

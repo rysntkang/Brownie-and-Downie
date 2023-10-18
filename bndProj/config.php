@@ -2,7 +2,7 @@
 
 function redirect($url=''){
 	if(!empty($url))
-	echo '<script>location.href="http://localhost/bndProj/' .$url. '"</script>';
+	echo '<script>location.href="http://localhost/Brownie-and-Downie/bndProj/' .$url. '"</script>';
 }
 
 ?>

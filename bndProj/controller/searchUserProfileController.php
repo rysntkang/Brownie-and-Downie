@@ -1,9 +1,9 @@
 <?php
 
-class SearchUserProfileController extends UserProfile
+class SearchUserProfileController extends UserProfileClass
 {
     public static function searchUserProfile($name) {
-        $profile = new UserProfile();
+        $profile = new UserProfileClass();
         $profile->set_profileName($name);
 
         $error = $profile->searchProfile();

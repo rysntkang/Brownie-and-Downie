@@ -1,6 +1,6 @@
 <?php
 
-class ViewUserProfileController extends UserProfile
+class ViewUserProfileController extends UserProfileClass
 {
     public function viewUserProfile()
     {

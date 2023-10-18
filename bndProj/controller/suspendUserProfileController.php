@@ -1,10 +1,10 @@
 <?php
 
-class SuspendUserProfileController extends UserProfile
+class SuspendUserProfileController extends UserProfileClass
 {
     public static function suspendUserProfile($userProfileId)
     {
-        $profile = new UserProfile();
+        $profile = new UserProfileClass();
         $profile->set_userProfileId($userProfileId);
 
         $error = $profile->suspendProfile();

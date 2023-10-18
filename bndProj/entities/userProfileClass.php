@@ -1,6 +1,6 @@
 <?php
 
-class UserProfile extends Dbh
+class UserProfileClass extends Dbh
 {
 	private $profileName;
     private $description;
