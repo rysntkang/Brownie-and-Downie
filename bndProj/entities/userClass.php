@@ -22,7 +22,6 @@ class UserClass extends Dbh
             $this->mobileNumber = $mobileNumber;
             $this->activated = $activated;
 			$this->userProfileId = $userProfileId;
-            //$this->conn = mysqli_connect("localhost", "root", "", "314db");
     }
 
 	public function set_username($username) {
@@ -81,6 +80,14 @@ class UserClass extends Dbh
 		return $this->activated;
 	}
 
+	public function set_userProfileId($userProfileId) {
+		$this->userProfileId = $userProfileId;
+	}
+
+	public function get_userProfileId() {
+		return $this->userProfileId;
+	}
+
 	protected function login()
 	{
 		$error;
@@ -111,5 +118,159 @@ class UserClass extends Dbh
 		$error = "Incorrect username or password!";
 		return $error;
 	}
+
+	protected function checkUsername($username)
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT userId FROM user WHERE username = '$username'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
+	protected function checkMobileNumber($mobileNumber)
+	{
+		$resultCheck;
+		$conn = $this->connectDB();
+		$sql = "SELECT userId FROM user WHERE mobileNumber = '$mobileNumber'";
+		$result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+	}
+
+	protected function create()
+    {
+        $error;
+		$conn = $this->connectDB();
+
+        if($this->checkUsername($this->username) == false || $this->checkMobileNumber($this->mobileNumber) == false) {
+            $error = "Username or mobile number has already been used!";
+            return $error;
+        }
+
+        $sql = "INSERT INTO user (username, password, firstName, lastName, address, mobileNumber, activated, userProfileId) 
+		VALUES ('$this->username', '$this->password', '$this->firstName', '$this->lastName', '$this->address', '$this->mobileNumber', '$this->activated', '$this->userProfileId')";
+
+        if(!$result = $conn->query($sql)) {
+			$error = "Create user error";
+			return $error;
+		}
+
+		$error = "Success";
+		return $error;
+    }
+
+	protected function view()
+    {
+        $array;
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM user";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userId' => $row['userId'],
+                    'username' => $row['username'],
+                    'password' => $row['password'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName'],
+					'address' => $row['address'],
+					'mobileNumber' => $row['mobileNumber'],
+					'activated' => $row['activated'],
+					'userProfileId' => $row['userProfileId']
+                );
+                $array[$row['userId']] = $current;
+            }
+        }
+
+        return $array;
+    }
+
+	protected function update()
+    {
+        $error;
+        $conn = $this->connectDB();
+        $sql = "UPDATE user SET firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Update failure";
+            return $error;
+        }
+
+        $error = "Success";
+        return $error;
+    }
+
+	protected function suspend()
+    {
+        $error;
+        $conn = $this->connectDB();
+
+        $sql = "UPDATE user SET activated = NOT activated WHERE userId = '$this->userId'";
+        if(!$result = $conn->query($sql)) {
+            $error = "Suspend failure";
+            return $error;
+        }
+
+        $error = "Success";
+        return $error;
+    }
+
+	protected function search()
+    {
+        $error;
+        $array;
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM user WHERE username = '$this->username'";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Search failure";
+            return $error;
+        }
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userId' => $row['userId'],
+                    'username' => $row['username'],
+                    'password' => $row['password'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName'],
+					'address' => $row['address'],
+					'mobileNumber' => $row['mobileNumber'],
+					'activated' => $row['activated'],
+					'userProfileId' => $row['userProfileId']
+                );
+                $array[$row['userId']] = $current;
+            }
+            return $array;
+        }
+        else {
+            $error = "No records found";
+            return $error;
+        }
+    }
 }
 ?>

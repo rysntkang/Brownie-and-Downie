@@ -1,7 +1,7 @@
 <!-- Easier to implement external scripts/css (ex. Bootstrap 4, etc.) -->
 
 <!-- Remember to change the base url -->
-<?php $base_url = "http://localhost/bndProj/"; ?>
+<?php $base_url = "http://localhost/Brownie-and-Downie/bndProj/"; ?>
 
 <head>
     <link rel="stylesheet" href="<?php echo $base_url ?>plugins\Bootstrap 4\css\bootstrap.min.css">

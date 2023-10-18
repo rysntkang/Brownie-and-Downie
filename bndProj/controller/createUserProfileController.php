@@ -1,9 +1,9 @@
 <?php
 
-class CreateUserProfileController extends UserProfile
+class CreateUserProfileController extends UserProfileClass
 {
     public static function createUserProfile($name, $description, $role) {
-        $profile = new UserProfile();
+        $profile = new UserProfileClass();
         $profile->set_name($name);
         $profile->set_description($description);
         $profile->set_role($role);
