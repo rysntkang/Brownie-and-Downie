@@ -59,7 +59,7 @@ if(isset($_POST["suspendUserProfile"]))
         </div>
     </div>
     <div class="row">
-            <?php
+        <?php
         if(isset($_POST["search"]))
         {
             $value = $_POST["search"];
