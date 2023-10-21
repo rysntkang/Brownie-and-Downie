@@ -30,3 +30,5 @@
     </nav>
   </div>
 </aside>
+
+<!-- For redirect, use this format: href="index.php?page=<YOUR BOUNDARY FILE NAME>"-->
