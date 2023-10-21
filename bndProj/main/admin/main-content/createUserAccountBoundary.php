@@ -13,6 +13,11 @@
         background-color: #d9d9d9;
     }
 
+    #profile {
+        width: 300px;
+        height: 40px;
+    }
+
 </style>
 
 <div class="container">
@@ -59,9 +64,9 @@
                     <label for="profile" class="form-label">Profile</label>
                     <br>
                     <select class="form-select" id="profile">
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        <option value="option1">Chef</option>
+                        <option value="option2">Cashier</option>
+                        <option value="option3">Waiter</option>
                         <!-- Add more options as needed -->
                     </select>
                 </div>
@@ -75,10 +80,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    #profile {
-        width: 300px;
-        height: 40px;
-    }
-</style>
