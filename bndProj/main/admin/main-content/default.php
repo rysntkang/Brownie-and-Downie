@@ -1,6 +1,0 @@
-<h2>Welcome to Brownies and Downies</h2>
-<p>
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis ex sit amet ligula sollicitudin ultricies vitae non turpis. Quisque feugiat, ipsum facilisis auctor commodo, augue nisi tristique tortor, in placerat sapien lacus quis nunc. Suspendisse aliquam fringilla dolor, placerat molestie urna ultricies eget. Morbi rhoncus iaculis ullamcorper. Vivamus faucibus ex vel ipsum vehicula ultrices. Curabitur luctus fringilla erat lacinia blandit. In venenatis eget tellus rutrum pretium. Cras at urna vitae nisl commodo pharetra. Donec ac dui ut lorem facilisis finibus vitae et metus.
-
-Duis accumsan mi orci, sit amet feugiat leo luctus sit amet. Proin maximus in purus quis malesuada. Duis maximus erat a mi finibus, a ultricies mi scelerisque. Ut quis neque ac tellus imperdiet consectetur. In porttitor nisl ultrices tellus vulputate pretium. Fusce eget molestie felis. Aliquam luctus euismod augue, non tincidunt justo lacinia ut. Aliquam posuere massa a imperdiet faucibus. </p>
