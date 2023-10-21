@@ -1,40 +1,43 @@
-<?php
+<?php 
 require_once('../config.php');
 include "../dbConnection.php";
 include "../entities/userClass.php";
 include "../controller/loginController.php";
+include("../header.php");
 
-if(isset($_POST["submit"]))
-{
-  $username = $_POST["logUsername"];
-  $password = $_POST["logPassword"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $error = LoginController::loginUser($username, $password);
+    // Pass values t
+    $username = $_POST['logUsername'];
+    $password = $_POST['logPassword'];
 
-  // redirect to respective pages
-  if($error == "Success")
-  {
-    redirectHomePage($_SESSION["userProfileId"]);
-  }
-  else
-  {
-    echo "<script>alert('$error');</script>";
-  }
+    $error = loginController::loginUser($username, $password);
+
+    if($error == "Success")
+    {
+      redirectHomePage($_SESSION["userProfileId"]);
+    }
+    else
+    {
+      echo "<script>alert('$error');</script>";
+    }
+
 }
 
 function redirectHomePage($userProfileId){
-  if ($userProfileId == '1'){
-    redirect("main/admin/home.php");
+  if ($userProfileId == 1){
+    redirect("main/admin");
   }
-  elseif ($userProfileId == '2'){
+  elseif ($userProfileId == 2){
     redirect("main/cafestaff");
   }
+
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
-
+<body class="login-page">
 <style>
     body{
       background-image: url('../image/michal-parzuchowski-ItaV89TNkks-unsplash.jpg');
@@ -48,8 +51,7 @@ function redirectHomePage($userProfileId){
       color: #fff4f4 !important;
       background: #8080801c;
     }
-</style>
-<body class="login-page">
+  </style>
 <br>
 <br>
 <br>
@@ -87,12 +89,5 @@ function redirectHomePage($userProfileId){
   </div>
 </div>
 
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>
