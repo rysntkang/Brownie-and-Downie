@@ -93,7 +93,7 @@ class UserProfileClass extends Dbh
         return $status['activated'];
     }
 
-    protected function createProfile()
+    protected function create()
     {
         $error;
 		$conn = $this->connectDB();
@@ -110,9 +110,9 @@ class UserProfileClass extends Dbh
 		return $error;
     }
 
-    protected function viewProfile()
+    protected function view()
     {
-        $array;
+        $array = [];
         $conn = $this->connectDB();
         $sql = "SELECT * FROM userprofile";
         $result = $conn->query($sql);
@@ -128,18 +128,19 @@ class UserProfileClass extends Dbh
                     'role' => $row['role'],
                     'activated' => $row['activated']
                 );
-                $array[$row['userProfileId']] = $current;
+                //$array[$row['userProfileId']] = $current;
+                array_push($array, $current);
             }
         }
 
         return $array;
     }
 
-    protected function updateProfile()
+    protected function update()
     {
         $error;
         $conn = $this->connectDB();
-        $sql = "UPDATE userprofile SET profileName = '$this->name', description = '$this->description', role = '$this->role'";
+        $sql = "UPDATE userprofile SET profileName = '$this->name', description = '$this->description', role = '$this->role' WHERE userProfileId = '$this->userProfileId'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Update failure";
@@ -150,7 +151,7 @@ class UserProfileClass extends Dbh
         return $error;
     }
 
-    protected function suspendProfile()
+    protected function suspend()
     {
         $error;
         $conn = $this->connectDB();
@@ -167,10 +168,10 @@ class UserProfileClass extends Dbh
         return $error;
     }
 
-    protected function searchProfile()
+    protected function search()
     {
         $error;
-        $array;
+        $array = [];
         $conn = $this->connectDB();
         $sql = "SELECT * FROM userprofile WHERE profilename = '$this->name'";
 
@@ -190,7 +191,8 @@ class UserProfileClass extends Dbh
                     'role' => $row['role'],
                     'activated' => $row['activated']
                 );
-                $array[$row['userProfileId']] = $current;
+                //$array[$row['userProfileId']] = $current;
+                array_push($array, $current);
             }
             return $array;
         }

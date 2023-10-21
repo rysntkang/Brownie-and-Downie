@@ -6,7 +6,7 @@ class SearchUserProfileController extends UserProfileClass
         $profile = new UserProfileClass();
         $profile->set_profileName($name);
 
-        $error = $profile->searchProfile();
+        $error = $profile->search();
         return $error;
     }
 }

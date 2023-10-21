@@ -1,8 +1,8 @@
 <?php
-session_start();
+//session_start();
 
 include "../../dbConnection.php";
-include "../../entities/profileClass.php";
+include "../../entities/userProfileClass.php";
 include "../../controller/viewUserProfileController.php";
 include "../../controller/suspendUserProfileController.php";
 include "../../controller/searchUserProfileController.php";

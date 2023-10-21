@@ -1,8 +1,8 @@
 <?php
 
-class ViewUserProfileController extends UserProfileClass
+class ViewWorkSlotController extends WorkSlotClass
 {
-    public function viewUserProfile()
+    public function viewWorkSlot()
     {
         $array;
         $array = $this->view();

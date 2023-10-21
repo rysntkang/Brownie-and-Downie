@@ -7,7 +7,7 @@ class SuspendUserProfileController extends UserProfileClass
         $profile = new UserProfileClass();
         $profile->set_userProfileId($userProfileId);
 
-        $error = $profile->suspendProfile();
+        $error = $profile->suspend();
         return $error;
     }
 }

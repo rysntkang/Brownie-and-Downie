@@ -179,7 +179,7 @@ class UserClass extends Dbh
 
 	protected function view()
     {
-        $array;
+        $array = [];
         $conn = $this->connectDB();
         $sql = "SELECT * FROM user";
         $result = $conn->query($sql);
@@ -199,7 +199,8 @@ class UserClass extends Dbh
 					'activated' => $row['activated'],
 					'userProfileId' => $row['userProfileId']
                 );
-                $array[$row['userId']] = $current;
+                //$array[$row['userId']] = $current;
+                array_push($array, $current);
             }
         }
 
@@ -210,7 +211,7 @@ class UserClass extends Dbh
     {
         $error;
         $conn = $this->connectDB();
-        $sql = "UPDATE user SET firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber";
+        $sql = "UPDATE user SET firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber' WHERE userId = '$this->userId'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Update failure";
@@ -239,7 +240,7 @@ class UserClass extends Dbh
 	protected function search()
     {
         $error;
-        $array;
+        $array = [];
         $conn = $this->connectDB();
         $sql = "SELECT * FROM user WHERE username = '$this->username'";
 
@@ -263,7 +264,8 @@ class UserClass extends Dbh
 					'activated' => $row['activated'],
 					'userProfileId' => $row['userProfileId']
                 );
-                $array[$row['userId']] = $current;
+                //$array[$row['userId']] = $current;
+                array_push($array, $current);
             }
             return $array;
         }

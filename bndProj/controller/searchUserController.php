@@ -1,6 +1,6 @@
 <?php
 
-class SearchUserProfileController extends UserClass
+class SearchUserController extends UserClass
 {
     public static function searchUser($username) {
         $user = new UserClass();

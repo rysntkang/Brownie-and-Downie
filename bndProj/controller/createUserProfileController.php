@@ -8,7 +8,7 @@ class CreateUserProfileController extends UserProfileClass
         $profile->set_description($description);
         $profile->set_role($role);
 
-        $error = $profile->createProfile();
+        $error = $profile->create();
         return $error;
     }
 }
