@@ -8,3 +8,4 @@
   }
   ?>
 </div>
+<!-- Add new pages into the main-content folder. -->
