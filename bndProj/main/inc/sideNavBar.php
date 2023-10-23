@@ -3,6 +3,7 @@
     <span class="brand-text font-weight-light">Brownies and Downies</span>
   </a>
 
+  <!-- Admin Side Bar -->
   <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">

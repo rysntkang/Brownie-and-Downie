@@ -21,6 +21,7 @@ session_start();
 </style>
 
 <nav class="main-header navbar navbar-expand-lg top-navbar">
+  <!-- Admin Top Bar -->
   <ul class="navbar-nav ml-auto">
     <div class="btn-group nav-link">
       <button type="button" class="btn btn-rounded badge badge-light dropdown-toggle dropdown-icon" data-toggle="dropdown">
