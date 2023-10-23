@@ -2,7 +2,7 @@
 
 class DeleteWorkSlotController extends WorkSlotClass
 {
-    public static function createWorkSlot($workslotId) {
+    public static function deleteWorkSlot($workslotId) {
         $workslot = new WorkSlotClass();
         $workslot->set_workslotId($workslotId);
 
