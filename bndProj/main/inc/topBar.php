@@ -30,7 +30,7 @@ session_start();
       </button>
       <div class="dropdown-menu dropdown-menu-right" role="menu">
         <a class="dropdown-item" href="#"><span class="fa fa-user"></span> My Account</a>
-        <a class="dropdown-item" href="../login.php"><span class="fas fa-sign-out-alt"></span> Logout</a>
+        <a class="dropdown-item" href="../../../logout.php"><span class="fas fa-sign-out-alt"></span> Logout</a>
       </div>
     </div>
   </ul>
