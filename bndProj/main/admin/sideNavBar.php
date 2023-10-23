@@ -1,5 +1,5 @@
 <aside class="main-sidebar">
-  <a href="#" class="brand-link navbar-gray text-sm">
+  <a href="index.php" class="brand-link navbar-gray text-sm">
     <span class="brand-text font-weight-light">Brownies and Downies</span>
   </a>
 
