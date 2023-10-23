@@ -1,2 +1,2 @@
 <?php require_once('../config.php'); ?>
-<?php redirect('admin/login.php'); ?>
+<?php redirect('main/login.php'); ?>
