@@ -12,17 +12,28 @@ class UserClass extends Dbh
 	private $activated;
     private $userProfileId;
 
-    public function __construct($userId = null, $username = null, $password = null, $firstName = null, $lastName = null, $address = null, $mobileNumber = null, $activated = null, $userProfileId = null){
-            $this->userId = $userId;
-            $this->username = $username;
-            $this->password = $password;
-			$this->firstName = $firstName;
-            $this->lastName = $lastName;
-            $this->address = $address;
-            $this->mobileNumber = $mobileNumber;
-            $this->activated = $activated;
-			$this->userProfileId = $userProfileId;
+    // public function __construct($userId = null, $username = null, $password = null, $firstName = null, $lastName = null, $address = null, $mobileNumber = null, $activated = null, $userProfileId = null){
+    //         $this->userId = $userId;
+    //         $this->username = $username;
+    //         $this->password = $password;
+	// 		$this->firstName = $firstName;
+    //         $this->lastName = $lastName;
+    //         $this->address = $address;
+    //         $this->mobileNumber = $mobileNumber;
+    //         $this->activated = $activated;
+	// 		$this->userProfileId = $userProfileId;
+    // }
+    public function __construct(){
+        
     }
+
+    public function set_userId($userId) {
+		$this->userId = $userId;
+	}
+
+	public function get_userId($userId) {
+		return $this->userId;
+	}
 
 	public function set_username($username) {
 		$this->username = $username;
@@ -211,7 +222,7 @@ class UserClass extends Dbh
     {
         $error;
         $conn = $this->connectDB();
-        $sql = "UPDATE user SET firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber' WHERE userId = '$this->userId'";
+        $sql = "UPDATE user SET username = '$this->username', firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber', password = '$this->password' WHERE userId = '$this->userId'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Update failure";
@@ -242,7 +253,7 @@ class UserClass extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM user WHERE username = '$this->username'";
+        $sql = "SELECT * FROM user WHERE userId LIKE '%$this->userId%' OR username LIKE '%$this->username%'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";

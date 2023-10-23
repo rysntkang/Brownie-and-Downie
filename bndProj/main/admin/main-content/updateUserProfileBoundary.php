@@ -52,7 +52,7 @@ if(isset($_POST["updateUserProfile"]))
                 <form method="POST">
                     <?php
                         // retrieve information of user profile with regards to userProfileId
-                        $details = SearchUserProfileController::searchUserProfile($userProfileId, NULL);
+                        $details = SearchUserProfileController::searchUserProfile($userProfileId);
                         // var_dump($details);
                         $profileName = $details[0]['profileName'];
                         $description = $details[0]['description'];

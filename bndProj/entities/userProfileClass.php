@@ -7,11 +7,15 @@ class UserProfileClass extends Dbh
     private $role;
     private $userProfileId;
 
-    public function __construct($name = null, $description = null, $role = null, $userProfileId = null){
-            $this->name = $name;
-            $this->description = $description;
-            $this->role = $role;
-            $this->userProfileId = $userProfileId;
+    // public function __construct($name = null, $description = null, $role = null, $userProfileId = null){
+    //         $this->name = $name;
+    //         $this->description = $description;
+    //         $this->role = $role;
+    //         $this->userProfileId = $userProfileId;
+    // }
+
+    public function __construct(){
+
     }
 
     public function get_userProfileId($userProfileId) {

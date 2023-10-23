@@ -1,4 +1,3 @@
-<!-- WIP -->
 <?php
 include "../../dbConnection.php";
 include "../../entities/userProfileClass.php";
