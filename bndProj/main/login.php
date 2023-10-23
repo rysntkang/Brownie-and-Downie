@@ -29,7 +29,13 @@ function redirectHomePage($userProfileId){
     redirect("main/actors/admin");
   }
   elseif ($userProfileId == 2){
-    redirect("main/actors/cafestaff");
+    redirect("main/actors/owner");
+  }
+  elseif ($userProfileId == 3){
+    redirect("main/actors/manager");
+  }
+  else {
+    redirect("main/actors/staff");
   }
 
 }
