@@ -3,6 +3,8 @@
     <span class="brand-text font-weight-light">Brownies and Downies</span>
   </a>
 
+  <php>
+
   <!-- Admin Side Bar -->
   <div class="sidebar">
     <nav class="mt-4">
