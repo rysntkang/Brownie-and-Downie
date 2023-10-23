@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 02:28 PM
+-- Generation Time: Oct 23, 2023 at 07:53 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,7 +72,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `address`, `mobileNumber`, `activated`, `userProfileId`) VALUES
-(1, 'admin', 'admin123', 'Admin', 'Admin', 'Admin', 11111111, 1, 1);
+(1, 'admin', 'admin123', 'Admin', 'Admin', 'Admin', 11111111, 1, 1),
+(3, 'test', 'test', 'test', 'test', 'test', 222222222, 1, 4),
+(4, 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 33333333, 1, 4),
+(6, 'cccc', 'cccc', 'cccc', 'cccc', 'cccc', 44444444, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -98,7 +101,12 @@ INSERT INTO `userprofile` (`userProfileId`, `profileName`, `description`, `role`
 (3, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
 (4, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
 (5, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
-(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1);
+(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(13, 'test', 'test', 'test', 1),
+(14, 'a', 'a', 'a', 1),
+(15, 'c', 'b', 'c', 1),
+(16, 'd', 'd', 'd', 1),
+(17, 'e', 'e', 'e', 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +120,17 @@ CREATE TABLE `workslot` (
   `Role` varchar(255) NOT NULL,
   `username_workslot` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `workslot`
+--
+
+INSERT INTO `workslot` (`workslotId`, `Date`, `Role`, `username_workslot`) VALUES
+(1, '2023-10-21', 'Cashier', 'test'),
+(2, '2023-10-21', 'Cashier', NULL),
+(3, '2023-10-21', 'Waiter', 'cccc'),
+(4, '2023-10-22', 'Cashier', 'test'),
+(5, '2023-10-21', 'Waiter', 'asdf');
 
 --
 -- Indexes for dumped tables
@@ -175,19 +194,19 @@ ALTER TABLE `offer`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
 --
 ALTER TABLE `userprofile`
-  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `workslot`
 --
 ALTER TABLE `workslot`
-  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

@@ -50,7 +50,7 @@ class UserProfileClass extends Dbh
     {
         $resultCheck;
         $conn = $this->connectDB();
-        $sql = "SELECT userProfileId FROM userprofile WHERE name = '$this->name'";
+        $sql = "SELECT userProfileId FROM userprofile WHERE profileName = '$this->profileName'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -103,7 +103,7 @@ class UserProfileClass extends Dbh
             return $error;
         }
 
-        $sql = "INSERT INTO userprofile (name, description, role) VALUES ('$this->name', '$this->description', '$this->role')";
+        $sql = "INSERT INTO userprofile (profileName, description, role, activated) VALUES ('$this->profileName', '$this->description', '$this->role', true)";
         $result = $conn->query($sql);
 
 		$error = "Success";
@@ -123,7 +123,7 @@ class UserProfileClass extends Dbh
             {
                 $current = array(
                     'userProfileId' => $row['userProfileId'],
-                    'name' => $row['profileName'],
+                    'profileName' => $row['profileName'],
                     'description' => $row['description'],
                     'role' => $row['role'],
                     'activated' => $row['activated']
@@ -140,7 +140,7 @@ class UserProfileClass extends Dbh
     {
         $error;
         $conn = $this->connectDB();
-        $sql = "UPDATE userprofile SET profileName = '$this->name', description = '$this->description', role = '$this->role' WHERE userProfileId = '$this->userProfileId'";
+        $sql = "UPDATE userprofile SET profileName = '$this->profileName', description = '$this->description', role = '$this->role' WHERE userProfileId = '$this->userProfileId'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Update failure";
@@ -173,7 +173,8 @@ class UserProfileClass extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM userprofile WHERE profilename = '$this->name'";
+        //$sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
+        $sql = "SELECT * FROM userprofile WHERE userProfileId LIKE '%$this->userProfileId%' OR profileName LIKE '%$this->profileName%'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";
@@ -186,7 +187,7 @@ class UserProfileClass extends Dbh
             {
                 $current = array(
                     'userProfileId' => $row['userProfileId'],
-                    'name' => $row['profileName'],
+                    'profileName' => $row['profileName'],
                     'description' => $row['description'],
                     'role' => $row['role'],
                     'activated' => $row['activated']

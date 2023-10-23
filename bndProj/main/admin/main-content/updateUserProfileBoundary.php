@@ -1,16 +1,18 @@
-<!-- WIP -->
 <?php
 include "../../dbConnection.php";
 include "../../entities/userProfileClass.php";
-include "../../controller/createUserProfileController.php";
+include "../../controller/updateUserProfileController.php";
+include "../../controller/searchUserProfileController.php";
 
-if(isset($_POST["createUserProfile"]))
+$userProfileId = $_SESSION['userProfileId'];
+
+if(isset($_POST["updateUserProfile"]))
 {
   $profileName = $_POST["profileName"];
   $description = $_POST["description"];
   $role = $_POST["role"];
 
-  $error = CreateUserProfileController::createUserProfile($profileName, $description, $role);
+  $error = UpdateUserProfileController::updateUserProfile($userProfileId, $profileName, $description, $role);
 
   if($error != "Success")
   {
@@ -36,7 +38,7 @@ if(isset($_POST["createUserProfile"]))
         background-color: #d9d9d9;
     }
 
-    #createButton {
+    #updateButton {
         float: right;
         padding: auto;
     }
@@ -48,19 +50,27 @@ if(isset($_POST["createUserProfile"]))
         <div class="card">
             <div class="card-body">
                 <form method="POST">
+                    <?php
+                        // retrieve information of user profile with regards to userProfileId
+                        $details = SearchUserProfileController::searchUserProfile($userProfileId, NULL);
+                        // var_dump($details);
+                        $profileName = $details[0]['profileName'];
+                        $description = $details[0]['description'];
+                        $role = $details[0]['role'];
+                    ?>
                     <div class="mb-3">
                         <label for="profileName" class="form-label">Profile Name</label>
-                        <input type="text" class="form-control" name="profileName">
+                        <input type="text" class="form-control" name="profileName" value="<?=$profileName?>">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" name="description">
+                        <input type="text" class="form-control" name="description" value="<?=$description?>">
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" name="role">
+                        <input type="text" class="form-control" name="role" value="<?=$role?>">
                     </div>
-                    <button class="btn btn-success" type="submit" name="createUserProfile" id="createButton">Create</button>
+                    <button class="btn btn-success" type="submit" name="updateUserProfile" id="updateButton">Update</button>
                 </form>
             </div>
         </div>
