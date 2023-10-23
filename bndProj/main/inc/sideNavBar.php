@@ -3,10 +3,13 @@
     <span class="brand-text font-weight-light">Brownies and Downies</span>
   </a>
 
-  <php>
 
-  <!-- Admin Side Bar -->
-  <div class="sidebar">
+  <?php
+  //ADMIN SIDE BAR
+  if($_SESSION["userProfileId"] == 1)
+  {
+    echo '  
+    <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
         <li class="nav-header">User Profiles</li>
@@ -44,7 +47,81 @@
         </li>
       </ul>
     </nav>
-  </div>
+  </div>';
+  }
+
+  //OWNER SIDE BAR
+  elseif ($_SESSION["userProfileId"] == 2)
+  {
+    echo '  
+    <div class="sidebar">
+    <nav class="mt-4">
+      <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
+        <li class="nav-header">User Profiles</li>
+        <li class="nav-item">
+          <a href="index.php?page=viewUserProfileBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View All User Profiles</p>
+          </a>
+        </li>
+        <li class="nav-header">Work Slots</li>
+        <li class="nav-item">
+          <a href="index.php?page=viewWorkSlotsBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-briefcase active"></i>
+            <p>View Workslots</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=createWorkSlotsBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-clock"></i>
+            <p>Create Workslots</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>';
+  }
+
+  //MANAGER SIDE BAR
+  elseif ($_SESSION["userProfileId"] == 3)
+  {
+    echo '  
+    <div class="sidebar">
+    <nav class="mt-4">
+      <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
+        <li class="nav-header">EXAMPLE HEADER</li>
+        <li class="nav-item">
+          <a href="index.php?page=" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>EXAMPLE TITLE</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>';
+  }
+
+  //CAFE STAFF SIDE BAR
+  elseif ($_SESSION["userProfileId"] == 4)
+  {
+    echo '  
+    <div class="sidebar">
+    <nav class="mt-4">
+      <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
+        <li class="nav-header">EXAMPLE HEADER</li>
+        <li class="nav-item">
+          <a href="index.php?page=" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>EXAMPLE TITLE</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>';
+  }
+  ?>
+
+  <!-- Admin Side Bar -->
 </aside>
 
 <!-- For redirect, use this format: href="index.php?page=<YOUR BOUNDARY FILE NAME>"-->
