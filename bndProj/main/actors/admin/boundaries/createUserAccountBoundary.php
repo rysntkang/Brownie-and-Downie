@@ -1,9 +1,9 @@
 <?php
-include "../../dbConnection.php";
-include "../../entities/userClass.php";
-include "../../entities/userProfileClass.php";
-include "../../controller/createUserController.php";
-include "../../controller/viewUserProfileController.php";
+include "../../../dbConnection.php";
+include "../../../entities/userClass.php";
+include "../../../entities/userProfileClass.php";
+include "../../../controller/createUserController.php";
+include "../../../controller/viewUserProfileController.php";
 
 if(isset($_POST["createUser"]))
 {

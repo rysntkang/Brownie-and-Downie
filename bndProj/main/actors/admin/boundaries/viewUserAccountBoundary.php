@@ -1,11 +1,11 @@
 <?php
 //session_start();
 
-include "../../dbConnection.php";
-include "../../entities/userClass.php";
-include "../../controller/viewUserController.php";
-include "../../controller/suspendUserController.php";
-include "../../controller/searchUserController.php";
+include "../../../dbConnection.php";
+include "../../../entities/userClass.php";
+include "../../../controller/viewUserController.php";
+include "../../../controller/suspendUserController.php";
+include "../../../controller/searchUserController.php";
 
 if(isset($_POST["suspendUser"]))
 {

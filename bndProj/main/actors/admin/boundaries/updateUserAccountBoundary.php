@@ -1,10 +1,10 @@
 <?php
-include "../../dbConnection.php";
-include "../../entities/userClass.php";
-include "../../entities/userProfileClass.php";
-include "../../controller/updateUserController.php";
-include "../../controller/searchUserController.php";
-include "../../controller/searchUserProfileController.php";
+include "../../../dbConnection.php";
+include "../../../entities/userClass.php";
+include "../../../entities/userProfileClass.php";
+include "../../../controller/updateUserController.php";
+include "../../../controller/searchUserController.php";
+include "../../../controller/searchUserProfileController.php";
 
 $userId = $_SESSION['userId'];
 

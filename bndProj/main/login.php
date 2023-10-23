@@ -26,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function redirectHomePage($userProfileId){
   if ($userProfileId == 1){
-    redirect("main/admin");
+    redirect("main/actors/admin");
   }
   elseif ($userProfileId == 2){
-    redirect("main/cafestaff");
+    redirect("main/actors/cafestaff");
   }
 
 }

@@ -1,7 +1,7 @@
 <?php
-include "../../dbConnection.php";
-include "../../entities/userProfileClass.php";
-include "../../controller/createUserProfileController.php";
+include "../../../dbConnection.php";
+include "../../../entities/userProfileClass.php";
+include "../../../controller/createUserProfileController.php";
 
 if(isset($_POST["createUserProfile"]))
 {
