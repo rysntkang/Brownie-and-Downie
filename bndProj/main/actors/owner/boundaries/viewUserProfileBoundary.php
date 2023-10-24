@@ -3,9 +3,9 @@
 
 include "../../../dbConnection.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/viewUserProfileController.php";
-include "../../../controller/suspendUserProfileController.php";
-include "../../../controller/searchUserProfileController.php";
+include "../../../controller/admin/viewUserProfileController.php";
+include "../../../controller/admin/suspendUserProfileController.php";
+include "../../../controller/admin/searchUserProfileController.php";
 
 ?>
 
@@ -17,7 +17,7 @@ include "../../../controller/searchUserProfileController.php";
         border-style: solid;
         border-color: black;
         background-color: #D9D9D9;
-        width: 90%;
+        width: 100%;
         text-align: center;
     }
 

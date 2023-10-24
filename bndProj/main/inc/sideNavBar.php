@@ -5,6 +5,7 @@
 
 
   <?php
+  ob_start();
   //ADMIN SIDE BAR
   if($_SESSION["userProfileId"] == 1)
   {
@@ -66,13 +67,13 @@
         </li>
         <li class="nav-header">Work Slots</li>
         <li class="nav-item">
-          <a href="index.php?page=viewWorkSlotsBoundary" class="nav-link nav-home">
+          <a href="index.php?page=viewWorkslotsBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-briefcase active"></i>
             <p>View Workslots</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="index.php?page=createWorkSlotsBoundary" class="nav-link nav-home">
+          <a href="index.php?page=createWorkslotsBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-clock"></i>
             <p>Create Workslots</p>
           </a>

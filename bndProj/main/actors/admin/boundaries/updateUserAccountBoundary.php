@@ -2,31 +2,31 @@
 include "../../../dbConnection.php";
 include "../../../entities/userClass.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/updateUserController.php";
-include "../../../controller/searchUserController.php";
-include "../../../controller/searchUserProfileController.php";
+include "../../../controller/admin/updateUserController.php";
+include "../../../controller/admin/searchUserController.php";
+include "../../../controller/admin/searchUserProfileController.php";
 
 $userId = $_SESSION['userId'];
 
 if(isset($_POST["updateUser"]))
 {
-  $username = $_POST["username"];
-  $firstName = $_POST["firstName"];
-  $lastName = $_POST["lastName"];
-  $address = $_POST["address"];
-  $mobileNumber = $_POST["mobileNumber"];
-  $password = $_POST["password"];
+    $username = $_POST["username"];
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $address = $_POST["address"];
+    $mobileNumber = $_POST["mobileNumber"];
+    $password = $_POST["password"];
 
-  $error = UpdateUserController::updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password);
+    $error = UpdateUserController::updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password);
 
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
-  else
-  {
-    header("location:index.php?page=viewUserAccountBoundary");
-  }
+    if($error != "Success")
+    {
+        echo "<script>alert('$error');</script>";
+    }
+    else
+    {
+        header("location:index.php?page=viewUserAccountBoundary");
+    }
 }
 ?>
 <style>

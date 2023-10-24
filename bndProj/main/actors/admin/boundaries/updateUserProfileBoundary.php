@@ -1,8 +1,8 @@
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/updateUserProfileController.php";
-include "../../../controller/searchUserProfileController.php";
+include "../../../controller/admin/updateUserProfileController.php";
+include "../../../controller/admin/searchUserProfileController.php";
 
 $userProfileId = $_SESSION['userProfileId'];
 

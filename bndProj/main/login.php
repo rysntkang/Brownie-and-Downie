@@ -5,23 +5,31 @@ include "../entities/userClass.php";
 include "../controller/loginController.php";
 include("../header.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Pass values t
+//if ($_SERVER["REQUEST_METHOD"] == "POST") 
+if(isset($_POST["submit"]))
+{
     $username = $_POST['logUsername'];
     $password = $_POST['logPassword'];
 
-    $error = loginController::loginUser($username, $password);
-
-    if($error == "Success")
+    // check for empty input
+    if(empty($username) || empty($password))
     {
-      redirectHomePage($_SESSION["userProfileId"]);
+      $error = "Please fill in all fields";
+      echo "<script>alert('$error');</script>";
     }
     else
     {
-      echo "<script>alert('$error');</script>";
-    }
+      $error = loginController::loginUser($username, $password);
 
+      if($error == "Success")
+      {
+        redirectHomePage($_SESSION["userProfileId"]);
+      }
+      else
+      {
+        echo "<script>alert('$error');</script>";
+      }      
+    }
 }
 
 function redirectHomePage($userProfileId){
@@ -88,7 +96,7 @@ function redirectHomePage($userProfileId){
           <div class="col-8">
           </div>
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            <button type="submit" name="submit" class="btn btn-primary btn-block">Log In</button>
           </div>
       </form>
     </div>

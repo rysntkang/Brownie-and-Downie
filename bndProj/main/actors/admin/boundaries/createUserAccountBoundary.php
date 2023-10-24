@@ -2,30 +2,38 @@
 include "../../../dbConnection.php";
 include "../../../entities/userClass.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/createUserController.php";
-include "../../../controller/viewUserProfileController.php";
+include "../../../controller/admin/createUserController.php";
+include "../../../controller/admin/viewUserProfileController.php";
 
 if(isset($_POST["createUser"]))
 {
-  $username = $_POST["username"];
-  $firstName = $_POST["firstName"];
-  $lastName = $_POST["lastName"];
-  $address = $_POST["address"];
-  $mobileNumber = $_POST["mobileNumber"];
-  $password = $_POST["password"];
-  $userProfileId = $_POST["profile"];
+    $username = $_POST["username"];
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $address = $_POST["address"];
+    $mobileNumber = $_POST["mobileNumber"];
+    $password = $_POST["password"];
+    $userProfileId = $_POST["profile"];
 
-  $error = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
-  // createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId)
-
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
-  else
-  {
-    header("location:index.php?page=viewUserAccountBoundary");
-  }
+    if(empty($username) || empty($firstName) || empty($lastName) || empty($address) || empty($mobileNumber) || empty($password))
+    {
+        $error = "Please fill in all fields";
+        echo "<script>alert('$error');</script>";
+    }
+    else
+    {
+        $error = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
+        // createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId)
+    
+        if($error != "Success")
+        {
+            echo "<script>alert('$error');</script>";
+        }
+        else
+        {
+            header("location:index.php?page=viewUserAccountBoundary");
+        }
+    }
 }
 ?>
 <style>

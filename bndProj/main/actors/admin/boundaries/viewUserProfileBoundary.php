@@ -3,9 +3,9 @@
 
 include "../../../dbConnection.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/viewUserProfileController.php";
-include "../../../controller/suspendUserProfileController.php";
-include "../../../controller/searchUserProfileController.php";
+include "../../../controller/admin/viewUserProfileController.php";
+include "../../../controller/admin/suspendUserProfileController.php";
+include "../../../controller/admin/searchUserProfileController.php";
 
 if(isset($_POST["suspendUserProfile"]))
 {
@@ -35,7 +35,7 @@ if(isset($_POST["updateUserProfile"]))
         border-style: solid;
         border-color: black;
         background-color: #D9D9D9;
-        width: 90%;
+        width: 100%;
         text-align: center;
     }
 
@@ -74,7 +74,11 @@ if(isset($_POST["updateUserProfile"]))
             $result = SearchUserProfileController::searchUserProfile($userProfileIdOrName);
             if(gettype($result) == 'string')
             {
-                echo "<script>alert('$result');</script>";
+                //echo "<script>alert('$result');</script>";
+                echo "<script>";
+                echo "alert('$result');";
+                echo "document.location = 'index.php?page=viewUserProfileBoundary';";
+                echo "</script>";
             }
             else
             {

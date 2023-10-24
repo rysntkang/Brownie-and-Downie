@@ -113,7 +113,7 @@ class WorkSlotClass extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM workslot WHERE date = '$this->date'";
+        $sql = "SELECT * FROM workslot WHERE date LIKE '%$this->date%'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";

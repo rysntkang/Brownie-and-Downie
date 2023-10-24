@@ -1,11 +1,12 @@
 <?php
 //session_start();
+ob_start();
 
 include "../../../dbConnection.php";
 include "../../../entities/userClass.php";
-include "../../../controller/viewUserController.php";
-include "../../../controller/suspendUserController.php";
-include "../../../controller/searchUserController.php";
+include "../../../controller/admin/viewUserController.php";
+include "../../../controller/admin/suspendUserController.php";
+include "../../../controller/admin/searchUserController.php";
 
 if(isset($_POST["suspendUser"]))
 {
@@ -35,7 +36,7 @@ if(isset($_POST["updateUser"]))
         border-style: solid;
         border-color: black;
         background-color: #D9D9D9;
-        width: 90%;
+        width: 100%;
         text-align: center;
     }
 
@@ -74,7 +75,11 @@ if(isset($_POST["updateUser"]))
             $result = SearchUserController::searchUser($userIdOrName);
             if(gettype($result) == 'string')
             {
-                echo "<script>alert('$result');</script>";
+                // echo "<script>alert('$result');</script>";
+                echo "<script>";
+                echo "alert('$result');";
+                echo "document.location = 'index.php?page=viewUserAccountBoundary';";
+                echo "</script>";
             }
             else
             {

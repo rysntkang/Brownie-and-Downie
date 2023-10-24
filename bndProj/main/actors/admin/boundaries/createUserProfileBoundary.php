@@ -1,24 +1,32 @@
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/userProfileClass.php";
-include "../../../controller/createUserProfileController.php";
+include "../../../controller/admin/createUserProfileController.php";
 
 if(isset($_POST["createUserProfile"]))
 {
-  $profileName = $_POST["profileName"];
-  $description = $_POST["description"];
-  $role = $_POST["role"];
+    $profileName = $_POST["profileName"];
+    $description = $_POST["description"];
+    $role = $_POST["role"];
 
-  $error = CreateUserProfileController::createUserProfile($profileName, $description, $role);
+    if(empty($profileName) || empty($description) || empty($role))
+    {
+        $error = "Please fill in all fields";
+        echo "<script>alert('$error');</script>";
+    }
+    else
+    {
+        $error = CreateUserProfileController::createUserProfile($profileName, $description, $role);
 
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
-  else
-  {
-    header("location:index.php?page=viewUserProfileBoundary");
-  }
+        if($error != "Success")
+        {
+            echo "<script>alert('$error');</script>";
+        }
+        else
+        {
+            header("location:index.php?page=viewUserProfileBoundary");
+        }
+    }
 }
 ?>
 <style>
