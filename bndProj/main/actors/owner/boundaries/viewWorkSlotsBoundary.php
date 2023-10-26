@@ -21,6 +21,7 @@ if(isset($_POST["deleteWorkslot"]))
 if(isset($_POST["updateWorkslot"]))
 {
     $workslotId = $_POST["updateWorkslot"];
+    echo $workslotId;
     $_SESSION['workslotId'] = $workslotId;
     header("location:index.php?page=updateWorkslotsBoundary");
 }

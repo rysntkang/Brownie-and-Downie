@@ -3,7 +3,8 @@ include "../../../dbConnection.php";
 include "../../../entities/workslotClass.php";
 include "../../../entities/userProfileClass.php";
 include "../../../controller/owner/updateWorkslotController.php";
-include "../../../controller/owner/searchWorkslotController.php";
+//include "../../../controller/owner/searchWorkslotController.php";
+include "../../../controller/owner/searchByIdWorkslotController.php";
 include "../../../controller/admin/viewUserProfileController.php";
 
 $workslotId = $_SESSION['workslotId'];
@@ -58,7 +59,7 @@ if(isset($_POST["updateWorkslot"]))
                 <form method="POST">
                     <?php
                         // retrieve information of user profile with regards to userProfileId
-                        $details = SearchWorkslotController::searchWorkslot($workslotId);
+                        $details = SearchByIdWorkslotController::searchByIdWorkslot($workslotId);
                         // var_dump($details);
                         $date = $details[0]['date'];
                         $role = $details[0]['role'];
