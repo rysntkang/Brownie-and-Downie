@@ -97,6 +97,25 @@
             <p>EXAMPLE TITLE</p>
           </a>
         </li>
+        <li class="nav-header">Cafe Staff</li>
+        <li class="nav-item">
+          <a href="index.php?page=viewAllCafeStaffBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View All Cafe Staff</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewAndOfferWorkSlotBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View And Offer Workslot</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewBiddingListBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View Bidding List</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>';
@@ -114,6 +133,37 @@
           <a href="index.php?page=" class="nav-link nav-home">
             <i class="nav-icon fas fa-address-card active"></i>
             <p>EXAMPLE TITLE</p>
+          </a>
+        </li>
+        <li class="nav-header">Cafe Staff</li>
+        <li class="nav-item">
+          <a href="index.php?page=deleteBidBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>Delete Bid</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=submitBidBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>Submit Bid</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=updateBidBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>Update Bid</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewAndSearchAvailableBidsBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View Available Bids</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewMyBidsBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View My Bids</p>
           </a>
         </li>
       </ul>
