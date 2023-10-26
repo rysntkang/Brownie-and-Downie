@@ -31,7 +31,7 @@ class UserClass extends Dbh
 		$this->userId = $userId;
 	}
 
-	public function get_userId($userId) {
+	public function get_userId() {
 		return $this->userId;
 	}
 

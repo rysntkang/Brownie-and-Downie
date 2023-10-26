@@ -82,6 +82,31 @@ class WorkSlotClass extends Dbh
         return $array;
     }
 
+    protected function viewAvailable()
+    {
+        $array = [];
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM workslot WHERE role = '$this->role' ORDER BY date ASC";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'workslotId' => $row['workslotId'],
+                    'date' => $row['Date'],
+                    'role' => $row['Role'],
+                    'username_workslot' => $row['username_workslot']
+                );
+                //$array[$row['workslotId']] = $current;
+                array_push($array, $current);
+            }
+        }
+
+        return $array;
+    }
+
     protected function update()
     {
         $error;
@@ -147,6 +172,39 @@ class WorkSlotClass extends Dbh
         $array = [];
         $conn = $this->connectDB();
         $sql = "SELECT * FROM workslot WHERE workslotId = '$this->workslotId'";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Search failure";
+            return $error;
+        }
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'workslotId' => $row['workslotId'],
+                    'date' => $row['Date'],
+                    'role' => $row['Role'],
+                    'username_workslot' => $row['username_workslot']
+                );
+                //$array[$row['userProfileId']] = $current;
+                array_push($array, $current);
+            }
+            return $array;
+        }
+        else {
+            $error = "No records found";
+            return $error;
+        }
+    }
+
+    protected function searchByRoleDate()
+    {
+        $error;
+        $array = [];
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM workslot WHERE role = '$this->role' AND date = '$this->date'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";

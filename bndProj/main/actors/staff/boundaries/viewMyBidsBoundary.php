@@ -8,6 +8,13 @@
     so that I can know if I am approved to work on that slot.
 
 -->
+<?php
+include "../../../dbConnection.php";
+include "../../../entities/bidClass.php";
+include "../../../controller/staff/viewBidController.php";
+
+$username = $_SESSION['username'];
+?>
 <style>
     .table {
         margin-top: 1em !important;
@@ -53,25 +60,33 @@
 
 
 <body>
-    <!-- #3 VIEW MY BIDS -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>01-10-2023</td>
-                <td>Approved</td>
-            </tr>
+    <?php
+    $array = ViewBidController::viewBid($username);
 
-            <tr>
-                <td>02-10-2023</td>
-                <td>Rejected</td>
-            </tr>
-        </tbody>
-    </table>
+    echo '<table class="table">';
+    echo '  <tr>';
+    echo '      <th>Date</th>';
+    echo '      <th>Status</th>';
+    echo '  </tr>';
+    foreach($array as $bid)
+    {
+        echo '  <tr>';
+        echo '      <td>' . $bid['date'] . '</td>';
+        if($bid['approval'] == 0)
+        {
+            echo '      <td>Pending</td>';
+        }
+        else if($bid['approval'] == 1)
+        {
+            echo '      <td>Approved</td>';
+        }
+        else
+        {
+            echo '      <td>Rejected</td>';
+        }
+        echo '  </tr>';
+    }
+    echo '</table>';
+    ?>
 
 </body>

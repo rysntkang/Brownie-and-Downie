@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2023 at 07:53 AM
+-- Generation Time: Oct 26, 2023 at 02:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,10 +30,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `bids` (
   `bidId` int(11) NOT NULL,
   `workslotId` int(11) NOT NULL,
+  `date` date NOT NULL,
   `role` varchar(255) NOT NULL,
   `username_bids` varchar(255) NOT NULL,
-  `approval` tinyint(1) NOT NULL
+  `approval` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bids`
+--
+
+INSERT INTO `bids` (`bidId`, `workslotId`, `date`, `role`, `username_bids`, `approval`) VALUES
+(1, 7, '2023-10-21', 'Chef', 'asdf', 0),
+(2, 8, '2023-10-22', 'Chef', 'asdf', 0);
 
 -- --------------------------------------------------------
 
@@ -44,9 +53,10 @@ CREATE TABLE `bids` (
 CREATE TABLE `offer` (
   `offerId` int(11) NOT NULL,
   `workslotId` int(11) NOT NULL,
+  `date` date NOT NULL,
   `role` varchar(255) NOT NULL,
   `username_offer` varchar(255) NOT NULL,
-  `approval` tinyint(1) NOT NULL
+  `approval` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -75,7 +85,8 @@ INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `
 (1, 'admin', 'admin123', 'Admin', 'Admin', 'Admin', 11111111, 1, 1),
 (3, 'test', 'test', 'test', 'test', 'test', 222222222, 1, 4),
 (4, 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 33333333, 1, 4),
-(6, 'cccc', 'cccc', 'cccc', 'cccc', 'cccc', 44444444, 1, 5);
+(6, 'cccc', 'cccc', 'cccc', 'cccc', 'cccc', 44444444, 1, 5),
+(7, 'owner', 'owner', 'owner', 'owner', 'owner', 8778, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -126,11 +137,13 @@ CREATE TABLE `workslot` (
 --
 
 INSERT INTO `workslot` (`workslotId`, `Date`, `Role`, `username_workslot`) VALUES
-(1, '2023-10-21', 'Cashier', 'test'),
-(2, '2023-10-21', 'Cashier', NULL),
-(3, '2023-10-21', 'Waiter', 'cccc'),
-(4, '2023-10-22', 'Cashier', 'test'),
-(5, '2023-10-21', 'Waiter', 'asdf');
+(1, '2023-10-21', 'Cashier', NULL),
+(3, '2023-10-21', 'Waiter', NULL),
+(4, '2023-10-22', 'Cashier', NULL),
+(5, '2023-10-21', 'Waiter', NULL),
+(6, '2023-10-21', 'Chef', 'asdf'),
+(7, '2023-10-21', 'Chef', NULL),
+(8, '2023-10-22', 'Chef', NULL);
 
 --
 -- Indexes for dumped tables
@@ -182,7 +195,7 @@ ALTER TABLE `workslot`
 -- AUTO_INCREMENT for table `bids`
 --
 ALTER TABLE `bids`
-  MODIFY `bidId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bidId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `offer`
@@ -194,7 +207,7 @@ ALTER TABLE `offer`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
@@ -206,7 +219,7 @@ ALTER TABLE `userprofile`
 -- AUTO_INCREMENT for table `workslot`
 --
 ALTER TABLE `workslot`
-  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

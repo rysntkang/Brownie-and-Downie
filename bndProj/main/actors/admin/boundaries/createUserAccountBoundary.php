@@ -94,7 +94,7 @@ if(isset($_POST["createUser"]))
 
                 <div class="mb-3">
                     <label for="mobileNumber" class="form-label">Mobile Number</label>
-                    <input type="text" class="form-control" name="mobileNumber">
+                    <input type="number" class="form-control" name="mobileNumber">
                 </div>
 
                 <div class="mb-3">

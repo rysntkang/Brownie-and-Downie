@@ -206,5 +206,40 @@ class UserProfileClass extends Dbh
             return $error;
         }
     }
+
+    protected function searchById()
+    {
+        $error;
+        $array = [];
+        $conn = $this->connectDB();
+        //$sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
+        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId'";
+
+        if(!$result = $conn->query($sql)) {
+            $error = "Search failure";
+            return $error;
+        }
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userProfileId' => $row['userProfileId'],
+                    'profileName' => $row['profileName'],
+                    'description' => $row['description'],
+                    'role' => $row['role'],
+                    'activated' => $row['activated']
+                );
+                //$array[$row['userProfileId']] = $current;
+                array_push($array, $current);
+            }
+            return $array;
+        }
+        else {
+            $error = "No records found";
+            return $error;
+        }
+    }
 }
 ?>
