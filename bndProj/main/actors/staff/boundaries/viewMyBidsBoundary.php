@@ -11,7 +11,7 @@
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/bidClass.php";
-include "../../../controller/staff/viewBidController.php";
+include "../../../controller/staff/viewStaffBidController.php";
 
 $username = $_SESSION['username'];
 ?>
@@ -61,7 +61,7 @@ $username = $_SESSION['username'];
 
 <body>
     <?php
-    $array = ViewBidController::viewBid($username);
+    $array = ViewStaffBidController::viewStaffBid($username);
 
     echo '<table class="table">';
     echo '  <tr>';

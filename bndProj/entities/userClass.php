@@ -115,6 +115,7 @@ class UserClass extends Dbh
 				$_SESSION['userId'] = $users["userId"];
 				$_SESSION['username'] = $users["username"];
 				$_SESSION['userProfileId'] = $users["userProfileId"];
+                $_SESSION['maxShift'] = $users['maxShift'];
 
 				$error = "Success";
 				return $error;

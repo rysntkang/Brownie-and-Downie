@@ -18,7 +18,7 @@ class UserProfileClass extends Dbh
 
     }
 
-    public function get_userProfileId($userProfileId) {
+    public function get_userProfileId() {
         return $this->userProfileId;
     }
 
@@ -26,7 +26,7 @@ class UserProfileClass extends Dbh
 		$this->userProfileId = $userProfileId;
 	}
 
-    public function get_profileName($profileName) {
+    public function get_profileName() {
         return $this->profileName;
     }
 
@@ -34,7 +34,7 @@ class UserProfileClass extends Dbh
         $this->profileName = $profileName;
     }
 
-    public function get_description($description) {
+    public function get_description() {
         return $this->description;
     }
 
@@ -42,7 +42,7 @@ class UserProfileClass extends Dbh
         $this->description = $description;
     }
 
-    public function get_role($role) {
+    public function get_role() {
         return $this->role;
     }
 

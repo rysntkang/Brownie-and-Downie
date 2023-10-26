@@ -14,7 +14,7 @@ class WorkSlotClass extends Dbh
         // $this->username_workslot;
     }
 
-    public function get_workslotId($workslotId) {
+    public function get_workslotId() {
         return $this->workslotId;
     }
 
@@ -22,7 +22,7 @@ class WorkSlotClass extends Dbh
 		$this->workslotId = $workslotId;
 	}
 
-    public function get_date($date) {
+    public function get_date() {
         return $this->date;
     }
 
@@ -30,7 +30,7 @@ class WorkSlotClass extends Dbh
         $this->date = $date;
     }
 
-    public function get_role($role) {
+    public function get_role() {
         return $this->role;
     }
 
@@ -38,12 +38,32 @@ class WorkSlotClass extends Dbh
         $this->role = $role;
     }
 
-    public function get_usernameWorkslot($usernameWorkslot) {
+    public function get_usernameWorkslot() {
         return $this->usernameWorkslot;
     }
 
-    public function set_usernameWorkslot($usernameWorkslot) {
-        $this->usernameWorkslot = $usernameWorkslot;
+    public function set_username_workslot($username_workslot) {
+        $this->username_workslot = $username_workslot;
+    }
+
+    protected function checkMaxShift($username_workslot, $date)
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT COUNT(workslotId) AS totalShift FROM workslot WHERE username_workslot = '$username_workslot' AND YEARWEEK(`date`, 0) = YEARWEEK('$this->date', 0)";
+        $result = $conn->query($sql);
+
+        //var_dump($result->fetch_assoc()['totalShift']);
+
+        if ((5 - $result->fetch_assoc()['totalShift']) > 0)
+		{
+			$resultCheck = true;
+		}
+        else
+        {
+            $resultCheck = false;
+        }
+        return $resultCheck;
     }
 
     protected function create()
@@ -230,6 +250,26 @@ class WorkSlotClass extends Dbh
             $error = "No records found";
             return $error;
         }
+    }
+
+    protected function assign()
+    {
+        $error;
+		$conn = $this->connectDB();
+
+        if($this->checkMaxShift($this->username_workslot, $this->date) == false) {
+            $error = "User has been allocated maximum number of shifts! Will reject other pending shifts!";
+            return $error;
+        }
+
+        echo $this->workslotId;
+        echo $this->username_workslot;
+
+        $sql = "UPDATE workslot SET username_workslot = '$this->username_workslot' WHERE workslotId = '$this->workslotId'";
+        $result = $conn->query($sql);
+
+		$error = "Success";
+		return $error;
     }
     
 }

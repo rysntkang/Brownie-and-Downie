@@ -96,7 +96,7 @@ class BidClass extends Dbh
 		return $error;
     }
 
-    protected function view()
+    protected function viewStaff()
     {
         $array = [];
         $conn = $this->connectDB();
@@ -121,6 +121,50 @@ class BidClass extends Dbh
         }
 
         return $array;
+    }
+
+    protected function viewManager()
+    {
+        $array = [];
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM bids WHERE approval = '0' ORDER BY date ASC, role ASC";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'bidId' => $row['bidId'],
+                    'workslotId' => $row['workslotId'],
+                    'date' => $row['date'],
+                    'role' => $row['role'],
+                    'username_bids' => $row['username_bids'],
+                    'approval' => $row['approval']
+                );
+                //$array[$row['userId']] = $current;
+                array_push($array, $current);
+            }
+        }
+
+        return $array;
+    }
+
+    protected function approve()
+    {
+        $error;
+		$conn = $this->connectDB();
+
+        // if($this->checkMaxShift($this->username_workslot, $this->date) == false) {
+        //     $error = "User has been allocated maximum number of shifts! Will reject other pending shifts!";
+        //     return $error;
+        // }
+
+        $sql = "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId'";
+        $result = $conn->query($sql);
+
+		$error = "Success";
+		return $error;
     }
 }
 ?>
