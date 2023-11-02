@@ -1,10 +1,10 @@
 <?php
 
-class ApproveBidController extends BidClass
+class ApproveBidController extends BidEntity
 {
-    public static function approveBid($bidId, $approval)
+    public function approveBid($bidId, $approval)
     {
-        $bid = new BidClass();
+        $bid = new BidEntity();
         $bid->set_bidId($bidId);
         $bid->set_approval($approval);
         $error = $bid->approve();

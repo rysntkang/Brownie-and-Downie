@@ -10,10 +10,10 @@
 -->
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/bidClass.php";
+include "../../../entities/bidEntity.php";
 include "../../../controller/staff/viewStaffBidController.php";
 
-$username = $_SESSION['username'];
+$userId = $_SESSION['currentUserId'];
 ?>
 <style>
     .table {
@@ -58,35 +58,37 @@ $username = $_SESSION['username'];
     
 </style>
 
+<div class="container">
+    <div class="row">
+        <?php
+        // $array = ViewStaffBidController::viewStaffBid($username);
+        $viewBid = new ViewStaffBidController();
+        $array = $viewBid->viewStaffBid($userId);
 
-<body>
-    <?php
-    $array = ViewStaffBidController::viewStaffBid($username);
-
-    echo '<table class="table">';
-    echo '  <tr>';
-    echo '      <th>Date</th>';
-    echo '      <th>Status</th>';
-    echo '  </tr>';
-    foreach($array as $bid)
-    {
+        echo '<table class="table">';
         echo '  <tr>';
-        echo '      <td>' . $bid['date'] . '</td>';
-        if($bid['approval'] == 0)
-        {
-            echo '      <td>Pending</td>';
-        }
-        else if($bid['approval'] == 1)
-        {
-            echo '      <td>Approved</td>';
-        }
-        else
-        {
-            echo '      <td>Rejected</td>';
-        }
+        echo '      <th>Date</th>';
+        echo '      <th>Status</th>';
         echo '  </tr>';
-    }
-    echo '</table>';
-    ?>
-
-</body>
+        foreach($array as $bid)
+        {
+            echo '  <tr>';
+            echo '      <td>' . $bid['date'] . '</td>';
+            if($bid['approval'] == 0)
+            {
+                echo '      <td>Pending</td>';
+            }
+            else if($bid['approval'] == 1)
+            {
+                echo '      <td>Approved</td>';
+            }
+            else
+            {
+                echo '      <td>Rejected</td>';
+            }
+            echo '  </tr>';
+        }
+        echo '</table>';
+        ?>
+    </div>
+</div>

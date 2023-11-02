@@ -19,23 +19,20 @@
 -->
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/userProfileClass.php";
-include "../../../entities/workSlotClass.php";
-include "../../../entities/bidClass.php";
-include "../../../controller/admin/searchByIdUserProfileController.php";
-include "../../../controller/owner/searchWorkslotController.php";
+include "../../../entities/workSlotEntity.php";
+include "../../../entities/bidEntity.php";
 include "../../../controller/staff/viewAvailableWorkslotController.php";
 include "../../../controller/staff/searchByRoleDateWorkslotController.php";
 include "../../../controller/staff/createBidController.php";
 
 // retrieve role pertaining to userProfileId
-$userProfileId = $_SESSION['userProfileId'];
-$username = $_SESSION['username'];
+$userProfileId = $_SESSION['currentUserProfileId'];
+$username = $_SESSION['currentUsername'];
+$userId = $_SESSION['currentUserId'];
 
-$role = SearchByIdUserProfileController::searchByIdUserProfile($userProfileId)[0]['role'];
-// echo '<pre>'; print_r($role); echo '</pre>';
-
-$array = ViewAvailableWorkslotController::viewAvailableWorkSlot($role);
+// $array = ViewAvailableWorkslotController::viewAvailableWorkSlot($role);
+$viewAvailable = new ViewAvailableWorkslotController();
+$array = $viewAvailable->viewAvailableWorkSlot($userProfileId);
 $dates = [];
 foreach($array as $a) {
     $date = $a['date'];
@@ -49,7 +46,9 @@ if(isset($_POST["submitBid"]))
     $workslotId = $_POST["submitBid"];
     $workslotDate = $_POST["workslotDate"];
     
-    $result = createBidController::createBid($workslotId, $workslotDate, $role, $username);
+    // $result = createBidController::createBid($workslotId, $workslotDate, $role, $username);
+    $submitBid = new CreateBidController();
+    $result = $submitBid->createBid($workslotId, $workslotDate, $userProfileId, $userId);
 
     if($result != "Success")
     {
@@ -109,92 +108,103 @@ if(isset($_POST["submitBid"]))
     
 </style>
 
-
-<body>
-    <!-- #7 SEARCH FOR WORK SLOT -->
-    <div class="container">
+<div class="container">
     <div class="row">
         <div class="card">
             <div class="card-body">
-            <form method="POST">
-                <div class="mb-3">
-                    <label for="date" class="form-label">Search Date:</label>
-                    <br>
-                    <select class="form-select" id="date" name="selectDate">
-                        <?php
-                        foreach($dates as $date) {
-                            echo '<option value=' . $date . '>' . $date . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Search Date:</label>
+                        <br>
+                        <select class="form-select" id="date" name="selectDate">
+                            <?php
+                            foreach($dates as $date) {
+                                echo '<option value=' . $date . '>' . $date . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-                <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-light">Reset</button>
-                    <button type="submit" name="searchDate" class="btn btn-light">Search</button>
-                </div>
-            </form>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-light">Reset</button>
+                        <button type="submit" name="searchDate" class="btn btn-light">Search</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <div class="row">
+        <?php
+        if(isset($_POST["searchDate"])) {
+            $date = $_POST["selectDate"];
+            // $searchedArray = SearchByRoleDateWorkSlotController::searchByRoleDateWorkslot($role, $date);
+            $searchByRoleDate = new SearchByRoleDateWorkSlotController();
+            $searchedArray = $searchByRoleDate->searchByRoleDateWorkslot($userProfileId, $date);
+
+            echo '<table class="table">';
+            echo '  <tr>';
+            echo '      <th>Date</th>';
+            echo '      <th>Status</th>';
+            echo '      <th>Action</th>';
+            echo '  </tr>';
+
+            foreach($searchedArray as $workslot) {
+                echo '  <tr>';
+                echo '      <td>' . $workslot['date'] . '</td>';
+                if ($workslot['username'] == NULL) {
+                    echo '      <td>Available</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+                    echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
+                    echo '          </form>';
+                    echo '      </td>';
+                }
+                else {
+                    echo '      <td>Full</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
+                    echo '          </form>';
+                    echo '      </td>';
+                }
+                echo '  </tr>';
+            }
+            echo '</table>';
+        }
+        else {
+            // echo '<pre>'; print_r($array); echo '</pre>';
+            echo '<table class="table">';
+            echo '  <tr>';
+            echo '      <th>Date</th>';
+            echo '      <th>Status</th>';
+            echo '      <th>Action</th>';
+            echo '  </tr>';
+
+            foreach($array as $workslot) {
+                echo '  <tr>';
+                echo '      <td>' . $workslot['date'] . '</td>';
+                if ($workslot['username'] == NULL) {
+                    echo '      <td>Available</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+                    echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
+                    echo '          </form>';
+                    echo '      </td>';
+                }
+                else {
+                    echo '      <td>Full</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
+                    echo '          </form>';
+                    echo '      </td>';
+                }
+                echo '  </tr>';
+            }
+            echo '</table>';
+        }
+        ?>                  
     </div>
-    <?php
-    if(isset($_POST["searchDate"])) {
-        $date = $_POST["selectDate"];
-        $searchedArray = SearchByRoleDateWorkSlotController::searchByRoleDateWorkslot($role, $date);
-
-        echo '<table class="table">';
-        echo '  <tr>';
-        echo '      <th>Date</th>';
-        echo '      <th>Status</th>';
-        echo '      <th>Action</th>';
-        echo '  </tr>';
-
-        foreach($searchedArray as $workslot) {
-            echo '  <tr>';
-            echo '      <td>' . $workslot['date'] . '</td>';
-            if ($workslot['username_workslot'] == NULL) {
-                echo '      <td>Available</td>';
-            }
-            else {
-                echo '      <td>Full</td>';
-            }
-            echo '  </tr>';
-        }
-        echo '</table>';
-    }
-    else {
-        // echo '<pre>'; print_r($array); echo '</pre>';
-        echo '<table class="table">';
-        echo '  <tr>';
-        echo '      <th>Date</th>';
-        echo '      <th>Status</th>';
-        echo '      <th>Action</th>';
-        echo '  </tr>';
-
-        foreach($array as $workslot) {
-            echo '  <tr>';
-            echo '      <td>' . $workslot['date'] . '</td>';
-            if ($workslot['username_workslot'] == NULL) {
-                echo '      <td>Available</td>';
-                echo '      <td>';
-                echo '          <form method="POST">';
-                echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
-                echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
-                echo '          </form>';
-                echo '      </td>';
-            }
-            else {
-                echo '      <td>Full</td>';
-                echo '      <td>';
-                echo '          <form method="POST">';
-                echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
-                echo '          </form>';
-                echo '      </td>';
-            }
-            echo '  </tr>';
-        }
-        echo '</table>';
-    }
-    ?>
-</body>
+</div>

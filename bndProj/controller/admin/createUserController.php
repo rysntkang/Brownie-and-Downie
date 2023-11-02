@@ -1,6 +1,6 @@
 <?php
     
-class CreateUserController extends UserClass
+class CreateUserController extends UserEntity
 {
     // public static function createUser($name, $description, $role) {
     //     $profile = new UserProfile();
@@ -12,8 +12,8 @@ class CreateUserController extends UserClass
     //     return $error;
     // }
 
-    public static function createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId) {
-        $user = new UserClass();
+    public function createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId) {
+        $user = new UserEntity();
         $user->set_username($username);
         $user->set_firstName($firstName);
         $user->set_lastName($lastName);

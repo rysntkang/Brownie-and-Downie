@@ -1,10 +1,10 @@
 <?php
 
-class ViewManagerBidController extends BidClass
+class ViewManagerBidController extends BidEntity
 {
-    public static function viewManagerBid()
+    public function viewManagerBid()
     {
-        $bid = new BidClass();
+        $bid = new BidEntity();
         $array = $bid->viewManager();
 
         return $array;

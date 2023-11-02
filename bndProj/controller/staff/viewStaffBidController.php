@@ -1,11 +1,11 @@
 <?php
 
-class ViewStaffBidController extends BidClass
+class ViewStaffBidController extends BidEntity
 {
-    public static function viewStaffBid($username_bids)
+    public static function viewStaffBid($userId)
     {
-        $bid = new BidClass();
-        $bid->set_username_bids($username_bids);
+        $bid = new BidEntity();
+        $bid->set_userIdBids($userId);
         $array = $bid->viewStaff();
 
         return $array;

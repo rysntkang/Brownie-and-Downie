@@ -1,12 +1,18 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/userClass.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/userEntity.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/admin/updateUserController.php";
-include "../../../controller/admin/searchUserController.php";
-include "../../../controller/admin/searchUserProfileController.php";
+include "../../../controller/admin/viewUserProfileController.php";
 
 $userId = $_SESSION['userId'];
+$username = $_SESSION['username'];
+$firstName = $_SESSION['firstName']; 
+$lastName = $_SESSION['lastName'];
+$mobileNumber = $_SESSION['mobileNumber'];
+$address = $_SESSION['address'];
+$password = $_SESSION['password'];
+$userProfileId = $_SESSION['userProfileId'];
 
 if(isset($_POST["updateUser"]))
 {
@@ -17,11 +23,12 @@ if(isset($_POST["updateUser"]))
     $mobileNumber = $_POST["mobileNumber"];
     $password = $_POST["password"];
 
-    $error = UpdateUserController::updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password);
+    $updateUser = new UpdateUserController();
+    $result = $updateUser->updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password);
 
-    if($error != "Success")
+    if($result != "Success")
     {
-        echo "<script>alert('$error');</script>";
+        echo "<script>alert('$result');</script>";
     }
     else
     {
@@ -60,64 +67,60 @@ if(isset($_POST["updateUser"]))
         <div class="card">
             <div class="card-body">
             <form method="POST">
-                <?php
-                    // retrieve information of user with regards to userId
-                    $details = SearchUserController::searchUser($userId);
-                    // var_dump($details);
-                    $username = $details[0]['username'];
-                    $password = $details[0]['password'];
-                    $firstName = $details[0]['firstName'];
-                    $lastName = $details[0]['lastName'];
-                    $address = $details[0]['address'];
-                    $mobileNumber = $details[0]['mobileNumber'];
-                    $userProfileId = $details[0]['userProfileId'];
-
-                    $userProfileDetails = SearchUserProfileController::searchUserProfile($userProfileId);
-                    $role = $userProfileDetails[0]['role'];
-                ?>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="username" value="<?=$username?>">
+                    <input type="text" class="form-control" name="username" value="<?=$username?>" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="firstName"  value="<?=$firstName?>">
+                            <input type="text" class="form-control" name="firstName"  value="<?=$firstName?>" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="lastName" value="<?=$lastName?>">
+                            <input type="text" class="form-control" name="lastName" value="<?=$lastName?>" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" value="<?=$address?>">
+                    <input type="text" class="form-control" name="address" value="<?=$address?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="mobileNumber" class="form-label">Mobile Number</label>
-                    <input type="text" class="form-control" name="mobileNumber" value="<?=$mobileNumber?>">
+                    <input type="text" class="form-control" name="mobileNumber" value="<?=$mobileNumber?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" value="<?=$password?>">
+                    <input type="password" class="form-control" name="password" value="<?=$password?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="profile" class="form-label">Profile</label>
                     <br>
-                    <select class="form-select" id="profile" disabled>
-                        <option value="option1"><?=$role?></option>
-                        <option value="option2">Cashier</option>
-                        <option value="option3">Waiter</option>
-                        <!-- Add more options as needed -->
+                    <select class="form-select" id="profile" name="profile" disabled>
+                        <?php
+                        $userProfile = new ViewUserProfileController();
+                        $array = $userProfile->viewUserProfile();
+                        foreach($array as $row)
+                        {
+                            if ($userProfileId == $row['userProfileId'])
+                            {
+                                echo '<option value=' . $row['userProfileId'] . ' selected>' . $row['role'] . '</option>';
+                            }
+                            else
+                            {
+                                echo '<option value=' . $row['userProfileId'] . '>' . $row['role'] . '</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
                 <button class="btn btn-success" type="submit" name="updateUser" id="updateButton">Update</button>

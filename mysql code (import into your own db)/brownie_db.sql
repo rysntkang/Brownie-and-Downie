@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2023 at 02:23 PM
+-- Generation Time: Nov 02, 2023 at 07:17 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bnd_db`
+-- Database: `brownie_db`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bids` (
   `bidId` int(11) NOT NULL,
-  `workslotId` int(11) NOT NULL,
+  `workslotId_bids` int(11) NOT NULL,
   `date` date NOT NULL,
-  `role` varchar(255) NOT NULL,
-  `username_bids` varchar(255) NOT NULL,
+  `userProfileId_bids` int(11) NOT NULL,
+  `userId_bids` int(11) NOT NULL,
   `approval` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,9 +40,9 @@ CREATE TABLE `bids` (
 -- Dumping data for table `bids`
 --
 
-INSERT INTO `bids` (`bidId`, `workslotId`, `date`, `role`, `username_bids`, `approval`) VALUES
-(1, 7, '2023-10-21', 'Chef', 'asdf', 0),
-(2, 8, '2023-10-22', 'Chef', 'asdf', 0);
+INSERT INTO `bids` (`bidId`, `workslotId_bids`, `date`, `userProfileId_bids`, `userId_bids`, `approval`) VALUES
+(8, 1, '2023-11-04', 4, 4, 1),
+(9, 2, '2023-11-04', 4, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -52,12 +52,19 @@ INSERT INTO `bids` (`bidId`, `workslotId`, `date`, `role`, `username_bids`, `app
 
 CREATE TABLE `offer` (
   `offerId` int(11) NOT NULL,
-  `workslotId` int(11) NOT NULL,
+  `workslotId_offer` int(11) NOT NULL,
   `date` date NOT NULL,
-  `role` varchar(255) NOT NULL,
-  `username_offer` varchar(255) NOT NULL,
-  `approval` int(11) NOT NULL
+  `userProfileId_offer` int(11) NOT NULL,
+  `userId_offer` int(11) NOT NULL,
+  `accepted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `offer`
+--
+
+INSERT INTO `offer` (`offerId`, `workslotId_offer`, `date`, `userProfileId_offer`, `userId_offer`, `accepted`) VALUES
+(7, 2, '2023-11-04', 4, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -74,19 +81,19 @@ CREATE TABLE `user` (
   `address` varchar(255) NOT NULL,
   `mobileNumber` int(11) NOT NULL,
   `activated` tinyint(1) NOT NULL,
-  `userProfileId` int(11) NOT NULL
+  `userProfileId` int(11) NOT NULL,
+  `maxShift` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `address`, `mobileNumber`, `activated`, `userProfileId`) VALUES
-(1, 'admin', 'admin123', 'Admin', 'Admin', 'Admin', 11111111, 1, 1),
-(3, 'test', 'test', 'test', 'test', 'test', 222222222, 1, 4),
-(4, 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 33333333, 1, 4),
-(6, 'cccc', 'cccc', 'cccc', 'cccc', 'cccc', 44444444, 1, 5),
-(7, 'owner', 'owner', 'owner', 'owner', 'owner', 8778, 1, 2);
+INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `address`, `mobileNumber`, `activated`, `userProfileId`, `maxShift`) VALUES
+(1, 'admin', 'admin', 'Admin', 'Admin', 'NIL', 11111111, 1, 1, NULL),
+(2, 'owner', 'owner', 'Owner', 'Owner', 'NIL', 22222222, 1, 2, NULL),
+(3, 'manager', 'manager', 'Manager', 'Manager', 'NIL', 33333333, 1, 3, NULL),
+(4, 'peter1', 'peter1', 'Peter', 'Goh', 'Yishun Ave 1, BLK 433, #08-977, 760433', 90874367, 1, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,12 +119,7 @@ INSERT INTO `userprofile` (`userProfileId`, `profileName`, `description`, `role`
 (3, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
 (4, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
 (5, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
-(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
-(13, 'test', 'test', 'test', 1),
-(14, 'a', 'a', 'a', 1),
-(15, 'c', 'b', 'c', 1),
-(16, 'd', 'd', 'd', 1),
-(17, 'e', 'e', 'e', 1);
+(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1);
 
 -- --------------------------------------------------------
 
@@ -128,22 +130,17 @@ INSERT INTO `userprofile` (`userProfileId`, `profileName`, `description`, `role`
 CREATE TABLE `workslot` (
   `workslotId` int(11) NOT NULL,
   `Date` date NOT NULL,
-  `Role` varchar(255) NOT NULL,
-  `username_workslot` varchar(255) DEFAULT NULL
+  `userprofileId_workslot` int(11) NOT NULL,
+  `userId_workslot` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `workslot`
 --
 
-INSERT INTO `workslot` (`workslotId`, `Date`, `Role`, `username_workslot`) VALUES
-(1, '2023-10-21', 'Cashier', NULL),
-(3, '2023-10-21', 'Waiter', NULL),
-(4, '2023-10-22', 'Cashier', NULL),
-(5, '2023-10-21', 'Waiter', NULL),
-(6, '2023-10-21', 'Chef', 'asdf'),
-(7, '2023-10-21', 'Chef', NULL),
-(8, '2023-10-22', 'Chef', NULL);
+INSERT INTO `workslot` (`workslotId`, `Date`, `userprofileId_workslot`, `userId_workslot`) VALUES
+(1, '2023-11-04', 4, 4),
+(2, '2023-11-04', 4, NULL);
 
 --
 -- Indexes for dumped tables
@@ -154,16 +151,18 @@ INSERT INTO `workslot` (`workslotId`, `Date`, `Role`, `username_workslot`) VALUE
 --
 ALTER TABLE `bids`
   ADD PRIMARY KEY (`bidId`),
-  ADD KEY `workslotId` (`workslotId`),
-  ADD KEY `username_bids` (`username_bids`);
+  ADD KEY `workslotId_bids` (`workslotId_bids`),
+  ADD KEY `userProfileId_bids` (`userProfileId_bids`),
+  ADD KEY `userId_bids` (`userId_bids`);
 
 --
 -- Indexes for table `offer`
 --
 ALTER TABLE `offer`
   ADD PRIMARY KEY (`offerId`),
-  ADD KEY `workslotId` (`workslotId`),
-  ADD KEY `username_offer` (`username_offer`);
+  ADD KEY `workslotId_offer` (`workslotId_offer`),
+  ADD KEY `userProfileId_offer` (`userProfileId_offer`),
+  ADD KEY `userId_offer` (`userId_offer`);
 
 --
 -- Indexes for table `user`
@@ -185,7 +184,8 @@ ALTER TABLE `userprofile`
 --
 ALTER TABLE `workslot`
   ADD PRIMARY KEY (`workslotId`),
-  ADD KEY `username_workslot` (`username_workslot`);
+  ADD KEY `userprofileId_workslot` (`userprofileId_workslot`),
+  ADD KEY `userId_workslot` (`userId_workslot`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -195,31 +195,31 @@ ALTER TABLE `workslot`
 -- AUTO_INCREMENT for table `bids`
 --
 ALTER TABLE `bids`
-  MODIFY `bidId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bidId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `offerId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `offerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
 --
 ALTER TABLE `userprofile`
-  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `workslot`
 --
 ALTER TABLE `workslot`
-  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -229,15 +229,17 @@ ALTER TABLE `workslot`
 -- Constraints for table `bids`
 --
 ALTER TABLE `bids`
-  ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`workslotId`) REFERENCES `workslot` (`workslotId`),
-  ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`username_bids`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`workslotId_bids`) REFERENCES `workslot` (`workslotId`),
+  ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`userProfileId_bids`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `bids_ibfk_3` FOREIGN KEY (`userId_bids`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `offer`
 --
 ALTER TABLE `offer`
-  ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`workslotId`) REFERENCES `workslot` (`workslotId`),
-  ADD CONSTRAINT `offer_ibfk_2` FOREIGN KEY (`username_offer`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`workslotId_offer`) REFERENCES `workslot` (`workslotId`),
+  ADD CONSTRAINT `offer_ibfk_2` FOREIGN KEY (`userProfileId_offer`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `offer_ibfk_3` FOREIGN KEY (`userId_offer`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `user`
@@ -249,7 +251,8 @@ ALTER TABLE `user`
 -- Constraints for table `workslot`
 --
 ALTER TABLE `workslot`
-  ADD CONSTRAINT `workslot_ibfk_1` FOREIGN KEY (`username_workslot`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `workslot_ibfk_1` FOREIGN KEY (`userprofileId_workslot`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `workslot_ibfk_2` FOREIGN KEY (`userId_workslot`) REFERENCES `user` (`userId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

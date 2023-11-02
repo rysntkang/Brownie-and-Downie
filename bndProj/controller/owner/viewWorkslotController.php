@@ -1,10 +1,10 @@
 <?php
 
-class ViewWorkSlotController extends WorkSlotClass
+class ViewWorkslotController extends WorkslotEntity
 {
-    public static function viewWorkslot()
+    public function viewWorkslot()
     {
-        $workslot = new WorkslotClass();
+        $workslot = new WorkslotEntity();
         $array = $workslot->view();
 
         return $array;

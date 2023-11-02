@@ -1,27 +1,31 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/admin/updateUserProfileController.php";
-include "../../../controller/admin/searchUserProfileController.php";
 
 $userProfileId = $_SESSION['userProfileId'];
+$profileName = $_SESSION['profileName'];
+$description = $_SESSION['description'];
+$role = $_SESSION['role'];
+
 
 if(isset($_POST["updateUserProfile"]))
 {
-  $profileName = $_POST["profileName"];
-  $description = $_POST["description"];
-  $role = $_POST["role"];
+    $profileName = $_POST["profileName"];
+    $description = $_POST["description"];
+    $role = $_POST["role"];
+    
+    $updateUserProfile = new UpdateUserProfileController();
+    $result = $updateUserProfile->updateUserProfile($userProfileId, $profileName, $description, $role);
 
-  $error = UpdateUserProfileController::updateUserProfile($userProfileId, $profileName, $description, $role);
-
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
-  else
-  {
-    header("location:index.php?page=viewUserProfileBoundary");
-  }
+    if($result != "Success")
+    {
+        echo "<script>alert('$result');</script>";
+    }
+    else
+    {
+        header("location:index.php?page=viewUserProfileBoundary");
+    }
 }
 ?>
 <style>
@@ -50,25 +54,17 @@ if(isset($_POST["updateUserProfile"]))
         <div class="card">
             <div class="card-body">
                 <form method="POST">
-                    <?php
-                        // retrieve information of user profile with regards to userProfileId
-                        $details = SearchUserProfileController::searchUserProfile($userProfileId);
-                        // var_dump($details);
-                        $profileName = $details[0]['profileName'];
-                        $description = $details[0]['description'];
-                        $role = $details[0]['role'];
-                    ?>
                     <div class="mb-3">
                         <label for="profileName" class="form-label">Profile Name</label>
-                        <input type="text" class="form-control" name="profileName" value="<?=$profileName?>">
+                        <input type="text" class="form-control" name="profileName" value="<?=$profileName?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" name="description" value="<?=$description?>">
+                        <input type="text" class="form-control" name="description" value="<?=$description?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" name="role" value="<?=$role?>">
+                        <input type="text" class="form-control" name="role" value="<?=$role?>" required>
                     </div>
                     <button class="btn btn-success" type="submit" name="updateUserProfile" id="updateButton">Update</button>
                 </form>

@@ -1,29 +1,33 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/workslotClass.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/workslotEntity.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/owner/updateWorkslotController.php";
 //include "../../../controller/owner/searchWorkslotController.php";
 include "../../../controller/owner/searchByIdWorkslotController.php";
 include "../../../controller/admin/viewUserProfileController.php";
 
 $workslotId = $_SESSION['workslotId'];
+$role = $_SESSION['role'];
+$date = $_SESSION['date'];
 
 if(isset($_POST["updateWorkslot"]))
 {
-  $date = $_POST["date"];
-  $role = $_POST["role"];
+    $date = $_POST["date"];
+    $userProfileId = $_POST["userProfileId"];
 
-  $error = UpdateWorkslotController::updateWorkslot($workslotId, $date, $role);
+    //   $error = UpdateWorkslotController::updateWorkslot($workslotId, $date, $role);
+    $updateWorkslot = new UpdateWorkslotController();
+    $result = $updateWorkslot->updateWorkslot($workslotId, $date, $userProfileId);
 
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
-  else
-  {
-    header("location:index.php?page=viewWorkslotsBoundary");
-  }
+    if($result != "Success")
+    {
+        echo "<script>alert('$result');</script>";
+    }
+    else
+    {
+        header("location:index.php?page=viewWorkslotsBoundary");
+    }
 }
 ?>
 <style>
@@ -58,11 +62,11 @@ if(isset($_POST["updateWorkslot"]))
             <div class="card-body">
                 <form method="POST">
                     <?php
-                        // retrieve information of user profile with regards to userProfileId
-                        $details = SearchByIdWorkslotController::searchByIdWorkslot($workslotId);
-                        // var_dump($details);
-                        $date = $details[0]['date'];
-                        $role = $details[0]['role'];
+                        // // retrieve information of user profile with regards to userProfileId
+                        // $details = SearchByIdWorkslotController::searchByIdWorkslot($workslotId);
+                        // // var_dump($details);
+                        // $date = $details[0]['date'];
+                        // $role = $details[0]['role'];
                     ?>
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
@@ -71,7 +75,7 @@ if(isset($_POST["updateWorkslot"]))
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
                         <br>
-                        <select class="form-select" id="role" name="role">
+                        <select class="form-select" id="role" name="userProfileId">
                             <?php
                             $roles = new viewUserProfileController();
                             $array = $roles->viewUserProfile();
@@ -82,13 +86,13 @@ if(isset($_POST["updateWorkslot"]))
                                     if($row['role'] == $role)
                                     {
                                         ?>
-                                        <option value=<?=$row['role']?> selected><?=$row['role']?></option>
+                                        <option value=<?=$row['userProfileId']?> selected><?=$row['role']?></option>
                                         <?php
                                     }
                                     else
                                     {
                                         ?>
-                                        <option value=<?=$row['role']?>><?=$row['role']?></option>
+                                        <option value=<?=$row['userProfileId']?>><?=$row['role']?></option>
                                         <?php
                                     }
                                 }

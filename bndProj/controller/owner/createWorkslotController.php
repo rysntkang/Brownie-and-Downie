@@ -1,11 +1,11 @@
 <?php
 
-class CreateWorkSlotController extends WorkSlotClass
+class CreateWorkslotController extends WorkslotEntity
 {
-    public static function createWorkSlot($date, $role) {
-        $workslot = new WorkSlotClass();
+    public function createWorkslot($date, $userProfileId) {
+        $workslot = new WorkslotEntity();
         $workslot->set_date($date);
-        $workslot->set_role($role);
+        $workslot->set_userProfileIdWorkslot($userProfileId);
 
         $error = $workslot->create();
         return $error;

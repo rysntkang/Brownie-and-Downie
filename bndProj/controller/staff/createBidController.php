@@ -1,13 +1,13 @@
 <?php
     
-class CreateBidController extends BidClass
+class CreateBidController extends BidEntity
 {
-    public static function createBid($workslotId, $date, $role, $username_bids) {
-        $bid = new BidClass();
-        $bid->set_workslotId($workslotId);
+    public function createBid($workslotId, $date, $userProfileId, $userId) {
+        $bid = new BidEntity();
+        $bid->set_workslotIdBids($workslotId);
         $bid->set_date($date);
-        $bid->set_role($role);
-        $bid->set_username_bids($username_bids);
+        $bid->set_userProfileIdBids($userProfileId);
+        $bid->set_userIdBids($userId);
         $bid->set_approval(0);
 
         $error = $bid->create();

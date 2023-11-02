@@ -1,6 +1,6 @@
 <?php
 
-class UserProfileClass extends Dbh
+class UserProfileEntity extends Dbh
 {
 	private $profileName;
     private $description;
@@ -177,8 +177,8 @@ class UserProfileClass extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        //$sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
-        $sql = "SELECT * FROM userprofile WHERE userProfileId LIKE '%$this->userProfileId%' OR profileName LIKE '%$this->profileName%'";
+        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
+        // $sql = "SELECT * FROM userprofile WHERE userProfileId LIKE '%$this->userProfileId%' OR profileName LIKE '%$this->profileName%'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";
@@ -207,13 +207,13 @@ class UserProfileClass extends Dbh
         }
     }
 
-    protected function searchById()
+    protected function searchOne()
     {
         $error;
         $array = [];
         $conn = $this->connectDB();
         //$sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
-        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId'";
+        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR role = '$this->role'";
 
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";

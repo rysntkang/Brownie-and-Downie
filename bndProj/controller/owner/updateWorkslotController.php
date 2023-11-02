@@ -1,12 +1,12 @@
 <?php
 
-class UpdateWorkSlotController extends WorkSlotClass
+class UpdateWorkslotController extends WorkslotEntity
 {
-    public static function updateWorkSlot($workslotId, $date, $role) {
-        $workslot = new WorkSlotClass();
+    public function updateWorkslot($workslotId, $date, $userProfileId) {
+        $workslot = new WorkslotEntity();
         $workslot->set_workslotId($workslotId);
         $workslot->set_date($date);
-        $workslot->set_role($role);
+        $workslot->set_userProfileIdWorkslot($userProfileId);
 
         $error = $workslot->update();
         return $error;

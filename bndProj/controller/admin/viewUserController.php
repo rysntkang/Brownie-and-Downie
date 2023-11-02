@@ -1,10 +1,10 @@
 <?php
 
-class ViewUserController extends UserClass
+class ViewUserController extends UserEntity
 {
-    public static function viewUser()
+    public function viewUser()
     {
-        $user = new UserClass();
+        $user = new UserEntity();
         $array = $user->view();
 
         return $array;

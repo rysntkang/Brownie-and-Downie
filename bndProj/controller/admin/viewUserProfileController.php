@@ -1,12 +1,12 @@
 <?php
 
-class ViewUserProfileController extends UserProfileClass
+class ViewUserProfileController extends UserProfileEntity
 {
-    public static function viewUserProfile()
+    public function viewUserProfile()
     {
         // $array;
         // $array = $this->view();
-        $profile = new UserProfileClass();
+        $profile = new UserProfileEntity();
         $array = $profile->view();
 
         return $array;

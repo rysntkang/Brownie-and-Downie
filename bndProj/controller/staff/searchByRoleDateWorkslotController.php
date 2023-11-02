@@ -1,11 +1,11 @@
 <?php
 
-class SearchByRoleDateWorkSlotController extends WorkSlotClass
+class SearchByRoleDateWorkSlotController extends WorkSlotEntity
 {
-    public static function searchByRoleDateWorkslot($role, $date)
+    public function searchByRoleDateWorkslot($userProfileId, $date)
     {
-        $workslot = new WorkslotClass();
-        $workslot->set_role($role);
+        $workslot = new WorkslotEntity();
+        $workslot->set_userProfileIdWorkslot($userProfileId);
         $workslot->set_date($date);
         $array = $workslot->searchByRoleDate();
 

@@ -1,10 +1,10 @@
 <?php
 
-class SuspendUserController extends UserClass
+class SuspendUserController extends UserEntity
 {
-    public static function suspendUser($userId)
+    public function suspendUser($userId)
     {
-        $user = new UserClass();
+        $user = new UserEntity();
         $user->set_userId($userId);
 
         $error = $user->suspend();

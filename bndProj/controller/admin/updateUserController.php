@@ -1,10 +1,10 @@
 <?php
 
-class UpdateUserController extends UserClass
+class UpdateUserController extends UserEntity
 {
-    public static function updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password) 
+    public function updateUser($userId, $username, $firstName, $lastName, $address, $mobileNumber, $password) 
     {
-        $user = new UserClass();
+        $user = new UserEntity();
         $user->set_userId($userId);
         $user->set_username($username);
         $user->set_firstName($firstName);

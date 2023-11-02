@@ -2,27 +2,36 @@
 //session_start();
 
 include "../../../dbConnection.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/admin/viewUserProfileController.php";
 include "../../../controller/admin/suspendUserProfileController.php";
 include "../../../controller/admin/searchUserProfileController.php";
 
 if(isset($_POST["suspendUserProfile"]))
 {
-  $userProfileId = $_POST["suspendUserProfile"];
+    $userProfileId = $_POST["suspendUserProfile"];
 
-  $error = SuspendUserProfileController::suspendUserProfile($userProfileId);
+    $suspend = new SuspendUserProfileController();
+    $result = $suspend->suspendUserProfile($userProfileId);
 
-  if($error != "Success")
-  {
-    echo "<script>alert('$error');</script>";
-  }
+    if($result != "Success")
+    {
+        echo "<script>alert('$result');</script>";
+    }
 }
 
 if(isset($_POST["updateUserProfile"]))
 {
-    $userProfileId = $_POST["updateUserProfile"];
-    $_SESSION['userProfileId'] = $userProfileId;
+    $updateUserProfileId = $_POST["updateUserProfile"];
+    $updateProfileName = $_POST["updateProfileName"];
+    $updateDescription = $_POST["updateDescription"];
+    $updateRole = $_POST["updateRole"];
+
+    $_SESSION['userProfileId'] = $updateUserProfileId;
+    $_SESSION['profileName'] = $updateProfileName;
+    $_SESSION['description'] = $updateDescription;
+    $_SESSION['role'] = $updateRole;
+    
     header("location:index.php?page=updateUserProfileBoundary");
 }
 ?>
@@ -60,9 +69,9 @@ if(isset($_POST["updateUserProfile"]))
 <div class="container">
     <div class="row">
         <div class="search-container ml-auto">
-        <form method="POST">
-        <input type="text" name="search" id="myInput" placeholder="Search">
-        </form>
+            <form method="POST">
+                <input type="text" name="search" id="myInput" placeholder="Search">
+            </form>
         </div>
     </div>
     <div class="row">
@@ -70,116 +79,95 @@ if(isset($_POST["updateUserProfile"]))
         if(isset($_POST["search"]))
         {
             $userProfileIdOrName = $_POST["search"];
-        
-            $result = SearchUserProfileController::searchUserProfile($userProfileIdOrName);
-            if(gettype($result) == 'string')
+
+            $searchUserProfile = new SearchUserProfileController();
+            $result = $searchUserProfile->searchUserProfile($userProfileIdOrName);
+            if(gettype($result) == "string")
             {
-                //echo "<script>alert('$result');</script>";
-                echo "<script>";
+                echo '<script>';
                 echo "alert('$result');";
-                echo "document.location = 'index.php?page=viewUserProfileBoundary';";
-                echo "</script>";
+                echo 'document.location = "index.php?page=viewUserProfileBoundary";';
+                echo '</script>';
             }
             else
             {
-                ?>
-                <table class="table">
-                <thead>
-                    <tr>
-                    <th class="text-center">User Profile ID</th>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Description</th>
-                    <th class="text-center">Role</th>
-                    <th class="text-center" colspan="2">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach($result as $row)
+                echo '<table class ="table">';
+                echo '  <tr>';
+                echo '      <th class="text-center">User Profile ID</th>';
+                echo '      <th class="text-center">Name</th>';
+                echo '      <th class="text-center">Description</th>';
+                echo '      <th class="text-center">Role</th>';
+                echo '      <th class="text-center" colspan="2">Actions</th>';
+                echo '  </tr>';
+                foreach($result as $row)
+                {
+                    echo '  <tr>';
+                    echo '      <td>' . $row['userProfileId'] . '</td>';
+                    echo '      <td>' . $row['profileName'] . '</td>';
+                    echo '      <td>' . $row['description'] . '</td>';
+                    echo '      <td>' . $row['role'] . '</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <input type="hidden" name="updateProfileName" value="' . $row['profileName'] . '"/>';
+                    echo '              <input type="hidden" name="updateDescription" value="' . $row['description'] . '"/>';
+                    echo '              <input type="hidden" name="updateRole" value="' . $row['role'] . '"/>';
+                    echo '              <button class="btn btn-primary" style="height:40px" value="' . $row['userProfileId'] . '" name="updateUserProfile">UPDATE</button>';
+                    if ($row["activated"] == true)
                     {
-                    ?>
-                    <tr>
-                    <td><?=$row["userProfileId"]?></td>
-                    <td><?=$row["profileName"]?></td>
-                    <td><?=$row["description"]?></td>
-                    <td><?=$row["role"]?></td>
-                    <td>
-                        <form method="POST">
-                        <button class="btn btn-primary" style="height:40px" value="<?=$row['userProfileId']?>" name="updateUserProfile">UPDATE</button>
-                        <?php
-                        if($row["activated"] == true) {
-                        ?>
-                        <button class="btn btn-danger" style="height:40px" value="<?=$row['userProfileId']?>" name="suspendUserProfile">SUSPEND</button>
-                        <?php
-                        }
-                        else {
-                        ?>
-                        <button class="btn btn-success" style="height:40px" value="<?=$row['userProfileId']?>" name="suspendUserProfile">ACTIVATE</button>
-                        <?php
-                        }
-                        ?>
-                        </form>
-                    </td>
-                    </tr>
-        <?php
+                        echo '              <button class="btn btn-danger" style="height:40px" value="' . $row['userProfileId'] . '" name="suspendUserProfile">SUSPEND</button>';
                     }
+                    else
+                    {
+                        echo '              <button class="btn btn-success" style="height:40px" value="' . $row['userProfileId'] . '" name="suspendUserProfile">ACTIVATE</button>';
+                    }
+                    echo '          </form>';
+                    echo '      </td>';
+                    echo '  </tr>';
+                }
+                echo "</table>";
             }
-        ?>
-        </tbody>
-        </table>
-        <?php
         }
-        else 
+        else
         {
-        ?>
+            $viewUserProfile = new ViewUserProfileController();
+            $result = $viewUserProfile->viewUserProfile();
 
-        <table class="table">
-        <thead>
-            <tr>
-            <th class="text-center">User Profile ID</th>
-            <th class="text-center">Name</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Role</th>
-            <th class="text-center" colspan="2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $userProfile = new ViewUserProfileController();
-            $array = $userProfile->viewUserProfile();
-            foreach($array as $row)
+            echo '<table class ="table">';
+            echo '  <tr>';
+            echo '      <th class="text-center">User Profile ID</th>';
+            echo '      <th class="text-center">Name</th>';
+            echo '      <th class="text-center">Description</th>';
+            echo '      <th class="text-center">Role</th>';
+            echo '      <th class="text-center" colspan="2">Actions</th>';
+            echo '  </tr>';
+            foreach($result as $row)
             {
-            ?>
-            <tr>
-            <td><?=$row["userProfileId"]?></td>
-            <td><?=$row["profileName"]?></td>
-            <td><?=$row["description"]?></td>
-            <td><?=$row["role"]?></td>
-            <td>
-                <form method="POST">
-                <button class="btn btn-primary" style="height:40px" value="<?=$row['userProfileId']?>" name="updateUserProfile">UPDATE</button>
-                <?php
-                if($row["activated"] == true) {
-                ?>
-                <button class="btn btn-danger" style="height:40px" value="<?=$row['userProfileId']?>" name="suspendUserProfile">SUSPEND</button>
-                <?php
+                echo '  <tr>';
+                echo '      <td>' . $row['userProfileId'] . '</td>';
+                echo '      <td>' . $row['profileName'] . '</td>';
+                echo '      <td>' . $row['description'] . '</td>';
+                echo '      <td>' . $row['role'] . '</td>';
+                echo '      <td>';
+                echo '          <form method="POST">';
+                echo '              <input type="hidden" name="updateProfileName" value="' . $row['profileName'] . '"/>';
+                echo '              <input type="hidden" name="updateDescription" value="' . $row['description'] . '"/>';
+                echo '              <input type="hidden" name="updateRole" value="' . $row['role'] . '"/>';
+                echo '              <button class="btn btn-primary" style="height:40px" value="' . $row['userProfileId'] . '" name="updateUserProfile">UPDATE</button>';
+                if ($row["activated"] == true)
+                {
+                    echo '              <button class="btn btn-danger" style="height:40px" value="' . $row['userProfileId'] . '" name="suspendUserProfile">SUSPEND</button>';
                 }
-                else {
-                ?>
-                <button class="btn btn-success" style="height:40px" value="<?=$row['userProfileId']?>" name="suspendUserProfile">ACTIVATE</button>
-                <?php
+                else
+                {
+                    echo '              <button class="btn btn-success" style="height:40px" value="' . $row['userProfileId'] . '" name="suspendUserProfile">ACTIVATE</button>';
                 }
-                ?>
-                </form>
-            </td>
-            </tr>
-            <?php
+                echo '          </form>';
+                echo '      </td>';
+                echo '  </tr>';
             }
-            ?>
-        </tbody>
-        </table>
-        <?php
+            echo "</table>";
         }
         ?>
     </div>
+
 </div>

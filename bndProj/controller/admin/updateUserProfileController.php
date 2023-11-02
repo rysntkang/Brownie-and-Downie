@@ -1,10 +1,10 @@
 <?php
 
-class UpdateUserProfileController extends UserProfileClass
+class UpdateUserProfileController extends UserProfileEntity
 {
-    public static function updateUserProfile($userProfileId, $profileName, $description, $role) 
+    public function updateUserProfile($userProfileId, $profileName, $description, $role) 
     {
-        $profile = new UserProfileClass();
+        $profile = new UserProfileEntity();
         $profile->set_userProfileId($userProfileId);
         $profile->set_profileName($profileName);
         $profile->set_description($description);

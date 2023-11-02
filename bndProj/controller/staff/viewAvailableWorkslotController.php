@@ -1,11 +1,11 @@
 <?php
 
-class ViewAvailableWorkSlotController extends WorkSlotClass
+class ViewAvailableWorkSlotController extends WorkSlotEntity
 {
-    public static function viewAvailableWorkslot($role)
+    public function viewAvailableWorkslot($userProfileId)
     {
-        $workslot = new WorkslotClass();
-        $workslot->set_role($role);
+        $workslot = new WorkslotEntity();
+        $workslot->set_userProfileIdWorkslot($userProfileId);
         $array = $workslot->viewAvailable();
 
         return $array;

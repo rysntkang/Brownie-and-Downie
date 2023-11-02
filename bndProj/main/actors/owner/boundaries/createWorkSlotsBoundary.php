@@ -1,14 +1,14 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/workslotClass.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/workslotEntity.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/owner/createWorkslotController.php";
 include "../../../controller/admin/viewUserProfileController.php";
 
 if(isset($_POST["createWorkslot"]))
 {
     $date = $_POST["date"];
-    $role = $_POST["role"];
+    $userProfileId = $_POST["userProfileId"];
 
     if(empty($date))
     {
@@ -17,7 +17,9 @@ if(isset($_POST["createWorkslot"]))
     }
     else
     {
-        $result = createWorkslotController::createWorkslot($date, $role);
+        // $result = createWorkslotController::createWorkslot($date, $role);
+        $createWorkslot = new CreateWorkslotController();
+        $result = $createWorkslot->createWorkslot($date, $userProfileId);
 
         if($result != "Success")
         {
@@ -68,7 +70,7 @@ if(isset($_POST["createWorkslot"]))
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
                         <br>
-                        <select class="form-select" id="role" name="role">
+                        <select class="form-select" id="role" name="userProfileId">
                             <?php
                             $roles = new viewUserProfileController();
                             $array = $roles->viewUserProfile();
@@ -77,7 +79,7 @@ if(isset($_POST["createWorkslot"]))
                                 if($row['profileName'] == 'Cafe Staff')
                                 {
                                     ?>
-                                    <option value=<?=$row['role']?>><?=$row['role']?></option>
+                                    <option value=<?=$row['userProfileId']?>><?=$row['role']?></option>
                                     <?php
                                 }
                             }

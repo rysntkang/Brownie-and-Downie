@@ -1,9 +1,9 @@
 <?php
 
-class SearchWorkSlotController extends WorkSlotClass
+class SearchWorkslotController extends WorkslotEntity
 {
-    public static function searchWorkSlot($date) {
-        $workslot = new WorkSlotClass();
+    public function searchWorkslot($date) {
+        $workslot = new WorkslotEntity();
         $workslot->set_date($date);
 
         $error = $workslot->search();

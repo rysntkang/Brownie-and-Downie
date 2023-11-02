@@ -1,9 +1,9 @@
 <?php
 
-class DeleteWorkSlotController extends WorkSlotClass
+class DeleteWorkslotController extends WorkslotEntity
 {
-    public static function deleteWorkSlot($workslotId) {
-        $workslot = new WorkSlotClass();
+    public function deleteWorkslot($workslotId) {
+        $workslot = new WorkslotEntity();
         $workslot->set_workslotId($workslotId);
 
         $error = $workslot->delete();

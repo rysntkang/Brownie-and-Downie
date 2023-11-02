@@ -1,6 +1,6 @@
 <?php
 
-class UserClass extends Dbh
+class UserEntity extends Dbh
 {
 	private $userId;
 	private $username;
@@ -12,17 +12,6 @@ class UserClass extends Dbh
 	private $activated;
     private $userProfileId;
 
-    // public function __construct($userId = null, $username = null, $password = null, $firstName = null, $lastName = null, $address = null, $mobileNumber = null, $activated = null, $userProfileId = null){
-    //         $this->userId = $userId;
-    //         $this->username = $username;
-    //         $this->password = $password;
-	// 		$this->firstName = $firstName;
-    //         $this->lastName = $lastName;
-    //         $this->address = $address;
-    //         $this->mobileNumber = $mobileNumber;
-    //         $this->activated = $activated;
-	// 		$this->userProfileId = $userProfileId;
-    // }
     public function __construct(){
         
     }
@@ -103,7 +92,7 @@ class UserClass extends Dbh
 	{
 		$error;
 		$conn = $this->connectDB();
-        $sql = "SELECT * FROM user WHERE username = '$this->username' AND password = '$this->password'";
+        $sql = "SELECT userId, username, userProfileId, maxShift, activated FROM user WHERE username = '$this->username' AND password = '$this->password'";
         $result = $conn->query($sql);
         
 		if ($result->num_rows > 0)
@@ -112,10 +101,10 @@ class UserClass extends Dbh
 			if ($users["activated"] == 1)
 			{
 				session_start();
-				$_SESSION['userId'] = $users["userId"];
-				$_SESSION['username'] = $users["username"];
-				$_SESSION['userProfileId'] = $users["userProfileId"];
-                $_SESSION['maxShift'] = $users['maxShift'];
+				$_SESSION['currentUserId'] = $users["userId"];
+				$_SESSION['currentUsername'] = $users["username"];
+				$_SESSION['currentUserProfileId'] = $users["userProfileId"];
+                $_SESSION['currentMaxShift'] = $users['maxShift'];
 
 				$error = "Success";
 				return $error;
@@ -219,6 +208,36 @@ class UserClass extends Dbh
         return $array;
     }
 
+    protected function viewByRole()
+    {
+        $array = [];
+        $conn = $this->connectDB();
+        $sql = "SELECT * FROM user WHERE userProfileId = '$this->userProfileId'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $current = array(
+                    'userId' => $row['userId'],
+                    'username' => $row['username'],
+                    'password' => $row['password'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName'],
+					'address' => $row['address'],
+					'mobileNumber' => $row['mobileNumber'],
+					'activated' => $row['activated'],
+					'userProfileId' => $row['userProfileId']
+                );
+                //$array[$row['userId']] = $current;
+                array_push($array, $current);
+            }
+        }
+
+        return $array;
+    }
+
 	protected function update()
     {
         $error;
@@ -254,8 +273,9 @@ class UserClass extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM user WHERE userId LIKE '%$this->userId%' OR username LIKE '%$this->username%'";
-
+        // $sql = "SELECT * FROM user WHERE userId LIKE '%$this->userId%' OR username LIKE '%$this->username%'";
+        $sql = "SELECT * FROM user WHERE userId = '$this->userId' OR username = '$this->username'";
+        
         if(!$result = $conn->query($sql)) {
             $error = "Search failure";
             return $error;

@@ -1,9 +1,9 @@
 <?php
 
-class SearchUserProfileController extends UserProfileClass
+class SearchUserProfileController extends UserProfileEntity
 {
-    public static function searchUserProfile($userProfileIdOrName) {
-        $profile = new UserProfileClass();
+    public function searchUserProfile($userProfileIdOrName) {
+        $profile = new UserProfileEntity();
         $profile->set_userProfileId($userProfileIdOrName);
         $profile->set_profileName($userProfileIdOrName);
 

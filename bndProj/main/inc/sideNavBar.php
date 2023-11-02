@@ -7,7 +7,7 @@
   <?php
   ob_start();
   //ADMIN SIDE BAR
-  if($_SESSION["userProfileId"] == 1)
+  if($_SESSION["currentUserProfileId"] == 1)
   {
     echo '  
     <div class="sidebar">
@@ -39,20 +39,13 @@
             <p>Create User Account</p>
           </a>
         </li>
-        <li class="nav-header">Example Header</li>
-        <li class="nav-item dropdown">
-          <a href="./" class="nav-link nav-home">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p> Example 3 </p>
-          </a>
-        </li>
       </ul>
     </nav>
   </div>';
   }
 
   //OWNER SIDE BAR
-  elseif ($_SESSION["userProfileId"] == 2)
+  elseif ($_SESSION["currentUserProfileId"] == 2)
   {
     echo '  
     <div class="sidebar">
@@ -84,20 +77,19 @@
   }
 
   //MANAGER SIDE BAR
-  elseif ($_SESSION["userProfileId"] == 3)
+  elseif ($_SESSION["currentUserProfileId"] == 3)
   {
     echo '  
     <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
-        <li class="nav-header">EXAMPLE HEADER</li>
+        <li class="nav-header">Cafe Staff</li>
         <li class="nav-item">
-          <a href="index.php?page=" class="nav-link nav-home">
+          <a href="index.php?page=viewWorkslotsBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-address-card active"></i>
-            <p>EXAMPLE TITLE</p>
+            <p>View Workslots</p>
           </a>
         </li>
-        <li class="nav-header">Cafe Staff</li>
         <li class="nav-item">
           <a href="index.php?page=viewAllCafeStaffBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-address-card active"></i>
@@ -122,38 +114,13 @@
   }
 
   //CAFE STAFF SIDE BAR
-  elseif ($_SESSION["userProfileId"] == 4)
+  else
   {
     echo '  
     <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
-        <li class="nav-header">EXAMPLE HEADER</li>
-        <li class="nav-item">
-          <a href="index.php?page=" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>EXAMPLE TITLE</p>
-          </a>
-        </li>
         <li class="nav-header">Cafe Staff</li>
-        <li class="nav-item">
-          <a href="index.php?page=deleteBidBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>Delete Bid</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="index.php?page=submitBidBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>Submit Bid</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="index.php?page=updateBidBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>Update Bid</p>
-          </a>
-        </li>
         <li class="nav-item">
           <a href="index.php?page=viewAndSearchAvailableBidsBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-address-card active"></i>
@@ -164,6 +131,18 @@
           <a href="index.php?page=viewMyBidsBoundary" class="nav-link nav-home">
             <i class="nav-icon fas fa-address-card active"></i>
             <p>View My Bids</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewMyOffersBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View My Offers</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.php?page=viewMyWorkslotsBoundary" class="nav-link nav-home">
+            <i class="nav-icon fas fa-address-card active"></i>
+            <p>View My Assigned Workslots</p>
           </a>
         </li>
       </ul>

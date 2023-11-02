@@ -1,9 +1,9 @@
 <?php
 
-class SearchByIdWorkSlotController extends WorkSlotClass
+class SearchByIdWorkslotController extends WorkslotEntity
 {
-    public static function searchByIdWorkSlot($workslotId) {
-        $workslot = new WorkSlotClass();
+    public function searchByIdWorkslot($workslotId) {
+        $workslot = new WorkslotEntity();
         $workslot->set_workslotId($workslotId);
 
         $error = $workslot->searchById();

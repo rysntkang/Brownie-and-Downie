@@ -1,12 +1,12 @@
 <?php
 
-class BidClass extends Dbh
+class BidEntity extends Dbh
 {
     private $bidId;
-    private $workslotId;
+    private $workslotId_bids;
     private $date;
-    private $role;
-    private $username_bids;
+    private $userProfileId_bids;
+    private $userId_bids;
     private $approval;
 
     public function __construct() {
@@ -21,12 +21,12 @@ class BidClass extends Dbh
 		$this->bidId = $bidId;
 	}
 
-    public function get_workslotId() {
-        return $this->workslotId;
+    public function get_workslotIdBids() {
+        return $this->workslotId_bids;
     }
 
-    public function set_workslotId($workslotId) {
-		$this->workslotId = $workslotId;
+    public function set_workslotIdBids($workslotId_bids) {
+		$this->workslotId_bids = $workslotId_bids;
 	}
 
     public function get_date() {
@@ -37,20 +37,20 @@ class BidClass extends Dbh
         $this->date = $date;
     }
 
-    public function get_role() {
-        return $this->role;
+    public function get_userProfileIdBids() {
+        return $this->userProfileId_bids;
     }
 
-    public function set_role($role) {
-		$this->role = $role;
+    public function set_userProfileIdBids($userProfileId_bids) {
+		$this->userProfileId_bids = $userProfileId_bids;
 	}
 
-    public function get_username_bids() {
-        return $this->username_bids;
+    public function get_userIdBids() {
+        return $this->userId_bids;
     }
 
-    public function set_username_bids($username_bids) {
-		$this->username_bids = $username_bids;
+    public function set_userIdBids($userId_bids) {
+		$this->userId_bids = $userId_bids;
 	}
 
     public function get_approval() {
@@ -61,11 +61,29 @@ class BidClass extends Dbh
 		$this->approval = $approval;
 	}
 
-    protected function checkUsername($workslotId, $username_bids)
+    // protected function checkUsername($workslotId, $username_bids)
+    // {
+    //     $resultCheck;
+    //     $conn = $this->connectDB();
+    //     $sql = "SELECT bidId FROM bids WHERE workslotId = '$workslotId' AND userId_bids = '$username_bids'";
+    //     $result = $conn->query($sql);
+
+    //     if ($result->num_rows > 0)
+	// 	{
+	// 		$resultCheck = false;
+	// 	}
+    //     else
+    //     {
+    //         $resultCheck = true;
+    //     }
+    //     return $resultCheck;
+    // }
+
+    protected function checkUsername()
     {
         $resultCheck;
         $conn = $this->connectDB();
-        $sql = "SELECT bidId FROM bids WHERE workslotId = '$workslotId' AND username_bids = '$username_bids'";
+        $sql = "SELECT bidId FROM bids WHERE workslotId_bids = '$this->workslotId_bids' AND userId_bids = '$this->userId_bids';";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -84,12 +102,12 @@ class BidClass extends Dbh
         $error;
 		$conn = $this->connectDB();
 
-        if($this->checkUsername($this->workslotId, $this->username_bids) == false) {
+        if($this->checkUsername() == false) {
             $error = "Bid already submitted";
             return $error;
         }
 
-        $sql = "INSERT INTO bids (workslotId, date, role, username_bids, approval) VALUES ('$this->workslotId', '$this->date', '$this->role', '$this->username_bids', '$this->approval')";
+        $sql = "INSERT INTO bids (workslotId_bids, date, userProfileId_bids, userId_bids, approval) VALUES ('$this->workslotId_bids', '$this->date', '$this->userProfileId_bids', '$this->userId_bids', '$this->approval')";
         $result = $conn->query($sql);
 
 		$error = "Success";
@@ -100,7 +118,13 @@ class BidClass extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM bids WHERE username_bids = '$this->username_bids'";
+        // $sql = "SELECT * FROM bids WHERE userId_bids = '$this->userId_bids'";
+        $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, userprofile.role, user.username, bids.approval
+                FROM bids
+                LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
+                LEFT OUTER JOIN user ON bids.userId_bids = user.userId
+                WHERE userId_bids = '$this->userId_bids'
+                ORDER BY date DESC, role ASC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -109,10 +133,10 @@ class BidClass extends Dbh
             {
                 $current = array(
                     'bidId' => $row['bidId'],
-                    'workslotId' => $row['workslotId'],
+                    'workslotId_bids' => $row['workslotId_bids'],
                     'date' => $row['date'],
                     'role' => $row['role'],
-                    'username_bids' => $row['username_bids'],
+                    'username' => $row['username'],
                     'approval' => $row['approval']
                 );
                 //$array[$row['userId']] = $current;
@@ -127,7 +151,13 @@ class BidClass extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM bids WHERE approval = '0' ORDER BY date ASC, role ASC";
+        // $sql = "SELECT * FROM bids WHERE approval = '0' ORDER BY date ASC, role ASC";
+        $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, bids.userId_bids, userprofile.role, user.username, bids.approval
+                FROM bids
+                LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
+                LEFT OUTER JOIN user ON bids.userId_bids = user.userId
+                WHERE approval = 0
+                ORDER BY date DESC, role ASC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -136,10 +166,11 @@ class BidClass extends Dbh
             {
                 $current = array(
                     'bidId' => $row['bidId'],
-                    'workslotId' => $row['workslotId'],
+                    'workslotId_bids' => $row['workslotId_bids'],
                     'date' => $row['date'],
+                    'userId_bids' => $row['userId_bids'],
                     'role' => $row['role'],
-                    'username_bids' => $row['username_bids'],
+                    'username' => $row['username'],
                     'approval' => $row['approval']
                 );
                 //$array[$row['userId']] = $current;

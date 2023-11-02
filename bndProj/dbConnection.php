@@ -4,7 +4,7 @@
         protected function connectDB() 
         {
             $host = "localhost";
-            $dbname = "bnd_db";
+            $dbname = "brownie_db";
             $username = "root";
             $password = "";
     

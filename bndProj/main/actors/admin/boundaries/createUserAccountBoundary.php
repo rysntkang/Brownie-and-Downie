@@ -1,7 +1,7 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/userClass.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/userEntity.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/admin/createUserController.php";
 include "../../../controller/admin/viewUserProfileController.php";
 
@@ -15,24 +15,17 @@ if(isset($_POST["createUser"]))
     $password = $_POST["password"];
     $userProfileId = $_POST["profile"];
 
-    if(empty($username) || empty($firstName) || empty($lastName) || empty($address) || empty($mobileNumber) || empty($password))
+    // $result = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
+    $createUser = new CreateUserController();
+    $result = $createUser->createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
+
+    if ($result != "Success")
     {
-        $error = "Please fill in all fields";
-        echo "<script>alert('$error');</script>";
+        echo "<script>alert('$result');</script>";
     }
     else
     {
-        $error = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
-        // createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId)
-    
-        if($error != "Success")
-        {
-            echo "<script>alert('$error');</script>";
-        }
-        else
-        {
-            header("location:index.php?page=viewUserAccountBoundary");
-        }
+        header("location:index.php?page=viewUserAccountBoundary");
     }
 }
 ?>
@@ -69,37 +62,37 @@ if(isset($_POST["createUser"]))
             <form method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="username">
+                    <input type="text" class="form-control" name="username" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="firstName">
+                            <input type="text" class="form-control" name="firstName" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="lastName">
+                            <input type="text" class="form-control" name="lastName" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address">
+                    <input type="text" class="form-control" name="address" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="mobileNumber" class="form-label">Mobile Number</label>
-                    <input type="number" class="form-control" name="mobileNumber">
+                    <input type="number" class="form-control" name="mobileNumber" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" required>
                 </div>
 
                 <div class="mb-3">

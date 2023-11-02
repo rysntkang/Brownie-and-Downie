@@ -1,9 +1,9 @@
 <?php
 
-class SearchUserController extends UserClass
+class SearchUserController extends UserEntity
 {
-    public static function searchUser($userIdOrName) {
-        $user = new UserClass();
+    public function searchUser($userIdOrName) {
+        $user = new UserEntity();
         $user->set_username($userIdOrName);
         $user->set_userId($userIdOrName);
 

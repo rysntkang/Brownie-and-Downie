@@ -1,9 +1,9 @@
 <?php 
 require_once('../config.php');
 include "../dbConnection.php";
-include "../entities/userClass.php";
+include "../entities/userEntity.php";
 include "../controller/loginController.php";
-include("../header.php");
+include "../header.php";
 
 //if ($_SERVER["REQUEST_METHOD"] == "POST") 
 if(isset($_POST["submit"]))
@@ -11,24 +11,17 @@ if(isset($_POST["submit"]))
     $username = $_POST['logUsername'];
     $password = $_POST['logPassword'];
 
-    // check for empty input
-    if(empty($username) || empty($password))
+    // $error = LoginController::loginUser($username, $password);
+    $login = new LoginController();
+    $error = $login->loginUser($username, $password);
+
+    if ($error == "Success")
     {
-      $error = "Please fill in all fields";
-      echo "<script>alert('$error');</script>";
+      redirectHomePage($_SESSION["currentUserProfileId"]);
     }
     else
     {
-      $error = loginController::loginUser($username, $password);
-
-      if($error == "Success")
-      {
-        redirectHomePage($_SESSION["userProfileId"]);
-      }
-      else
-      {
-        echo "<script>alert('$error');</script>";
-      }      
+      echo "<script>alert('$error');</script>";
     }
 }
 
@@ -45,7 +38,6 @@ function redirectHomePage($userProfileId){
   else {
     redirect("main/actors/staff");
   }
-
 }
 ?>
 
@@ -77,7 +69,7 @@ function redirectHomePage($userProfileId){
       <p class="login-box-msg">Enter your credentials:</p>
       <form id="login-frm" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="logUsername" id="logUsername" autofocus placeholder="Username">
+          <input type="text" class="form-control" name="logUsername" id="logUsername" autofocus placeholder="Username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -85,7 +77,7 @@ function redirectHomePage($userProfileId){
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="logPassword" id="logPassword" autofocus placeholder="Password">
+          <input type="text" class="form-control" name="logPassword" id="logPassword" autofocus placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

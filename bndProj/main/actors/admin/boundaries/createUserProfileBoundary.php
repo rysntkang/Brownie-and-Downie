@@ -1,6 +1,6 @@
 <?php
 include "../../../dbConnection.php";
-include "../../../entities/userProfileClass.php";
+include "../../../entities/userProfileEntity.php";
 include "../../../controller/admin/createUserProfileController.php";
 
 if(isset($_POST["createUserProfile"]))
@@ -9,23 +9,17 @@ if(isset($_POST["createUserProfile"]))
     $description = $_POST["description"];
     $role = $_POST["role"];
 
-    if(empty($profileName) || empty($description) || empty($role))
+    // $result = CreateUserProfileController::createUserProfile($profileName, $description, $role);
+    $createUserProfile = new CreateUserProfileController();
+    $result = $createUserProfile->createUserProfile($profileName, $description, $role);
+
+    if ($result != "Success")
     {
-        $error = "Please fill in all fields";
-        echo "<script>alert('$error');</script>";
+        echo "<script>alert('$result');</script>";
     }
     else
     {
-        $error = CreateUserProfileController::createUserProfile($profileName, $description, $role);
-
-        if($error != "Success")
-        {
-            echo "<script>alert('$error');</script>";
-        }
-        else
-        {
-            header("location:index.php?page=viewUserProfileBoundary");
-        }
+        header("location:index.php?page=viewUserProfileBoundary");
     }
 }
 ?>
@@ -57,15 +51,15 @@ if(isset($_POST["createUserProfile"]))
                 <form method="POST">
                     <div class="mb-3">
                         <label for="profileName" class="form-label">Profile Name</label>
-                        <input type="text" class="form-control" name="profileName">
+                        <input type="text" class="form-control" name="profileName" required>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" name="description">
+                        <input type="text" class="form-control" name="description" required>
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" name="role">
+                        <input type="text" class="form-control" name="role" required>
                     </div>
                     <button class="btn btn-success" type="submit" name="createUserProfile" id="createButton">Create</button>
                 </form>
