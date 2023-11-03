@@ -76,7 +76,7 @@
     <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
-        <li class="nav-header">Cafe Staff</li>
+        <li class="nav-header">Cafe Manager</li>
         <li class="nav-item">
           <a href="index.php?page=viewWorkslotsBoundary" class="nav-link nav-home">
           <i class="nav-icon fas fa-briefcase active"></i>

@@ -15,17 +15,13 @@ $workslotId = $_SESSION['workslotId'];
 $workslotDate = $_SESSION['workslotDate'];
 $workslotUserProfileId = $_SESSION['workslotUserProfileId'];
 
-// $userProfileId = searchOneUserProfileController::searchOneUserProfile(NULL, $workslotRole)[0]['userProfileId'];
-// $array = ViewByRoleUserController::viewByRoleUser($workslotUserProfileId);
 $viewUsers = new ViewByRoleUserController();
 $array = $viewUsers->viewByRoleUser($workslotUserProfileId);
-//echo '<pre>'; print_r($array); echo '</pre>';
 $availableUser = [];
 
 foreach($array as $user) {
-    // $available = CheckAvailabilityController::checkAvailability($workslotDate, $user['username']);
     $availableUsers = new CheckAvailabilityController();
-    $available = $availableUsers->checkAvailability($workslotDate, $user['username']);
+    $available = $availableUsers->checkAvailabilityUser($workslotDate, $user['userId']);
     if($available == true) {
         $current = array(
             'userId' => $user['userId'],
@@ -40,9 +36,8 @@ foreach($array as $user) {
 
 if(isset($_POST["offer"]))
 {
-    $userId = $_POST["userId"];
+    $userId = $_POST["chosenUser"];
     
-    // $result = CreateOfferController::createOffer($workslotId, $workslotDate, $workslotRole, $username);
     $offer = new CreateOfferController();
     $result = $offer->createOffer($workslotId, $workslotDate, $workslotUserProfileId, $userId);
 
@@ -128,8 +123,7 @@ if(isset($_POST["offer"]))
                     <select class="form-select" id="chosenUser" name="chosenUser">
                         <?php
                         foreach($availableUser as $user) {
-                            echo '<option value=' . $user['username'] . '>' . $user['username'] . '</option>';
-                            echo '<input type="hidden" name="userId" value="' . $user['userId'] . '"/>';
+                            echo '<option value=' . $user['userId'] . '>' . $user['username'] . '</option>';
                         }
                         ?>
                     </select>

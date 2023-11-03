@@ -1,13 +1,3 @@
-<!-- WIP -->
-
-<!-- 
-    #3 - As a cafe manager, I want to be able to view the bidding list, 
-    so that I can view all the bids submitted by the cafe staff
-    
-    #4 - As a cafe manager, I want to be able to approve or reject staff bids, 
-    so that cafe staff are informed for which day they will be working.
-
--->
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/bidEntity.php";
@@ -24,7 +14,6 @@ if(isset($_POST["approve"]))
     $bidId = $_POST["approve"];
     $approval = 1;
     
-    // $result = AssignWorkslotController::assignWorkslot($workslotId, $workslotDate, $username);
     $assignWorkslot = new AssignWorkslotController();
     $result = $assignWorkslot->assignWorkslot($workslotId, $workslotDate, $userId);
 
@@ -45,8 +34,8 @@ if(isset($_POST["reject"]))
     $bidId = $_POST["reject"];
     $approval = 2;
     
-    $rejectBid = new ApprovalBidController();
-    $result = $rejectBi->rejectBid($bidId, $approval);
+    $rejectBid = new ApproveBidController();
+    $result = $rejectBid->approveBid($bidId, $approval);
     header("location:index.php?page=viewBiddingListBoundary");
 }
 ?>

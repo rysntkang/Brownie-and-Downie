@@ -60,6 +60,31 @@ class WorkslotEntity extends Dbh
         return $resultCheck;
     }
 
+    protected function checkAlreadyAssigned()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT workslotId FROM workslot WHERE Date = '$this->date' AND userId_workslot = '$this->userId_workslot'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
+    protected function checkAvailability()
+    {
+        $resultCheck = $this->checkMaxShift() && $this->checkAlreadyAssigned();
+
+        return $resultCheck;
+    }
+
     protected function create()
     {
         $error;
@@ -307,13 +332,17 @@ class WorkslotEntity extends Dbh
             return $error;
         }
 
+        if($this->checkAlreadyAssigned() == true) {
+            $error = "User has already been assigned a workslot on this day!";
+            return $error;
+        }
+
         $sql = "UPDATE workslot SET userId_workslot = '$this->userId_workslot' WHERE workslotId = '$this->workslotId'";
         $result = $conn->query($sql);
 
 		$error = "Success";
 		return $error;
     }
-    
 }
 
 ?>
