@@ -79,14 +79,8 @@
         <li class="nav-header">Cafe Staff</li>
         <li class="nav-item">
           <a href="index.php?page=viewWorkslotsBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
+          <i class="nav-icon fas fa-briefcase active"></i>
             <p>View Workslots</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="index.php?page=viewAllCafeStaffBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>View All Cafe Staff</p>
           </a>
         </li>
         <li class="nav-item">
