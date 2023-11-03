@@ -4,7 +4,7 @@
     $page = $_GET['page'];
     include('boundaries/'. $page . '.php');
   } else {
-    include('boundaries/viewUserProfileBoundary.php'); // Load a default page if no page is specified
+    include('boundaries/viewMyWorkslotsBoundary.php'); // Load a default page if no page is specified
   }
   ?>
 </div>

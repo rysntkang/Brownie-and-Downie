@@ -51,13 +51,6 @@
     <div class="sidebar">
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat" role="menu">
-        <li class="nav-header">User Profiles</li>
-        <li class="nav-item">
-          <a href="index.php?page=viewUserProfileBoundary" class="nav-link nav-home">
-            <i class="nav-icon fas fa-address-card active"></i>
-            <p>View All User Profiles</p>
-          </a>
-        </li>
         <li class="nav-header">Work Slots</li>
         <li class="nav-item">
           <a href="index.php?page=viewWorkslotsBoundary" class="nav-link nav-home">
