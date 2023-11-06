@@ -61,24 +61,6 @@ class BidEntity extends Dbh
 		$this->approval = $approval;
 	}
 
-    // protected function checkUsername($workslotId, $username_bids)
-    // {
-    //     $resultCheck;
-    //     $conn = $this->connectDB();
-    //     $sql = "SELECT bidId FROM bids WHERE workslotId = '$workslotId' AND userId_bids = '$username_bids'";
-    //     $result = $conn->query($sql);
-
-    //     if ($result->num_rows > 0)
-	// 	{
-	// 		$resultCheck = false;
-	// 	}
-    //     else
-    //     {
-    //         $resultCheck = true;
-    //     }
-    //     return $resultCheck;
-    // }
-
     protected function checkUsername()
     {
         $resultCheck;
@@ -118,7 +100,6 @@ class BidEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM bids WHERE userId_bids = '$this->userId_bids'";
         $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, userprofile.role, user.username, bids.approval
                 FROM bids
                 LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
@@ -139,7 +120,6 @@ class BidEntity extends Dbh
                     'username' => $row['username'],
                     'approval' => $row['approval']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -173,7 +153,6 @@ class BidEntity extends Dbh
                     'username' => $row['username'],
                     'approval' => $row['approval']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -185,11 +164,6 @@ class BidEntity extends Dbh
     {
         $error;
 		$conn = $this->connectDB();
-
-        // if($this->checkMaxShift($this->username_workslot, $this->date) == false) {
-        //     $error = "User has been allocated maximum number of shifts! Will reject other pending shifts!";
-        //     return $error;
-        // }
 
         $sql = "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId'";
         $result = $conn->query($sql);

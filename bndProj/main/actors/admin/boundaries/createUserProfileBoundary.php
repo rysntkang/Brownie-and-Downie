@@ -13,14 +13,19 @@ if(isset($_POST["createUserProfile"]))
     $createUserProfile = new CreateUserProfileController();
     $result = $createUserProfile->createUserProfile($profileName, $description, $role);
 
-    if ($result != "Success")
-    {
-        echo "<script>alert('$result');</script>";
-    }
-    else
+    if ($result == "Success")
     {
         header("location:index.php?page=viewUserProfileBoundary");
     }
+
+    // if ($result != "Success")
+    // {
+    //     echo "<script>alert('$result');</script>";
+    // }
+    // else
+    // {
+    //     header("location:index.php?page=viewUserProfileBoundary");
+    // }
 }
 ?>
 <style>

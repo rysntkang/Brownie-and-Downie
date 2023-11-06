@@ -169,10 +169,7 @@ class UserEntity extends Dbh
         $sql = "INSERT INTO user (username, password, firstName, lastName, address, mobileNumber, activated, userProfileId) 
 		VALUES ('$this->username', '$this->password', '$this->firstName', '$this->lastName', '$this->address', '$this->mobileNumber', '$this->activated', '$this->userProfileId')";
 
-        if(!$result = $conn->query($sql)) {
-			$error = "Create user error";
-			return $error;
-		}
+        $result = $conn->query($sql);
 
 		$error = "Success";
 		return $error;
@@ -200,7 +197,6 @@ class UserEntity extends Dbh
 					'activated' => $row['activated'],
 					'userProfileId' => $row['userProfileId']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -230,7 +226,6 @@ class UserEntity extends Dbh
 					'activated' => $row['activated'],
 					'userProfileId' => $row['userProfileId']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -243,11 +238,7 @@ class UserEntity extends Dbh
         $error;
         $conn = $this->connectDB();
         $sql = "UPDATE user SET username = '$this->username', firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber', password = '$this->password' WHERE userId = '$this->userId'";
-
-        if(!$result = $conn->query($sql)) {
-            $error = "Update failure";
-            return $error;
-        }
+        $result = $conn->query($sql);
 
         $error = "Success";
         return $error;
@@ -257,12 +248,8 @@ class UserEntity extends Dbh
     {
         $error;
         $conn = $this->connectDB();
-
         $sql = "UPDATE user SET activated = NOT activated WHERE userId = '$this->userId'";
-        if(!$result = $conn->query($sql)) {
-            $error = "Suspend failure";
-            return $error;
-        }
+        $result = $conn->query($sql);
 
         $error = "Success";
         return $error;
@@ -273,13 +260,8 @@ class UserEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM user WHERE userId LIKE '%$this->userId%' OR username LIKE '%$this->username%'";
-        $sql = "SELECT * FROM user WHERE userId = '$this->userId' OR username = '$this->username'";
-        
-        if(!$result = $conn->query($sql)) {
-            $error = "Search failure";
-            return $error;
-        }
+        $sql = "SELECT * FROM user WHERE username = '$this->username'";
+        $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
         {

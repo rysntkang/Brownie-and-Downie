@@ -100,7 +100,6 @@ class OfferEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM offer WHERE username_offer = '$this->username_offer'";
         $sql = "SELECT offer.offerId, offer.workslotId_offer, offer.date, userprofile.role, user.username, offer.accepted
                 FROM offer
                 LEFT OUTER JOIN userprofile ON offer.userprofileId_offer = userprofile.userProfileId

@@ -9,11 +9,11 @@ include "../../../controller/owner/viewWorkslotController.php";
 include "../../../controller/manager/checkAvailabilityController.php";
 include "../../../controller/manager/viewByRoleUserController.php";
 include "../../../controller/manager/createOfferController.php";
-include "../../../controller/admin/searchOneUserProfileController.php";
 
 $workslotId = $_SESSION['workslotId'];
 $workslotDate = $_SESSION['workslotDate'];
 $workslotUserProfileId = $_SESSION['workslotUserProfileId'];
+$workslotRole = $_SESSION['workslotRole'];
 
 $viewUsers = new ViewByRoleUserController();
 $array = $viewUsers->viewByRoleUser($workslotUserProfileId);
@@ -108,7 +108,7 @@ if(isset($_POST["offer"]))
             </tr>
             <tr>
                 <td><?php echo $workslotDate ?></td>
-                <td><?php echo $workslotUserProfileId ?></td>
+                <td><?php echo $workslotRole ?></td>
             </tr>
         </table>
     </div>

@@ -9,10 +9,12 @@ if(isset($_POST["offer"]))
     $workslotId = $_POST["offer"];
     $workslotDate = $_POST["workslotDate"];
     $workslotUserProfileId = $_POST["workslotUserProfileId"];
+    $workslotRole = $_POST["workslotRole"];
 
     $_SESSION['workslotId'] = $workslotId;
     $_SESSION['workslotDate'] = $workslotDate;
     $_SESSION['workslotUserProfileId'] = $workslotUserProfileId;
+    $_SESSION['workslotRole'] = $workslotRole;
     header("location:index.php?page=offerWorkslotBoundary");
 }
 ?>
@@ -87,6 +89,7 @@ if(isset($_POST["offer"]))
                 echo '          <form method="POST">';
                 echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
                 echo '              <input type="hidden" name="workslotUserProfileId" value="' . $workslot['userProfileId_workslot'] . '"/>';
+                echo '              <input type="hidden" name="workslotRole" value="' . $workslot['role'] . '"/>';
                 echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="offer">Offer</button>';
                 echo '          </form>';
                 echo '      </td>';

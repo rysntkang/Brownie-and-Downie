@@ -2,15 +2,6 @@
     
 class CreateUserController extends UserEntity
 {
-    // public static function createUser($name, $description, $role) {
-    //     $profile = new UserProfile();
-    //     $profile->set_name($name);
-    //     $profile->set_description($description);
-    //     $profile->set_role($role);
-
-    //     $error = $profile->createProfile();
-    //     return $error;
-    // }
 
     public function createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId) {
         $user = new UserEntity();

@@ -100,7 +100,6 @@ class WorkslotEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM workslot ORDER BY date ASC, role ASC";
         $sql = "SELECT workslot.workslotId, workslot.Date, workslot.userProfileId_workslot, userprofile.role, user.username
                 FROM workslot
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
@@ -130,7 +129,6 @@ class WorkslotEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM workslot WHERE userId_workslot = '$this->userId_workslot' ORDER BY date ASC";
         $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username
                 FROM workslot
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
@@ -190,11 +188,7 @@ class WorkslotEntity extends Dbh
         $error;
         $conn = $this->connectDB();
         $sql = "UPDATE workslot SET date = '$this->date', userProfileId_workslot = '$this->userProfileId_workslot' WHERE workslotId = '$this->workslotId'";
-
-        if(!$result = $conn->query($sql)) {
-            $error = "Update failure";
-            return $error;
-        }
+        $result = $conn->query($sql);
 
         $error = "Success";
         return $error;
@@ -227,7 +221,6 @@ class WorkslotEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM workslot WHERE date LIKE '%$this->date%'";
         $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username 
                 FROM workslot 
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
@@ -260,7 +253,6 @@ class WorkslotEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM workslot WHERE workslotId = '$this->workslotId'";
         $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username 
                 FROM workslot 
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId

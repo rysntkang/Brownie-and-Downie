@@ -2,9 +2,9 @@
 
 class CreateUserProfileController extends UserProfileEntity
 {
-    public function createUserProfile($name, $description, $role) {
+    public function createUserProfile($profileName, $description, $role) {
         $profile = new UserProfileEntity();
-        $profile->set_profileName($name);
+        $profile->set_profileName($profileName);
         $profile->set_description($description);
         $profile->set_role($role);
 

@@ -7,13 +7,6 @@ class UserProfileEntity extends Dbh
     private $role;
     private $userProfileId;
 
-    // public function __construct($name = null, $description = null, $role = null, $userProfileId = null){
-    //         $this->name = $name;
-    //         $this->description = $description;
-    //         $this->role = $role;
-    //         $this->userProfileId = $userProfileId;
-    // }
-
     public function __construct(){
 
     }
@@ -101,12 +94,6 @@ class UserProfileEntity extends Dbh
     {
         $error;
 		$conn = $this->connectDB();
-
-        if($this->checkUserProfile($this->name) == false) {
-            $error = "User profile name has already been used!";
-            return $error;
-        }
-
         $sql = "INSERT INTO userprofile (profileName, description, role, activated) VALUES ('$this->profileName', '$this->description', '$this->role', true)";
         $result = $conn->query($sql);
 
@@ -132,7 +119,6 @@ class UserProfileEntity extends Dbh
                     'role' => $row['role'],
                     'activated' => $row['activated']
                 );
-                //$array[$row['userProfileId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -145,11 +131,7 @@ class UserProfileEntity extends Dbh
         $error;
         $conn = $this->connectDB();
         $sql = "UPDATE userprofile SET profileName = '$this->profileName', description = '$this->description', role = '$this->role' WHERE userProfileId = '$this->userProfileId'";
-
-        if(!$result = $conn->query($sql)) {
-            $error = "Update failure";
-            return $error;
-        }
+        $result = $conn->query($sql);
 
         $error = "Success";
         return $error;
@@ -177,13 +159,8 @@ class UserProfileEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
-        // $sql = "SELECT * FROM userprofile WHERE userProfileId LIKE '%$this->userProfileId%' OR profileName LIKE '%$this->profileName%'";
-
-        if(!$result = $conn->query($sql)) {
-            $error = "Search failure";
-            return $error;
-        }
+        $sql = "SELECT * FROM userprofile WHERE profileName = '$this->profileName'";
+        $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
         {
@@ -196,7 +173,6 @@ class UserProfileEntity extends Dbh
                     'role' => $row['role'],
                     'activated' => $row['activated']
                 );
-                //$array[$row['userProfileId']] = $current;
                 array_push($array, $current);
             }
             return $array;
@@ -212,13 +188,8 @@ class UserProfileEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        //$sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR profileName = '$this->profileName'";
         $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR role = '$this->role'";
-
-        if(!$result = $conn->query($sql)) {
-            $error = "Search failure";
-            return $error;
-        }
+        $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
         {
@@ -231,7 +202,6 @@ class UserProfileEntity extends Dbh
                     'role' => $row['role'],
                     'activated' => $row['activated']
                 );
-                //$array[$row['userProfileId']] = $current;
                 array_push($array, $current);
             }
             return $array;
