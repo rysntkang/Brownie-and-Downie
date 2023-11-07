@@ -65,7 +65,7 @@ class UserProfileEntity extends Dbh
     {
         $resultCheck;
         $conn = $this->connectDB();
-        $sql = "SELECT userId FROM user WHERE userProfileId = '$this->userProfileId'";
+        $sql = "SELECT userId FROM user WHERE userProfileId = '$this->userProfileId' AND activated = 0;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -142,7 +142,7 @@ class UserProfileEntity extends Dbh
         $error;
         $conn = $this->connectDB();
 
-        if($this->activatedStatus($this->userProfileId) == true && $this->checkUserProfileUsed($this->userProfileId) == false) {
+        if($this->activatedStatus($this->userProfileId) == true && $this->checkUserProfileUsed($this->userProfileId) == true) {
             $error = "User Profile is currently being used!";
             return $error;
         }

@@ -42,49 +42,6 @@ class WorkslotEntity extends Dbh
         $this->userId_workslot = $userId_workslot;
     }
 
-    // protected function checkMaxShift()
-    // {
-    //     $resultCheck;
-    //     $conn = $this->connectDB();
-    //     $sql = "SELECT COUNT(workslotId) AS totalShift FROM workslot WHERE userId_workslot = '$this->userId_workslot' AND YEARWEEK(`date`, 0) = YEARWEEK('$this->date', 0)";
-    //     $result = $conn->query($sql);
-
-    //     if ((5 - $result->fetch_assoc()['totalShift']) > 0)
-	// 	{
-	// 		$resultCheck = true;
-	// 	}
-    //     else
-    //     {
-    //         $resultCheck = false;
-    //     }
-    //     return $resultCheck;
-    // }
-
-    // protected function checkAlreadyAssigned()
-    // {
-    //     $resultCheck;
-    //     $conn = $this->connectDB();
-    //     $sql = "SELECT workslotId FROM workslot WHERE Date = '$this->date' AND userId_workslot = '$this->userId_workslot'";
-    //     $result = $conn->query($sql);
-
-    //     if ($result->num_rows > 0)
-	// 	{
-	// 		$resultCheck = false;
-	// 	}
-    //     else
-    //     {
-    //         $resultCheck = true;
-    //     }
-    //     return $resultCheck;
-    // }
-
-    // protected function checkAvailability()
-    // {
-    //     $resultCheck = $this->checkMaxShift() && $this->checkAlreadyAssigned();
-
-    //     return $resultCheck;
-    // }
-
     protected function create()
     {
         $error;
@@ -313,28 +270,6 @@ class WorkslotEntity extends Dbh
             return $error;
         }
     }
-
-    // protected function assign()
-    // {
-    //     $error;
-	// 	$conn = $this->connectDB();
-
-    //     if($this->checkMaxShift() == false) {
-    //         $error = "User has been allocated maximum number of shifts!";
-    //         return $error;
-    //     }
-
-    //     if($this->checkAlreadyAssigned() == true) {
-    //         $error = "User has already been assigned a workslot on this day!";
-    //         return $error;
-    //     }
-
-    //     $sql = "UPDATE workslot SET userId_workslot = '$this->userId_workslot' WHERE workslotId = '$this->workslotId'";
-    //     $result = $conn->query($sql);
-
-	// 	$error = "Success";
-	// 	return $error;
-    // }
 }
 
 ?>

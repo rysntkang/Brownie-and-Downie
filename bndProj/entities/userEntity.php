@@ -237,6 +237,12 @@ class UserEntity extends Dbh
     {
         $error;
         $conn = $this->connectDB();
+        
+        if($this->checkUsername($this->username) == false || $this->checkMobileNumber($this->mobileNumber) == false) {
+            $error = "Username or mobile number has already been used!";
+            return $error;
+        }
+
         $sql = "UPDATE user SET username = '$this->username', firstName = '$this->firstName', lastName = '$this->lastName', address = '$this->address', mobileNumber = '$this->mobileNumber', password = '$this->password' WHERE userId = '$this->userId'";
         $result = $conn->query($sql);
 
