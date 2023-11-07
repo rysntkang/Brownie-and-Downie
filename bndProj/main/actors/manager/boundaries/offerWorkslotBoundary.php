@@ -1,12 +1,7 @@
 <?php
 include "../../../dbConnection.php";
-// include "../../../entities/offerClass.php";
 include "../../../entities/userEntity.php";
-include "../../../entities/workSlotEntity.php";
-include "../../../entities/userProfileEntity.php";
 include "../../../entities/offerEntity.php";
-include "../../../controller/owner/viewWorkslotController.php";
-include "../../../controller/manager/checkAvailabilityController.php";
 include "../../../controller/manager/viewByRoleUserController.php";
 include "../../../controller/manager/createOfferController.php";
 
@@ -16,23 +11,7 @@ $workslotUserProfileId = $_SESSION['workslotUserProfileId'];
 $workslotRole = $_SESSION['workslotRole'];
 
 $viewUsers = new ViewByRoleUserController();
-$array = $viewUsers->viewByRoleUser($workslotUserProfileId);
-$availableUser = [];
-
-foreach($array as $user) {
-    $availableUsers = new CheckAvailabilityController();
-    $available = $availableUsers->checkAvailabilityUser($workslotDate, $user['userId']);
-    if($available == true) {
-        $current = array(
-            'userId' => $user['userId'],
-            'username' => $user['username']
-        );
-
-        array_push($availableUser, $current);
-    } 
-}
-
-//echo '<pre>'; print_r($availableUser); echo '</pre>';
+$users = $viewUsers->viewByRoleUser($workslotUserProfileId);
 
 if(isset($_POST["offer"]))
 {
@@ -48,7 +27,7 @@ if(isset($_POST["offer"]))
     else
     {
         echo "<script>alert('Offer submitted');</script>";
-        // header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
+        header("location:index.php?page=viewAndOfferWorkslotBoundary");
     }
 }
 ?>
@@ -112,7 +91,6 @@ if(isset($_POST["offer"]))
             </tr>
         </table>
     </div>
-    <!-- #7 OFFER WORK SLOT -->
     <div class="row">
         <div class="card">
             <div class="card-body">
@@ -122,7 +100,7 @@ if(isset($_POST["offer"]))
                     <br>
                     <select class="form-select" id="chosenUser" name="chosenUser">
                         <?php
-                        foreach($availableUser as $user) {
+                        foreach($users as $user) {
                             echo '<option value=' . $user['userId'] . '>' . $user['username'] . '</option>';
                         }
                         ?>

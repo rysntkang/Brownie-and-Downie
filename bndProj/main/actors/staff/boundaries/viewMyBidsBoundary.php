@@ -1,13 +1,3 @@
-<!-- WIP -->
-
-<!-- 
-    ----------------------------------------
-    // CAFE STAFF
-
-    #3 - As a cafe staff, I want to be able to view my bids, 
-    so that I can know if I am approved to work on that slot.
-
--->
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/bidEntity.php";

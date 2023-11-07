@@ -69,8 +69,6 @@ if(isset($_POST["dropWorkslot"]))
         $viewAssigned = new ViewAssignedWorkSlotController();
         $array = $viewAssigned->viewAssignedWorkslot($userId);
 
-        // echo '<pre>'; print_r($array); echo '</pre>';
-
         echo '<table class="table">';
         echo '  <tr>';
         echo '      <th>Date</th>';

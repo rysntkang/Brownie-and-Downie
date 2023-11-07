@@ -1,32 +1,20 @@
-<!-- WIP -->
-
-<!-- 
-    ----------------------------------------
-    // CAFE STAFF
-
-    #3 - As a cafe staff, I want to be able to view my bids, 
-    so that I can know if I am approved to work on that slot.
-
--->
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/offerEntity.php";
-include "../../../entities/workslotEntity.php";
 include "../../../controller/staff/viewStaffOfferController.php";
-include "../../../controller/manager/assignWorkslotController.php";
 include "../../../controller/staff/acceptOfferController.php";
 
 $userId = $_SESSION['currentUserId'];
 
-if(isset($_POST["approve"]))
+if(isset($_POST["accept"]))
 {
     $workslotId = $_POST["workslotId"];
     $workslotDate = $_POST["workslotDate"];
-    $offerId = $_POST["approve"];
+    $offerId = $_POST["accept"];
     $accepted = 1;
-    
-    $assignWorkslot = new AssignWorkslotController();
-    $result = $assignWorkslot->assignWorkslot($workslotId, $workslotDate, $userId);
+
+    $accept = new AcceptOfferController();
+    $result = $accept->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
 
     if($result != "Success")
     {
@@ -34,19 +22,19 @@ if(isset($_POST["approve"]))
     }
     else
     {
-        $acceptOffer = new AcceptOfferController();
-        $result = $acceptOffer->acceptOffer($offerId, $accepted);
         header("location:index.php?page=viewMyOffersBoundary");
     }
 }
 
 if(isset($_POST["reject"]))
 {
+    $workslotId = $_POST["workslotId"];
+    $workslotDate = $_POST["workslotDate"];
     $offerId = $_POST["reject"];
     $accepted = 2;
 
-    $acceptOffer = new AcceptOfferController();
-    $result = $acceptOffer->acceptOffer($offerId, $accepted);
+    $reject = new AcceptOfferController();
+    $result = $reject->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
     header("location:index.php?page=viewMyOffersBoundary");
 }
 ?>
@@ -96,7 +84,6 @@ if(isset($_POST["reject"]))
 <div class="container">
     <div class="row">
         <?php
-        // $array = ViewStaffOfferController::viewStaffOffer($username);
         $viewOffer = new ViewStaffOfferController();
         $array = $viewOffer->viewStaffOffer($userId);
 
@@ -114,63 +101,13 @@ if(isset($_POST["reject"]))
             echo '          <form method="POST">';
             echo '              <input type="hidden" name="workslotId" value="' . $offer['workslotId'] . '"/>';
             echo '              <input type="hidden" name="workslotDate" value="' . $offer['date'] . '"/>';
-            echo '              <button class="btn btn-success" style="height:40px" value="' . $offer['offerId'] . '" name="approve">Accept</button>';
+            echo '              <button class="btn btn-success" style="height:40px" value="' . $offer['offerId'] . '" name="accept">Accept</button>';
             echo '              <button class="btn btn-danger" style="height:40px" value="' . $offer['offerId'] . '" name="reject">Reject</button>';
             echo '          </form>';
             echo '      </td>';
             echo '  </tr>';
         }
         echo '</table>';
-
-        // echo '<table class="table">';
-        // echo '  <tr>';
-        // echo '      <th>Date</th>';
-        // echo '      <th>Status</th>';
-        // echo '      <th>Action</th>';
-        // echo '  </tr>';
-        // foreach($array as $offer)
-        // {
-        //     echo '  <tr>';
-        //     echo '      <td>' . $offer['date'] . '</td>';
-        //     if($offer['accepted'] == 0)
-        //     {
-        //         echo '      <td>Pending</td>';
-        //         echo '      <td>';
-        //         echo '          <form method="POST">';
-        //         echo '              <input type="hidden" name="workslotId" value="' . $offer['workslotId'] . '"/>';
-        //         echo '              <input type="hidden" name="workslotDate" value="' . $offer['date'] . '"/>';
-        //         echo '              <button class="btn btn-success" style="height:40px" value="' . $offer['offerId'] . '" name="approve">Accept</button>';
-        //         echo '              <button class="btn btn-danger" style="height:40px" value="' . $offer['offerId'] . '" name="reject">Reject</button>';
-        //         echo '          </form>';
-        //         echo '      </td>';
-        //     }
-        //     else if($offer['accepted'] == 1)
-        //     {
-        //         echo '      <td>Approved</td>';
-        //         echo '      <td>';
-        //         echo '          <form method="POST">';
-        //         echo '              <input type="hidden" name="workslotId" value="' . $offer['workslotId'] . '"/>';
-        //         echo '              <input type="hidden" name="workslotDate" value="' . $offer['date'] . '"/>';
-        //         echo '              <button class="btn btn-success" style="height:40px" value="' . $offer['offerId'] . '" name="approve" disabled>Accept</button>';
-        //         echo '              <button class="btn btn-danger" style="height:40px" value="' . $offer['offerId'] . '" name="reject" disabled>Reject</button>';
-        //         echo '          </form>';
-        //         echo '      </td>';
-        //     }
-        //     else
-        //     {
-        //         echo '      <td>Rejected</td>';
-        //         echo '      <td>';
-        //         echo '          <form method="POST">';
-        //         echo '              <input type="hidden" name="workslotId" value="' . $offer['workslotId'] . '"/>';
-        //         echo '              <input type="hidden" name="workslotDate" value="' . $offer['date'] . '"/>';
-        //         echo '              <button class="btn btn-success" style="height:40px" value="' . $offer['offerId'] . '" name="approve" disabled>Accept</button>';
-        //         echo '              <button class="btn btn-danger" style="height:40px" value="' . $offer['offerId'] . '" name="reject" disabled>Reject</button>';
-        //         echo '          </form>';
-        //         echo '      </td>';
-        //     }
-        //     echo '  </tr>';
-        // }
-        // echo '</table>';
         ?>
     </div>
 </div>

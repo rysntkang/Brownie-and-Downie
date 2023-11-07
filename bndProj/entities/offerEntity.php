@@ -79,6 +79,42 @@ class OfferEntity extends Dbh
         return $resultCheck;
     }
 
+    protected function checkMaxShift()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT COUNT(workslotId) AS totalShift FROM workslot WHERE userId_workslot = '$this->userId_offer' AND YEARWEEK(`date`, 0) = YEARWEEK('$this->date', 0)";
+        $result = $conn->query($sql);
+
+        if ((5 - $result->fetch_assoc()['totalShift']) > 0)
+		{
+			$resultCheck = true;
+		}
+        else
+        {
+            $resultCheck = false;
+        }
+        return $resultCheck;
+    }
+
+    protected function checkAlreadyAssigned()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT workslotId FROM workslot WHERE Date = '$this->date' AND userId_workslot = '$this->userId_offer'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
     protected function create()
     {
         $error;
@@ -86,6 +122,16 @@ class OfferEntity extends Dbh
 
         if($this->checkUsername() == false) {
             $error = "Offer already submitted";
+            return $error;
+        }
+
+        if($this->checkMaxShift() == false) {
+            $error = "User has been allocated maximum number of shifts!";
+            return $error;
+        }
+
+        if($this->checkAlreadyAssigned() == false) {
+            $error = "User has already been assigned a workslot on this day!";
             return $error;
         }
 
@@ -121,7 +167,6 @@ class OfferEntity extends Dbh
                     'username' => $row['username'],
                     'accepted' => $row['accepted']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
         }
@@ -132,13 +177,43 @@ class OfferEntity extends Dbh
     protected function accept()
     {
         $error;
-		$conn = $this->connectDB();
+        $conn = $this->connectDB();
 
-        $sql = "UPDATE offer SET accepted = '$this->accepted' WHERE offerId = '$this->offerId'";
-        $result = $conn->query($sql);
+        if($this->accepted == 1)
+        {
+            if($this->checkMaxShift() == false) {
+                $error = "User has been allocated maximum number of shifts!";
+                return $error;
+            }
+    
+            if($this->checkAlreadyAssigned() == false) {
+                $error = "User has already been assigned a workslot on this day!";
+                return $error;
+            }
+    
+            $sql = "UPDATE workslot SET userId_workslot = '$this->userId_offer' WHERE workslotId = '$this->workslotId_offer';";
+            $sql .= "UPDATE offer SET accepted = '$this->accepted' WHERE offerId = '$this->offerId';";
+            if ($conn->multi_query($sql))
+            {
+                do {
+                    if ($result = $conn->store_result()) {
+                        $result->free();
+                    }
+                } while ($conn->more_results() && $conn->next_result());
+            }
+            $conn->close();
+    
+            $error = "Success";
+            return $error;
+        }
+        else
+        {
+            $sql = "UPDATE offer SET accepted = '$this->accepted' WHERE offerId = '$this->offerId'";
+            $result = $conn->query($sql);
 
-		$error = "Success";
-		return $error;
+            $error = "Success";
+            return $error;
+        }
     }
 }
 ?>

@@ -68,7 +68,6 @@ if(isset($_POST["offer"]))
 <div class="container">
     <div class="row">
         <?php
-        // $array = ViewWorkslotController::viewWorkslot();
         $viewWorkslot = new ViewWorkslotController();
         $array = $viewWorkslot->viewWorkslot();
 

@@ -1,22 +1,3 @@
-<!-- WIP -->
-
-<!-- 
-    ----------------------------------------
-    //VIEW AVAILABLE BIDS
-    #5 - As a cafe staff, I want to be able to view the available bids for the work slot,
-    so that I know when to work.
-
-
-    ----------------------------------------
-    //SEARCH FOR WORK SLOTS
-    #7 - As a cafe staff, I want to be able to search for work slots 
-    so that I can make bids more easily. 
-
-
-    ----------------------------------------
-
-
--->
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/workSlotEntity.php";
@@ -25,12 +6,10 @@ include "../../../controller/staff/viewAvailableWorkslotController.php";
 include "../../../controller/staff/searchByRoleDateWorkslotController.php";
 include "../../../controller/staff/createBidController.php";
 
-// retrieve role pertaining to userProfileId
 $userProfileId = $_SESSION['currentUserProfileId'];
 $username = $_SESSION['currentUsername'];
 $userId = $_SESSION['currentUserId'];
 
-// $array = ViewAvailableWorkslotController::viewAvailableWorkSlot($role);
 $viewAvailable = new ViewAvailableWorkslotController();
 $array = $viewAvailable->viewAvailableWorkSlot($userProfileId);
 $dates = [];
@@ -45,8 +24,7 @@ if(isset($_POST["submitBid"]))
 {
     $workslotId = $_POST["submitBid"];
     $workslotDate = $_POST["workslotDate"];
-    
-    // $result = createBidController::createBid($workslotId, $workslotDate, $role, $username);
+
     $submitBid = new CreateBidController();
     $result = $submitBid->createBid($workslotId, $workslotDate, $userProfileId, $userId);
 
@@ -57,7 +35,7 @@ if(isset($_POST["submitBid"]))
     else
     {
         echo "<script>alert('Bid submitted');</script>";
-        // header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
+        header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
     }
 }
 ?>
@@ -137,7 +115,6 @@ if(isset($_POST["submitBid"]))
         <?php
         if(isset($_POST["searchDate"])) {
             $date = $_POST["selectDate"];
-            // $searchedArray = SearchByRoleDateWorkSlotController::searchByRoleDateWorkslot($role, $date);
             $searchByRoleDate = new SearchByRoleDateWorkSlotController();
             $searchedArray = $searchByRoleDate->searchByRoleDateWorkslot($userProfileId, $date);
 
@@ -173,7 +150,6 @@ if(isset($_POST["submitBid"]))
             echo '</table>';
         }
         else {
-            // echo '<pre>'; print_r($array); echo '</pre>';
             echo '<table class="table">';
             echo '  <tr>';
             echo '      <th>Date</th>';

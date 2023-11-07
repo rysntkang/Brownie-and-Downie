@@ -79,6 +79,42 @@ class BidEntity extends Dbh
         return $resultCheck;
     }
 
+    protected function checkMaxShift()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT COUNT(workslotId) AS totalShift FROM workslot WHERE userId_workslot = '$this->userId_bids' AND YEARWEEK(`date`, 0) = YEARWEEK('$this->date', 0)";
+        $result = $conn->query($sql);
+
+        if ((5 - $result->fetch_assoc()['totalShift']) > 0)
+		{
+			$resultCheck = true;
+		}
+        else
+        {
+            $resultCheck = false;
+        }
+        return $resultCheck;
+    }
+
+    protected function checkAlreadyAssigned()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT workslotId FROM workslot WHERE Date = '$this->date' AND userId_workslot = '$this->userId_bids'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
     protected function create()
     {
         $error;
@@ -86,6 +122,16 @@ class BidEntity extends Dbh
 
         if($this->checkUsername() == false) {
             $error = "Bid already submitted";
+            return $error;
+        }
+
+        if($this->checkMaxShift() == false) {
+            $error = "User has been allocated maximum number of shifts!";
+            return $error;
+        }
+
+        if($this->checkAlreadyAssigned() == true) {
+            $error = "User has already been assigned a workslot on this day!";
             return $error;
         }
 
@@ -131,7 +177,6 @@ class BidEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        // $sql = "SELECT * FROM bids WHERE approval = '0' ORDER BY date ASC, role ASC";
         $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, bids.userId_bids, userprofile.role, user.username, bids.approval
                 FROM bids
                 LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
@@ -163,13 +208,43 @@ class BidEntity extends Dbh
     protected function approve()
     {
         $error;
-		$conn = $this->connectDB();
+        $conn = $this->connectDB();
 
-        $sql = "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId'";
-        $result = $conn->query($sql);
+        if ($this->approval == 1)
+        {
+            if($this->checkMaxShift() == false) {
+                $error = "User has been allocated maximum number of shifts!";
+                return $error;
+            }
+    
+            if($this->checkAlreadyAssigned() == false) {
+                $error = "User has already been assigned a workslot on this day!";
+                return $error;
+            }
+    
+            $sql = "UPDATE workslot SET userId_workslot = '$this->userId_bids' WHERE workslotId = '$this->workslotId_bids';";
+            $sql .= "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId';";
+            if ($conn->multi_query($sql))
+            {
+                do {
+                    if ($result = $conn->store_result()) {
+                        $result->free();
+                    }
+                } while ($conn->more_results() && $conn->next_result());
+            }
+            $conn->close();
+    
+            $error = "Success";
+            return $error;
+        }
+        else
+        {
+            $sql = "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId'";
+            $result = $conn->query($sql);
 
-		$error = "Success";
-		return $error;
+            $error = "Success";
+            return $error;
+        }
     }
 }
 ?>

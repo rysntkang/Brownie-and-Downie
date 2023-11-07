@@ -1,10 +1,8 @@
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/bidEntity.php";
-include "../../../entities/workslotEntity.php";
 include "../../../controller/manager/viewManagerBidController.php";
 include "../../../controller/manager/approveBidController.php";
-include "../../../controller/manager/assignWorkslotController.php";
 
 if(isset($_POST["approve"]))
 {
@@ -13,29 +11,30 @@ if(isset($_POST["approve"]))
     $userId = $_POST["userId"];
     $bidId = $_POST["approve"];
     $approval = 1;
-    
-    $assignWorkslot = new AssignWorkslotController();
-    $result = $assignWorkslot->assignWorkslot($workslotId, $workslotDate, $userId);
 
-    if($result != "Success")
+    $approve = new ApproveBidController();
+    $result = $approve->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
+
+    if ($result != "Success")
     {
-        echo "<script>alert('$result');</script>";
+        echo "<script>alert('$result');</script>"; 
     }
     else
     {
-        $approveBid = new ApproveBidController();
-        $result = $approveBid->approveBid($bidId, $approval);
         header("location:index.php?page=viewBiddingListBoundary");
     }
 }
 
 if(isset($_POST["reject"]))
 {
+    $workslotId = $_POST["workslotId"];
+    $workslotDate = $_POST["workslotDate"];
+    $userId = $_POST["userId"];
     $bidId = $_POST["reject"];
     $approval = 2;
     
-    $rejectBid = new ApproveBidController();
-    $result = $rejectBid->approveBid($bidId, $approval);
+    $reject = new ApproveBidController();
+    $result = $reject->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
     header("location:index.php?page=viewBiddingListBoundary");
 }
 ?>
@@ -80,7 +79,6 @@ if(isset($_POST["reject"]))
 <div class="container">
     <div class="row">
         <?php
-        // $array = ViewManagerBidController::viewManagerBid();
         $viewBids = new ViewManagerBidController();
         $array = $viewBids->viewManagerBid();
 
