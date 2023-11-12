@@ -1,0 +1,448 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 02, 2023 at 07:17 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `brownie_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bids`
+--
+
+CREATE TABLE `bids` (
+  `bidId` int(11) NOT NULL,
+  `workslotId_bids` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `userProfileId_bids` int(11) NOT NULL,
+  `userId_bids` int(11) NOT NULL,
+  `approval` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bids`
+--
+
+INSERT INTO `bids` (`bidId`, `workslotId_bids`, `date`, `userProfileId_bids`, `userId_bids`, `approval`) VALUES
+(8, 1, '2023-11-04', 4, 4, 1),
+(9, 2, '2023-11-04', 4, 4, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offer`
+--
+
+CREATE TABLE `offer` (
+  `offerId` int(11) NOT NULL,
+  `workslotId_offer` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `userProfileId_offer` int(11) NOT NULL,
+  `userId_offer` int(11) NOT NULL,
+  `accepted` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `offer`
+--
+
+INSERT INTO `offer` (`offerId`, `workslotId_offer`, `date`, `userProfileId_offer`, `userId_offer`, `accepted`) VALUES
+(7, 2, '2023-11-04', 4, 4, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `userId` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `mobileNumber` int(11) NOT NULL,
+  `activated` tinyint(1) NOT NULL,
+  `userProfileId` int(11) NOT NULL,
+  `maxShift` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userId`, `username`, `password`, `firstName`, `lastName`, `address`, `mobileNumber`, `activated`, `userProfileId`, `maxShift`) VALUES
+(1, 'admin', 'admin', 'Admin', 'Admin', 'NIL', 11111111, 1, 1, NULL),
+(2, 'owner', 'owner', 'Owner', 'Owner', 'NIL', 22222222, 1, 2, NULL),
+(3, 'manager', 'manager', 'Manager', 'Manager', 'NIL', 33333333, 1, 3, NULL),
+(4, 'peter1', 'peter1', 'Peter', 'Goh', 'Yishun Ave 1, BLK 433, #08-977, 760433', 90874367, 1, 4, NULL),
+(5, 'Emily Koh', 'mUv5eFiw', 'Emily', 'Koh', '8094 Ash St, San Jose, 91587', 80920476, 1, 5, NULL),
+(6, 'Jane Moore', 'jJoeLe3b', 'Jane', 'Moore', '8349 Elm St, Phoenix, 60972', 38886527, 1, 6, NULL),
+(7, 'Ming Jones', 'J8lG8pr8', 'Ming', 'Jones', '8382 Main St, Dallas, 37555', 97498370, 1, 7, NULL),
+(8, 'Peter Brown', '6lPM5MaL', 'Peter', 'Brown', '5133 Cedar Ln, Los Angeles, 26013', 11510152, 1, 8, NULL),
+(9, 'Emma Lee', 'W6o7yL2D', 'Emma', 'Lee', '7520 Elm St, Phoenix, 56922', 26643954, 1, 9, NULL),
+(10, 'Christopher Brown', 'jfwBMr0W', 'Christopher', 'Brown', '688 Ash St, Los Angeles, 93015', 63117582, 1, 10, NULL),
+(11, 'Peter Li', 'M7pge77F', 'Peter', 'Li', '4512 Main St, San Antonio, 49150', 84950184, 1, 11, NULL),
+(12, 'Daniel Miller', 'tV6RePMx', 'Daniel', 'Miller', '5987 Maple Ave, San Antonio, 11348', 69538697, 1, 12, NULL),
+(13, 'Kenny Brown', '7UA8HuUb', 'Kenny', 'Brown', '5293 Maple Ave, San Jose, 41433', 19413436, 1, 13, NULL),
+(14, 'Peter Brown', '9ndx7KDW', 'Peter', 'Brown', '7558 Oak St, Los Angeles, 53756', 74730210, 1, 14, NULL),
+(15, 'Daniel Tan', 'P2esMGjS', 'Daniel', 'Tan', '4425 Pine Rd, Los Angeles, 50098', 18725075, 1, 15, NULL),
+(16, 'Ming Ng', 'lYSfvb7p', 'Ming', 'Ng', '6057 Birch Blvd, Chicago, 98540', 58466420, 1, 16, NULL),
+(17, 'Sophia Miller', 'idB7i6M2', 'Sophia', 'Miller', '5648 Willow Ln, Phoenix, 81377', 60516805, 1, 17, NULL),
+(18, 'Emily Davis', 'rJRRH0hS', 'Emily', 'Davis', '3723 Main St, Dallas, 96593', 50661335, 1, 18, NULL),
+(19, 'Christopher Ang', 'khdjcx8t', 'Christopher', 'Ang', '2859 Main St, Phoenix, 21286', 78683777, 1, 19, NULL),
+(20, 'Ken Tan', 'LjHLggnt', 'Ken', 'Tan', '1908 Pine Rd, Philadelphia, 45809', 80799347, 1, 20, NULL),
+(21, 'Olivia Tan', 'UKOLuzfK', 'Olivia', 'Tan', '1137 Willow Ln, San Jose, 83615', 83798716, 1, 21, NULL),
+(22, 'John Davis', '0OKVpzZr', 'John', 'Davis', '6659 Spruce Dr, New York, 42415', 45647479, 1, 22, NULL),
+(23, 'John Jones', 'VjUgk4El', 'John', 'Jones', '2625 Main St, Houston, 26446', 93907764, 1, 23, NULL),
+(24, 'Olivia Smith', 'PpGCY1V8', 'Olivia', 'Smith', '8317 Maple Ave, Dallas, 17893', 43618677, 1, 24, NULL),
+(25, 'Kenny Lee', 'IPayAgRL', 'Kenny', 'Lee', '9310 Birch Blvd, San Antonio, 75028', 41901417, 1, 25, NULL),
+(26, 'Emily Taylor', '6N6mi9oW', 'Emily', 'Taylor', '5519 Pine Rd, Philadelphia, 86435', 85666377, 1, 26, NULL),
+(27, 'Ken Brown', 'tc2O0CfJ', 'Ken', 'Brown', '8118 Elm St, New York, 33688', 13172053, 1, 27, NULL),
+(28, 'Christopher Tan', 'goRfbEDr', 'Christopher', 'Tan', '7884 Birch Blvd, Los Angeles, 34963', 25820219, 1, 28, NULL),
+(29, 'Daniel Wilson', 'bo1p5FSO', 'Daniel', 'Wilson', '1519 Maple Ave, San Jose, 24767', 66795937, 1, 29, NULL),
+(30, 'Ken Smith', 'zI0o2mi6', 'Ken', 'Smith', '6495 Maple Ave, San Jose, 18369', 16329975, 1, 30, NULL),
+(31, 'Ming Davis', 'R94s5xrG', 'Ming', 'Davis', '6153 Cedar Ln, Philadelphia, 13639', 90753598, 1, 31, NULL),
+(32, 'Peter Ng', 'Z8dII6mZ', 'Peter', 'Ng', '5549 Pine Rd, San Jose, 74948', 41626597, 1, 32, NULL),
+(33, 'Olivia Jones', 'Mva8pNqU', 'Olivia', 'Jones', '6461 Oak St, Phoenix, 80702', 60123234, 1, 33, NULL),
+(34, 'Kenny Jones', 'uu9vvP2s', 'Kenny', 'Jones', '9243 Main St, Phoenix, 76753', 93504286, 1, 34, NULL),
+(35, 'John Smith', 'fXdgZfia', 'John', 'Smith', '2517 Main St, Dallas, 76288', 51191766, 1, 35, NULL),
+(36, 'Emily Lee', 'Yx6iJ9LI', 'Emily', 'Lee', '5254 Elm St, Chicago, 49115', 47296005, 1, 36, NULL),
+(37, 'Michael Moore', 'Dg0qcUNM', 'Michael', 'Moore', '8269 Main St, New York, 97057', 12005571, 1, 37, NULL),
+(38, 'Kenny Smith', '977XCL5r', 'Kenny', 'Smith', '990 Willow Ln, San Diego, 10958', 96990003, 1, 38, NULL),
+(39, 'Sophia Li', 'YQpzPoNQ', 'Sophia', 'Li', '2792 Maple Ave, Philadelphia, 91163', 11761735, 1, 39, NULL),
+(40, 'Lisa Davis', 'WwnTnRhC', 'Lisa', 'Davis', '5921 Willow Ln, San Diego, 67275', 66309329, 1, 40, NULL),
+(41, 'Olivia Smith', 'z4Gp2DRD', 'Olivia', 'Smith', '8202 Cedar Ln, San Diego, 58301', 18331666, 1, 41, NULL),
+(42, 'Kenny Johnson', 'AqK4cmXF', 'Kenny', 'Johnson', '4624 Cedar Ln, Philadelphia, 31764', 56391980, 1, 42, NULL),
+(43, 'Michael Smith', 'mQR9kFqM', 'Michael', 'Smith', '7468 Spruce Dr, Phoenix, 35678', 33471523, 1, 43, NULL),
+(44, 'Ming Williams', 'anX32svd', 'Ming', 'Williams', '3247 Ash St, Houston, 79473', 76721446, 1, 44, NULL),
+(45, 'Kenny Davis', '3eHVAPIA', 'Kenny', 'Davis', '173 Oak St, New York, 72067', 12549556, 1, 45, NULL),
+(46, 'Christopher Johnson', '5UhLLEvt', 'Christopher', 'Johnson', '2323 Elm St, New York, 85431', 20158110, 1, 46, NULL),
+(47, 'Peter Ang', 'WrqA65AT', 'Peter', 'Ang', '4205 Pine Rd, Dallas, 78312', 63406066, 1, 47, NULL),
+(48, 'Ken Johnson', 'P4EopzNB', 'Ken', 'Johnson', '6410 Main St, Phoenix, 70164', 31195942, 1, 48, NULL),
+(49, 'Sophia Ng', 'GyhJlYHQ', 'Sophia', 'Ng', '2725 Pine Rd, Los Angeles, 58876', 75777231, 1, 49, NULL),
+(50, 'Olivia Wilson', 'GoPmy8Wx', 'Olivia', 'Wilson', '2294 Elm St, Dallas, 45899', 56648625, 1, 50, NULL),
+(51, 'Emily Smith', 'eFMfeB1u', 'Emily', 'Smith', '3594 Ash St, Houston, 28781', 72000065, 1, 51, NULL),
+(52, 'Ken Moore', 'NSlATBHI', 'Ken', 'Moore', '7688 Cedar Ln, New York, 84787', 69074650, 1, 52, NULL),
+(53, 'Daniel Ng', 'LHbbTV8T', 'Daniel', 'Ng', '896 Elm St, Phoenix, 71859', 26027064, 1, 53, NULL),
+(54, 'Jane Taylor', '0iVqauya', 'Jane', 'Taylor', '6610 Ash St, Dallas, 10314', 97941037, 1, 54, NULL),
+(55, 'Emma Ng', '4nxBecs0', 'Emma', 'Ng', '7391 Pine Rd, Houston, 94753', 48495738, 1, 55, NULL),
+(56, 'Kenny Moore', '9XTebxpz', 'Kenny', 'Moore', '9225 Spruce Dr, San Jose, 70505', 93069081, 1, 56, NULL),
+(57, 'Jane Miller', 'BHfrChlq', 'Jane', 'Miller', '9754 Willow Ln, San Diego, 76566', 96406565, 1, 57, NULL),
+(58, 'Christopher Miller', 'ky9glMZE', 'Christopher', 'Miller', '54 Birch Blvd, San Jose, 69016', 93315221, 1, 58, NULL),
+(59, 'Michael Ang', 'APYRkjPs', 'Michael', 'Ang', '5377 Pine Rd, New York, 76855', 26705884, 1, 59, NULL),
+(60, 'Emily Tan', 'flZe9b3w', 'Emily', 'Tan', '85 Maple Ave, Phoenix, 56596', 88693238, 1, 60, NULL),
+(61, 'Sophia Li', '5yaOrxRv', 'Sophia', 'Li', '7342 Willow Ln, Dallas, 41511', 80093943, 1, 61, NULL),
+(62, 'Emily Koh', 'LRmcQmhO', 'Emily', 'Koh', '7214 Cedar Ln, Los Angeles, 39191', 41635597, 1, 62, NULL),
+(63, 'Michael Lee', 'fettBLXD', 'Michael', 'Lee', '799 Main St, San Diego, 25645', 29228287, 1, 63, NULL),
+(64, 'Cody Ng', 'UuVmRn9Y', 'Cody', 'Ng', '494 Maple Ave, San Antonio, 74210', 86926674, 1, 64, NULL),
+(65, 'Christopher Jones', 'jz7ayxXR', 'Christopher', 'Jones', '3316 Birch Blvd, Los Angeles, 39135', 15416178, 1, 65, NULL),
+(66, 'John Li', '1C7fj5CM', 'John', 'Li', '5559 Willow Ln, Chicago, 49288', 39650743, 1, 66, NULL),
+(67, 'William Brown', 'qah7qNnz', 'William', 'Brown', '6163 Ash St, Houston, 34294', 15508172, 1, 67, NULL),
+(68, 'Michael Ng', 'msPSlyZO', 'Michael', 'Ng', '5764 Willow Ln, New York, 85879', 24960022, 1, 68, NULL),
+(69, 'Emily Tan', 'TtGF4LSy', 'Emily', 'Tan', '461 Maple Ave, Chicago, 51636', 44977319, 1, 69, NULL),
+(70, 'William Brown', 'AV2WScbR', 'William', 'Brown', '2512 Elm St, Phoenix, 29989', 39729481, 1, 70, NULL),
+(71, 'Christopher Ng', '9wwNF54r', 'Christopher', 'Ng', '2717 Birch Blvd, San Jose, 21785', 62852436, 1, 71, NULL),
+(72, 'Sophia Johnson', 'U09r8quf', 'Sophia', 'Johnson', '35 Maple Ave, New York, 54687', 90650178, 1, 72, NULL),
+(73, 'Kenny Davis', 'ifew0A3j', 'Kenny', 'Davis', '3346 Maple Ave, San Jose, 52524', 19861835, 1, 73, NULL),
+(74, 'Olivia Wilson', 'yYZ7njZV', 'Olivia', 'Wilson', '2495 Elm St, San Antonio, 40730', 12469302, 1, 74, NULL),
+(75, 'Jane Johnson', 'NX7tPAOv', 'Jane', 'Johnson', '4069 Maple Ave, New York, 22646', 98620571, 1, 75, NULL),
+(76, 'Jane Davis', 'GHGOyd8U', 'Jane', 'Davis', '1526 Spruce Dr, Philadelphia, 85653', 59781314, 1, 76, NULL),
+(77, 'Olivia Koh', 'HhqzyfkV', 'Olivia', 'Koh', '6936 Willow Ln, New York, 36168', 98490909, 1, 77, NULL),
+(78, 'Christopher Miller', 'd5hjyQ4R', 'Christopher', 'Miller', '1183 Ash St, Los Angeles, 30725', 94173220, 1, 78, NULL),
+(79, 'Michael Tan', 'Hx8RyB2d', 'Michael', 'Tan', '6988 Spruce Dr, Houston, 79747', 74332276, 1, 79, NULL),
+(80, 'Cody Lee', 'MaNGCl8s', 'Cody', 'Lee', '5664 Elm St, New York, 12089', 79959617, 1, 80, NULL),
+(81, 'Christopher Moore', 'RuAcvN9H', 'Christopher', 'Moore', '8132 Cedar Ln, Philadelphia, 54221', 88332024, 1, 81, NULL),
+(82, 'William Tan', 'gvIPlzVO', 'William', 'Tan', '5597 Maple Ave, New York, 99176', 50445432, 1, 82, NULL),
+(83, 'Cody Jones', '4SOiyVAF', 'Cody', 'Jones', '5624 Birch Blvd, Chicago, 11912', 39278672, 1, 83, NULL),
+(84, 'Ken Ng', 'oTmfs0S2', 'Ken', 'Ng', '8707 Spruce Dr, San Antonio, 70592', 34327999, 1, 84, NULL),
+(85, 'Olivia Wilson', 'TI4URdKn', 'Olivia', 'Wilson', '5282 Oak St, Philadelphia, 71386', 86037024, 1, 85, NULL),
+(86, 'Jane Wilson', '4mrp49q4', 'Jane', 'Wilson', '5127 Elm St, Philadelphia, 97597', 94317156, 1, 86, NULL),
+(87, 'John Jones', 'vexssHZh', 'John', 'Jones', '6956 Elm St, Dallas, 96574', 72873277, 1, 87, NULL),
+(88, 'Kenny Ng', 'jthooESh', 'Kenny', 'Ng', '7922 Cedar Ln, Dallas, 38929', 66781337, 1, 88, NULL),
+(89, 'Michael Koh', 'j80SkIwm', 'Michael', 'Koh', '3188 Main St, Dallas, 87618', 18261107, 1, 89, NULL),
+(90, 'Kenny Brown', 'nKEXnxHN', 'Kenny', 'Brown', '6337 Elm St, Philadelphia, 60104', 11159719, 1, 90, NULL),
+(91, 'Christopher Ng', '7WttQLgK', 'Christopher', 'Ng', '5330 Elm St, Chicago, 83142', 12130526, 1, 91, NULL),
+(92, 'Cody Jones', 'oE5elDnB', 'Cody', 'Jones', '4420 Pine Rd, Philadelphia, 47446', 30257140, 1, 92, NULL),
+(93, 'Daniel Williams', '612u2r7I', 'Daniel', 'Williams', '1253 Main St, New York, 84420', 97331397, 1, 93, NULL),
+(94, 'Ken Moore', 'I4AilWf5', 'Ken', 'Moore', '2583 Main St, Los Angeles, 38931', 13655267, 1, 94, NULL),
+(95, 'Michael Li', 'E1yU8Kky', 'Michael', 'Li', '7141 Pine Rd, Phoenix, 66993', 38886894, 1, 95, NULL),
+(96, 'Emma Ng', 'iX1gSRVS', 'Emma', 'Ng', '8537 Main St, San Antonio, 18684', 22324643, 1, 96, NULL),
+(97, 'Sophia Taylor', 'ZzgAyFB5', 'Sophia', 'Taylor', '4594 Maple Ave, San Antonio, 15055', 47675103, 1, 97, NULL),
+(98, 'Sophia Koh', 'pIeZx8TK', 'Sophia', 'Koh', '8691 Cedar Ln, San Antonio, 37625', 11460312, 1, 98, NULL),
+(99, 'Emily Johnson', 'Zp9Hrjf2', 'Emily', 'Johnson', '590 Elm St, New York, 31564', 30277420, 1, 99, NULL),
+(100, 'William Davis', 'c3u11ADH', 'William', 'Davis', '8037 Willow Ln, Los Angeles, 38001', 12415920, 1, 100, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userprofile`
+--
+
+CREATE TABLE `userprofile` (
+  `userProfileId` int(11) NOT NULL,
+  `profileName` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `activated` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userprofile`
+--
+
+INSERT INTO `userprofile` (`userProfileId`, `profileName`, `description`, `role`, `activated`) VALUES
+(1, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(2, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(3, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(4, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(5, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(6, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(7, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(8, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(9, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(10, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(11, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(12, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(13, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(14, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(15, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(16, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(17, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(18, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(19, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(20, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(21, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(22, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(23, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(24, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(25, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(26, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(27, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(28, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(29, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(30, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(31, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(32, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(33, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(34, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(35, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(36, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(37, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(38, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(39, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(40, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(41, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(42, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(43, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(44, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(45, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(46, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(47, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(48, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(49, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(50, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(51, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(52, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(53, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(54, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(55, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(56, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(57, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(58, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(59, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(60, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(61, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(62, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(63, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(64, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(65, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(66, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(67, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(68, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(69, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(70, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(71, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(72, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(73, 'Cafe Staff', 'Bid for work slots', 'Chef', 1),
+(74, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(75, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(76, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(77, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(78, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(79, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(80, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(81, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(82, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(83, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(84, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(85, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(86, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(87, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(88, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(89, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(90, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(91, 'Cafe Staff', 'Bid for work slots', 'Waiter', 1),
+(92, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(93, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(94, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(95, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(96, 'System Admin', 'Support and manage different types of users and user profiles', 'System Admin', 1),
+(97, 'Cafe Staff', 'Bid for work slots', 'Cashier', 1),
+(98, 'Cafe Manager', 'Manage staff allocation and approval of biddings', 'Cafe Manager', 1),
+(99, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1),
+(100, 'Cafe Owner', 'View and manage work slots', 'Cafe Owner', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workslot`
+--
+
+CREATE TABLE `workslot` (
+  `workslotId` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `userprofileId_workslot` int(11) NOT NULL,
+  `userId_workslot` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `workslot`
+--
+
+INSERT INTO `workslot` (`workslotId`, `Date`, `userprofileId_workslot`, `userId_workslot`) VALUES
+(1, '2023-11-04', 4, 4),
+(2, '2023-11-04', 4, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `bids`
+--
+ALTER TABLE `bids`
+  ADD PRIMARY KEY (`bidId`),
+  ADD KEY `workslotId_bids` (`workslotId_bids`),
+  ADD KEY `userProfileId_bids` (`userProfileId_bids`),
+  ADD KEY `userId_bids` (`userId_bids`);
+
+--
+-- Indexes for table `offer`
+--
+ALTER TABLE `offer`
+  ADD PRIMARY KEY (`offerId`),
+  ADD KEY `workslotId_offer` (`workslotId_offer`),
+  ADD KEY `userProfileId_offer` (`userProfileId_offer`),
+  ADD KEY `userId_offer` (`userId_offer`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userId`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `mobileNumber` (`mobileNumber`),
+  ADD KEY `userProfileId` (`userProfileId`);
+
+--
+-- Indexes for table `userprofile`
+--
+ALTER TABLE `userprofile`
+  ADD PRIMARY KEY (`userProfileId`);
+
+--
+-- Indexes for table `workslot`
+--
+ALTER TABLE `workslot`
+  ADD PRIMARY KEY (`workslotId`),
+  ADD KEY `userprofileId_workslot` (`userprofileId_workslot`),
+  ADD KEY `userId_workslot` (`userId_workslot`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `bids`
+--
+ALTER TABLE `bids`
+  MODIFY `bidId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `offer`
+--
+ALTER TABLE `offer`
+  MODIFY `offerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `userprofile`
+--
+ALTER TABLE `userprofile`
+  MODIFY `userProfileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `workslot`
+--
+ALTER TABLE `workslot`
+  MODIFY `workslotId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `bids`
+--
+ALTER TABLE `bids`
+  ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`workslotId_bids`) REFERENCES `workslot` (`workslotId`),
+  ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`userProfileId_bids`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `bids_ibfk_3` FOREIGN KEY (`userId_bids`) REFERENCES `user` (`userId`);
+
+--
+-- Constraints for table `offer`
+--
+ALTER TABLE `offer`
+  ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`workslotId_offer`) REFERENCES `workslot` (`workslotId`),
+  ADD CONSTRAINT `offer_ibfk_2` FOREIGN KEY (`userProfileId_offer`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `offer_ibfk_3` FOREIGN KEY (`userId_offer`) REFERENCES `user` (`userId`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`userProfileId`) REFERENCES `userprofile` (`userProfileId`);
+
+--
+-- Constraints for table `workslot`
+--
+ALTER TABLE `workslot`
+  ADD CONSTRAINT `workslot_ibfk_1` FOREIGN KEY (`userprofileId_workslot`) REFERENCES `userprofile` (`userProfileId`),
+  ADD CONSTRAINT `workslot_ibfk_2` FOREIGN KEY (`userId_workslot`) REFERENCES `user` (`userId`);
+COMMIT;
+
+
