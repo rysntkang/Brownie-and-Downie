@@ -8,9 +8,10 @@ if(isset($_POST["createUserProfile"]))
     $profileName = $_POST["profileName"];
     $description = $_POST["description"];
     $role = $_POST["role"];
+    $activated = 1;
 
     $createUserProfile = new CreateUserProfileController();
-    $result = $createUserProfile->createUserProfile($profileName, $description, $role);
+    $result = $createUserProfile->createUserProfile($profileName, $description, $role, $activated);
 
     if ($result == "Success")
     {

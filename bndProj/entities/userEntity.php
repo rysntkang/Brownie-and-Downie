@@ -284,7 +284,6 @@ class UserEntity extends Dbh
 					'activated' => $row['activated'],
 					'userProfileId' => $row['userProfileId']
                 );
-                //$array[$row['userId']] = $current;
                 array_push($array, $current);
             }
             return $array;

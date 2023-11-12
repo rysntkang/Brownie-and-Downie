@@ -34,8 +34,8 @@ if(isset($_POST["submitBid"]))
     }
     else
     {
-        echo "<script>alert('Bid submitted');</script>";
-        header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
+        echo "<script>alert('Bid successfully submitted');</script>";
+        // header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
     }
 }
 ?>

@@ -6,6 +6,7 @@ class UserProfileEntity extends Dbh
     private $description;
     private $role;
     private $userProfileId;
+    private $activated;
 
     public function __construct(){
 
@@ -43,43 +44,33 @@ class UserProfileEntity extends Dbh
         $this->role = $role;
     }
 
-    protected function checkUserProfile($name)
+    public function set_activated($activated) {
+		$this->activated = $activated;
+	}
+
+	public function get_activated() {
+		return $this->activated;
+	}
+
+    protected function checkUserProfileUsed()
     {
         $resultCheck;
         $conn = $this->connectDB();
-        $sql = "SELECT userProfileId FROM userprofile WHERE profileName = '$this->profileName'";
+        $sql = "SELECT userId FROM user WHERE userProfileId = '$this->userProfileId' AND activated = 1;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
-		{
-			$resultCheck = false;
-		}
-        else
         {
             $resultCheck = true;
         }
-        return $resultCheck;
-    }
-
-    protected function checkUserProfileUsed($userProfileId)
-    {
-        $resultCheck;
-        $conn = $this->connectDB();
-        $sql = "SELECT userId FROM user WHERE userProfileId = '$this->userProfileId' AND activated = 0;";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0)
+        else
         {
             $resultCheck = false;
         }
-        else
-        {
-            $resultCheck = true;
-        }
         return $resultCheck;
     }
 
-    protected function activatedStatus($userProfileId)
+    protected function activatedStatus()
     {
         $conn = $this->connectDB();
         $sql = "SELECT activated FROM userProfile WHERE userProfileId = '$this->userProfileId'";
@@ -94,7 +85,7 @@ class UserProfileEntity extends Dbh
     {
         $error;
 		$conn = $this->connectDB();
-        $sql = "INSERT INTO userprofile (profileName, description, role, activated) VALUES ('$this->profileName', '$this->description', '$this->role', true)";
+        $sql = "INSERT INTO userprofile (profileName, description, role, activated) VALUES ('$this->profileName', '$this->description', '$this->role', '$this->activated')";
         $result = $conn->query($sql);
 
 		$error = "Success";
@@ -142,7 +133,7 @@ class UserProfileEntity extends Dbh
         $error;
         $conn = $this->connectDB();
 
-        if($this->activatedStatus($this->userProfileId) == true && $this->checkUserProfileUsed($this->userProfileId) == true) {
+        if($this->activatedStatus() == true && $this->checkUserProfileUsed() == true) {
             $error = "User Profile is currently being used!";
             return $error;
         }
