@@ -9,7 +9,6 @@ if(isset($_POST["suspendUser"]))
 {
     $userId = $_POST["suspendUser"];
 
-    // $result = SuspendUserController::suspendUser($userId);
     $suspend = new SuspendUserController();
     $result = $suspend->suspendUser($userId);
 

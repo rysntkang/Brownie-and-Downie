@@ -78,10 +78,10 @@ if(isset($_POST["updateUserProfile"]))
         <?php
         if(isset($_POST["search"]))
         {
-            $userProfileIdOrName = $_POST["search"];
+            $profileName = $_POST["search"];
 
             $searchUserProfile = new SearchUserProfileController();
-            $result = $searchUserProfile->searchUserProfile($userProfileIdOrName);
+            $result = $searchUserProfile->searchUserProfile($profileName);
             if(gettype($result) == "string")
             {
                 echo '<script>';

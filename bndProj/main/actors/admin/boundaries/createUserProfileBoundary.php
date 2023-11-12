@@ -9,7 +9,6 @@ if(isset($_POST["createUserProfile"]))
     $description = $_POST["description"];
     $role = $_POST["role"];
 
-    // $result = CreateUserProfileController::createUserProfile($profileName, $description, $role);
     $createUserProfile = new CreateUserProfileController();
     $result = $createUserProfile->createUserProfile($profileName, $description, $role);
 
@@ -17,15 +16,6 @@ if(isset($_POST["createUserProfile"]))
     {
         header("location:index.php?page=viewUserProfileBoundary");
     }
-
-    // if ($result != "Success")
-    // {
-    //     echo "<script>alert('$result');</script>";
-    // }
-    // else
-    // {
-    //     header("location:index.php?page=viewUserProfileBoundary");
-    // }
 }
 ?>
 <style>

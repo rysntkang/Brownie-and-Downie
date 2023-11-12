@@ -14,10 +14,10 @@ if(isset($_POST["createUser"]))
     $mobileNumber = $_POST["mobileNumber"];
     $password = $_POST["password"];
     $userProfileId = $_POST["profile"];
+    $activated = 1;
 
-    // $result = CreateUserController::createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
     $createUser = new CreateUserController();
-    $result = $createUser->createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId);
+    $result = $createUser->createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId, $activated);
 
     if ($result != "Success")
     {

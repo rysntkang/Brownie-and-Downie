@@ -3,8 +3,6 @@ include "../../../dbConnection.php";
 include "../../../entities/workslotEntity.php";
 include "../../../entities/userProfileEntity.php";
 include "../../../controller/owner/updateWorkslotController.php";
-//include "../../../controller/owner/searchWorkslotController.php";
-include "../../../controller/owner/searchByIdWorkslotController.php";
 include "../../../controller/admin/viewUserProfileController.php";
 
 $workslotId = $_SESSION['workslotId'];
@@ -16,7 +14,6 @@ if(isset($_POST["updateWorkslot"]))
     $date = $_POST["date"];
     $userProfileId = $_POST["userProfileId"];
 
-    //   $error = UpdateWorkslotController::updateWorkslot($workslotId, $date, $role);
     $updateWorkslot = new UpdateWorkslotController();
     $result = $updateWorkslot->updateWorkslot($workslotId, $date, $userProfileId);
 
@@ -61,13 +58,6 @@ if(isset($_POST["updateWorkslot"]))
         <div class="card">
             <div class="card-body">
                 <form method="POST">
-                    <?php
-                        // // retrieve information of user profile with regards to userProfileId
-                        // $details = SearchByIdWorkslotController::searchByIdWorkslot($workslotId);
-                        // // var_dump($details);
-                        // $date = $details[0]['date'];
-                        // $role = $details[0]['role'];
-                    ?>
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" name="date" value="<?=$date?>">

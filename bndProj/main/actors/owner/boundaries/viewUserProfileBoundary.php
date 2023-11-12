@@ -1,12 +1,9 @@
 <?php
-//session_start();
-
 include "../../../dbConnection.php";
 include "../../../entities/userProfileClass.php";
 include "../../../controller/admin/viewUserProfileController.php";
 include "../../../controller/admin/suspendUserProfileController.php";
 include "../../../controller/admin/searchUserProfileController.php";
-
 ?>
 
 <style>

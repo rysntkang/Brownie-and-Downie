@@ -3,7 +3,7 @@
 class CreateUserController extends UserEntity
 {
 
-    public function createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId) {
+    public function createUser($username, $firstName, $lastName, $address, $mobileNumber, $password, $userProfileId, $activated) {
         $user = new UserEntity();
         $user->set_username($username);
         $user->set_firstName($firstName);
@@ -12,7 +12,7 @@ class CreateUserController extends UserEntity
         $user->set_mobileNumber($mobileNumber);
         $user->set_password($password);
         $user->set_userProfileId($userProfileId);
-        $user->set_activated(1);
+        $user->set_activated($activated);
 
         $error = $user->create();
         return $error;

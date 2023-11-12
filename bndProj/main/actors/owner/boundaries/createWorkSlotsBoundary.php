@@ -17,7 +17,6 @@ if(isset($_POST["createWorkslot"]))
     }
     else
     {
-        // $result = createWorkslotController::createWorkslot($date, $role);
         $createWorkslot = new CreateWorkslotController();
         $result = $createWorkslot->createWorkslot($date, $userProfileId);
 

@@ -10,7 +10,6 @@ if(isset($_POST["deleteWorkslot"]))
 {
     $workslotId = $_POST["deleteWorkslot"];
 
-    // $result = DeleteWorkslotController::deleteWorkslot($workslotId);
     $deleteWorkslot = new DeleteWorkslotController();
     $result = $deleteWorkslot->deleteWorkslot($workslotId);
 

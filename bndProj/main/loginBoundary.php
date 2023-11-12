@@ -5,13 +5,11 @@ include "../entities/userEntity.php";
 include "../controller/loginController.php";
 include "../header.php";
 
-//if ($_SERVER["REQUEST_METHOD"] == "POST") 
 if(isset($_POST["submit"]))
 {
     $username = $_POST['logUsername'];
     $password = $_POST['logPassword'];
 
-    // $error = LoginController::loginUser($username, $password);
     $login = new LoginController();
     $error = $login->loginUser($username, $password);
 
