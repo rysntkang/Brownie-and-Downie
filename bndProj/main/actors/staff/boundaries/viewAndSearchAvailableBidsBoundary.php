@@ -127,24 +127,14 @@ if(isset($_POST["submitBid"]))
 
             foreach($searchedArray as $workslot) {
                 echo '  <tr>';
-                if ($workslot['username'] == NULL) {
-                    echo '      <td>' . $workslot['date'] . '</td>';
-                    echo '      <td>Available</td>';
-                    echo '      <td>';
-                    echo '          <form method="POST">';
-                    echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
-                    echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
-                    echo '          </form>';
-                    echo '      </td>';
-                }
-                // else {
-                //     echo '      <td>Full</td>';
-                //     echo '      <td>';
-                //     echo '          <form method="POST">';
-                //     echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
-                //     echo '          </form>';
-                //     echo '      </td>';
-                // }
+                echo '      <td>' . $workslot['date'] . '</td>';
+                echo '      <td>Available</td>';
+                echo '      <td>';
+                echo '          <form method="POST">';
+                echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+                echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
+                echo '          </form>';
+                echo '      </td>';
                 echo '  </tr>';
             }
             echo '</table>';
@@ -159,24 +149,14 @@ if(isset($_POST["submitBid"]))
 
             foreach($array as $workslot) {
                 echo '  <tr>';
-                if ($workslot['username'] == NULL) {
-                    echo '      <td>' . $workslot['date'] . '</td>';
-                    echo '      <td>Available</td>';
-                    echo '      <td>';
-                    echo '          <form method="POST">';
-                    echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
-                    echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
-                    echo '          </form>';
-                    echo '      </td>';
-                }
-                // else {
-                //     echo '      <td>Full</td>';
-                //     echo '      <td>';
-                //     echo '          <form method="POST">';
-                //     echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
-                //     echo '          </form>';
-                //     echo '      </td>';
-                // }
+                echo '      <td>' . $workslot['date'] . '</td>';
+                echo '      <td>Available</td>';
+                echo '      <td>';
+                echo '          <form method="POST">';
+                echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+                echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
+                echo '          </form>';
+                echo '      </td>';
                 echo '  </tr>';
             }
             echo '</table>';

@@ -1,8 +1,7 @@
 <?php
 include "../../../dbConnection.php";
-// include "../../../entities/offerClass.php";
 include "../../../entities/workSlotEntity.php";
-include "../../../controller/owner/viewWorkslotController.php";
+include "../../../controller/manager/viewUnassignedWorkslotController.php";
 
 if(isset($_POST["offer"]))
 {
@@ -68,8 +67,8 @@ if(isset($_POST["offer"]))
 <div class="container">
     <div class="row">
         <?php
-        $viewWorkslot = new ViewWorkslotController();
-        $array = $viewWorkslot->viewWorkslot();
+        $viewWorkslot = new ViewUnassignedWorkslotController();
+        $array = $viewWorkslot->viewUnassignedWorkslot();
 
         echo '<table class="table">';
         echo '  <tr>';
@@ -79,21 +78,18 @@ if(isset($_POST["offer"]))
         echo '  </tr>';
         foreach($array as $workslot)
         {
-            if($workslot['username'] == NULL)
-            {
-                echo '  <tr>';
-                echo '      <td>' . $workslot['date'] . '</td>';
-                echo '      <td>' . $workslot['role'] . '</td>';
-                echo '      <td>';
-                echo '          <form method="POST">';
-                echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
-                echo '              <input type="hidden" name="workslotUserProfileId" value="' . $workslot['userProfileId_workslot'] . '"/>';
-                echo '              <input type="hidden" name="workslotRole" value="' . $workslot['role'] . '"/>';
-                echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="offer">Offer</button>';
-                echo '          </form>';
-                echo '      </td>';
-                echo '  </tr>';
-            }
+            echo '  <tr>';
+            echo '      <td>' . $workslot['date'] . '</td>';
+            echo '      <td>' . $workslot['role'] . '</td>';
+            echo '      <td>';
+            echo '          <form method="POST">';
+            echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+            echo '              <input type="hidden" name="workslotUserProfileId" value="' . $workslot['userProfileId_workslot'] . '"/>';
+            echo '              <input type="hidden" name="workslotRole" value="' . $workslot['role'] . '"/>';
+            echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="offer">Offer</button>';
+            echo '          </form>';
+            echo '      </td>';
+            echo '  </tr>';
         }
         echo '</table>';
         ?>

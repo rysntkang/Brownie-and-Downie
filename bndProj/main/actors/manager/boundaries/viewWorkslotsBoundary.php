@@ -1,7 +1,7 @@
 <?php
 include "../../../dbConnection.php";
 include "../../../entities/workslotEntity.php";
-include "../../../controller/owner/viewWorkslotController.php";
+include "../../../controller/manager/viewManagerWorkslotsController.php";
 include "../../../controller/owner/searchWorkslotController.php";
 ?>
 <style>
@@ -102,8 +102,8 @@ include "../../../controller/owner/searchWorkslotController.php";
         }
         else
         {
-            $viewWorkslot = new ViewWorkslotController();
-            $array = $viewWorkslot->viewWorkSlot();
+            $viewWorkslot = new ViewManagerWorkslotController();
+            $array = $viewWorkslot->viewManagerWorkSlot();
             $sorted = array();
 
             for ($i = 0; $i < sizeof($array); $i++)

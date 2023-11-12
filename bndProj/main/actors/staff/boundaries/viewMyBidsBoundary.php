@@ -51,7 +51,6 @@ $userId = $_SESSION['currentUserId'];
 <div class="container">
     <div class="row">
         <?php
-        // $array = ViewStaffBidController::viewStaffBid($username);
         $viewBid = new ViewStaffBidController();
         $array = $viewBid->viewStaffBid($userId);
 

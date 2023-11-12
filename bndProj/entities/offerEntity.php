@@ -152,6 +152,7 @@ class OfferEntity extends Dbh
                 LEFT OUTER JOIN user ON offer.userId_offer = user.userId
                 WHERE userId_offer = '$this->userId_offer'
                 AND accepted = 0
+                AND date > CURRENT_DATE
                 ORDER BY date ASC;";
         $result = $conn->query($sql);
 

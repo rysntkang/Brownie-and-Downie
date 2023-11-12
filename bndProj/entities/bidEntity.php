@@ -182,6 +182,7 @@ class BidEntity extends Dbh
                 LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
                 LEFT OUTER JOIN user ON bids.userId_bids = user.userId
                 WHERE approval = 0
+                AND date > CURRENT_DATE
                 ORDER BY date DESC, role ASC;";
         $result = $conn->query($sql);
 
