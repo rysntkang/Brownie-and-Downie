@@ -205,37 +205,37 @@ class WorkslotEntity extends Dbh
         }
     }
 
-    protected function searchById()
-    {
-        $error;
-        $array = [];
-        $conn = $this->connectDB();
-        $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username 
-                FROM workslot 
-                LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
-                LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
-                WHERE workslotId LIKE '%$this->workslotId%';";
-        $result = $conn->query($sql);
+    // protected function searchById()
+    // {
+    //     $error;
+    //     $array = [];
+    //     $conn = $this->connectDB();
+    //     $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username 
+    //             FROM workslot 
+    //             LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
+    //             LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
+    //             WHERE workslotId LIKE '%$this->workslotId%';";
+    //     $result = $conn->query($sql);
 
-        if ($result->num_rows > 0)
-        {
-            while ($row = $result->fetch_assoc())
-            {
-                $current = array(
-                    'workslotId' => $row['workslotId'],
-                    'date' => $row['Date'],
-                    'role' => $row['role'],
-                    'username' => $row['username']
-                );
-                array_push($array, $current);
-            }
-            return $array;
-        }
-        else {
-            $error = "No records found";
-            return $error;
-        }
-    }
+    //     if ($result->num_rows > 0)
+    //     {
+    //         while ($row = $result->fetch_assoc())
+    //         {
+    //             $current = array(
+    //                 'workslotId' => $row['workslotId'],
+    //                 'date' => $row['Date'],
+    //                 'role' => $row['role'],
+    //                 'username' => $row['username']
+    //             );
+    //             array_push($array, $current);
+    //         }
+    //         return $array;
+    //     }
+    //     else {
+    //         $error = "No records found";
+    //         return $error;
+    //     }
+    // }
 
     protected function searchByRoleDate()
     {

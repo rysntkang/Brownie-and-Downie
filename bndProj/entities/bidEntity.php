@@ -130,7 +130,7 @@ class BidEntity extends Dbh
             return $error;
         }
 
-        if($this->checkAlreadyAssigned() == true) {
+        if($this->checkAlreadyAssigned() == false) {
             $error = "User has already been assigned a workslot on this day!";
             return $error;
         }

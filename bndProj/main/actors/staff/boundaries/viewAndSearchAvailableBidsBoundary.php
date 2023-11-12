@@ -127,8 +127,8 @@ if(isset($_POST["submitBid"]))
 
             foreach($searchedArray as $workslot) {
                 echo '  <tr>';
-                echo '      <td>' . $workslot['date'] . '</td>';
                 if ($workslot['username'] == NULL) {
+                    echo '      <td>' . $workslot['date'] . '</td>';
                     echo '      <td>Available</td>';
                     echo '      <td>';
                     echo '          <form method="POST">';
@@ -137,14 +137,14 @@ if(isset($_POST["submitBid"]))
                     echo '          </form>';
                     echo '      </td>';
                 }
-                else {
-                    echo '      <td>Full</td>';
-                    echo '      <td>';
-                    echo '          <form method="POST">';
-                    echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
-                    echo '          </form>';
-                    echo '      </td>';
-                }
+                // else {
+                //     echo '      <td>Full</td>';
+                //     echo '      <td>';
+                //     echo '          <form method="POST">';
+                //     echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
+                //     echo '          </form>';
+                //     echo '      </td>';
+                // }
                 echo '  </tr>';
             }
             echo '</table>';
@@ -159,8 +159,8 @@ if(isset($_POST["submitBid"]))
 
             foreach($array as $workslot) {
                 echo '  <tr>';
-                echo '      <td>' . $workslot['date'] . '</td>';
                 if ($workslot['username'] == NULL) {
+                    echo '      <td>' . $workslot['date'] . '</td>';
                     echo '      <td>Available</td>';
                     echo '      <td>';
                     echo '          <form method="POST">';
@@ -169,14 +169,14 @@ if(isset($_POST["submitBid"]))
                     echo '          </form>';
                     echo '      </td>';
                 }
-                else {
-                    echo '      <td>Full</td>';
-                    echo '      <td>';
-                    echo '          <form method="POST">';
-                    echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
-                    echo '          </form>';
-                    echo '      </td>';
-                }
+                // else {
+                //     echo '      <td>Full</td>';
+                //     echo '      <td>';
+                //     echo '          <form method="POST">';
+                //     echo '              <button class="btn btn-success" style="height:40px" value=' . $workslot['workslotId'] . 'name="submitBid" disabled>Submit Bid</button>';
+                //     echo '          </form>';
+                //     echo '      </td>';
+                // }
                 echo '  </tr>';
             }
             echo '</table>';
