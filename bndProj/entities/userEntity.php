@@ -138,11 +138,47 @@ class UserEntity extends Dbh
         return $resultCheck;
     }
 
+    protected function checkOtherUsername()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT userId FROM user WHERE username = '$this->username' and userId != '$this->userId'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
 	protected function checkMobileNumber($mobileNumber)
 	{
 		$resultCheck;
 		$conn = $this->connectDB();
 		$sql = "SELECT userId FROM user WHERE mobileNumber = '$mobileNumber'";
+		$result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+	}
+
+    protected function checkOtherMobileNumber($mobileNumber)
+	{
+		$resultCheck;
+		$conn = $this->connectDB();
+		$sql = "SELECT userId FROM user WHERE mobileNumber = '$mobileNumber' and userId != '$this->userId'";
 		$result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -238,7 +274,7 @@ class UserEntity extends Dbh
         $error;
         $conn = $this->connectDB();
         
-        if($this->checkUsername($this->username) == false || $this->checkMobileNumber($this->mobileNumber) == false) {
+        if($this->checkOtherUsername($this->username) == false || $this->checkOtherMobileNumber($this->mobileNumber) == false) {
             $error = "Username or mobile number has already been used!";
             return $error;
         }
