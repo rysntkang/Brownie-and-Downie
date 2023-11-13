@@ -307,6 +307,8 @@ class UserEntity extends Dbh
 
         if ($result->num_rows > 0)
         {
+            $error = "Success";
+            array_push($array, $error);
             while ($row = $result->fetch_assoc())
             {
                 $current = array(
@@ -326,7 +328,8 @@ class UserEntity extends Dbh
         }
         else {
             $error = "No records found";
-            return $error;
+            array_push($array, $error);
+            return $array;
         }
     }
 }

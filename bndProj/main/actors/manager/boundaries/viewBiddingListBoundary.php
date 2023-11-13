@@ -13,11 +13,11 @@ if(isset($_POST["approve"]))
     $approval = 1;
 
     $approve = new ApproveBidController();
-    $result = $approve->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
+    $error = $approve->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
 
-    if ($result != "Success")
+    if ($error != "Success")
     {
-        echo "<script>alert('$result');</script>"; 
+        echo "<script>alert('$error');</script>"; 
     }
     else
     {
@@ -34,7 +34,7 @@ if(isset($_POST["reject"]))
     $approval = 2;
     
     $reject = new ApproveBidController();
-    $result = $reject->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
+    $error = $reject->approveBid($bidId, $workslotId, $workslotDate, $userId, $approval);
     header("location:index.php?page=viewBiddingListBoundary");
 }
 ?>

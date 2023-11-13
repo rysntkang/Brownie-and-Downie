@@ -7,6 +7,6 @@ unset($_SESSION['username']);
 unset($_SESSION['userProfileId']);
 session_destroy();
 
-redirect("index.php");
+redirect("main/loginBoundary.php");
 exit();
 ?>

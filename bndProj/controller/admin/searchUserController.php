@@ -6,8 +6,8 @@ class SearchUserController extends UserEntity
         $user = new UserEntity();
         $user->set_username($username);
 
-        $error = $user->search();
-        return $error;
+        $array = $user->search();
+        return $array;
     }
 }
 

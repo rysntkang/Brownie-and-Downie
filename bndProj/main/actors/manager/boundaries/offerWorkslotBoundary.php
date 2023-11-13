@@ -19,16 +19,15 @@ if(isset($_POST["offer"]))
     $accepted = 0;
     
     $offer = new CreateOfferController();
-    $result = $offer->createOffer($workslotId, $workslotDate, $workslotUserProfileId, $userId, $accepted);
+    $error = $offer->createOffer($workslotId, $workslotDate, $workslotUserProfileId, $userId, $accepted);
 
-    if($result != "Success")
+    if($error != "Success")
     {
-        echo "<script>alert('$result');</script>";
+        echo "<script>alert('$error');</script>";
     }
     else
     {
         echo "<script>alert('Offer successfully submitted');</script>";
-        // header("location:index.php?page=viewAndOfferWorkslotBoundary");
     }
 }
 ?>

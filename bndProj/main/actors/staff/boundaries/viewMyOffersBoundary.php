@@ -14,11 +14,11 @@ if(isset($_POST["accept"]))
     $accepted = 1;
 
     $accept = new AcceptOfferController();
-    $result = $accept->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
+    $error = $accept->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
 
-    if($result != "Success")
+    if($error != "Success")
     {
-        echo "<script>alert('$result');</script>";
+        echo "<script>alert('$error');</script>";
     }
     else
     {
@@ -34,7 +34,7 @@ if(isset($_POST["reject"]))
     $accepted = 2;
 
     $reject = new AcceptOfferController();
-    $result = $reject->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
+    $error = $reject->acceptOffer($offerId, $workslotId, $workslotDate, $userId, $accepted);
     header("location:index.php?page=viewMyOffersBoundary");
 }
 ?>

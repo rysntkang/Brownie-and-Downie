@@ -79,19 +79,21 @@ if(isset($_POST["updateWorkslot"]))
         {
             $dateSearch = $_POST["search"];
             $searchWorkslot = new SearchWorkslotController();
+
             $array = $searchWorkslot->searchWorkslot($dateSearch);
-            if(gettype($array) == 'string')
+
+            if($array[0] != "Success")
             {
                 echo "<script>";
-                echo "alert('$array');";
+                echo "alert('$array[0]');";
                 echo "document.location = 'index.php?page=viewWorkslotsBoundary';";
                 echo "</script>";
             }
             else
             {
-                $sorted = array();
+                $sorted = [];
 
-                for ($i = 0; $i < sizeof($array); $i++)
+                for ($i = 1; $i < count($array); $i++)
                 {
                     $workslotId = $array[$i]['workslotId'];
                     $date = $array[$i]['date'];
@@ -139,9 +141,10 @@ if(isset($_POST["updateWorkslot"]))
         {
             $viewWorkslot = new ViewWorkslotController();
             $array = $viewWorkslot->viewWorkSlot();
-            $sorted = array();
+            
+            $sorted = [];
 
-            for ($i = 0; $i < sizeof($array); $i++)
+            for ($i = 0; $i < count($array); $i++)
             {
                 $workslotId = $array[$i]['workslotId'];
                 $date = $array[$i]['date'];

@@ -11,12 +11,12 @@ if(isset($_POST["dropWorkslot"]))
     $workslotId = $_POST["dropWorkslot"];
 
     $dropWorkslot = new DropAssignedWorkslotController();
-    $result = $dropWorkslot->dropAssignedWorkslot($workslotId);
+    $error = $dropWorkslot->dropAssignedWorkslot($workslotId);
 
     
-    if($result != "Success")
+    if($error != "Success")
     {
-        echo "<script>alert('$result');</script>";
+        echo "<script>alert('$error');</script>";
     }   
 }
 ?>

@@ -8,7 +8,7 @@ include "../../../controller/admin/viewUserProfileController.php";
 if(isset($_POST["createWorkslot"]))
 {
     $date = $_POST["date"];
-    $userProfileId = $_POST["userProfileId"];
+    $userProfileId_workslot = $_POST["userProfileId"];
 
     if(empty($date))
     {
@@ -18,9 +18,9 @@ if(isset($_POST["createWorkslot"]))
     else
     {
         $createWorkslot = new CreateWorkslotController();
-        $result = $createWorkslot->createWorkslot($date, $userProfileId);
+        $error = $createWorkslot->createWorkslot($date, $userProfileId_workslot);
 
-        if($result != "Success")
+        if($error != "Success")
         {
             echo "<script>alert('$error');</script>";
         }

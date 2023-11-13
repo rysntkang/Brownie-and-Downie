@@ -155,6 +155,8 @@ class UserProfileEntity extends Dbh
 
         if ($result->num_rows > 0)
         {
+            $error = "Success";
+            array_push($array, $error);
             while ($row = $result->fetch_assoc())
             {
                 $current = array(
@@ -170,36 +172,8 @@ class UserProfileEntity extends Dbh
         }
         else {
             $error = "No records found";
-            return $error;
-        }
-    }
-
-    protected function searchOne()
-    {
-        $error;
-        $array = [];
-        $conn = $this->connectDB();
-        $sql = "SELECT * FROM userprofile WHERE userProfileId = '$this->userProfileId' OR role = '$this->role'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0)
-        {
-            while ($row = $result->fetch_assoc())
-            {
-                $current = array(
-                    'userProfileId' => $row['userProfileId'],
-                    'profileName' => $row['profileName'],
-                    'description' => $row['description'],
-                    'role' => $row['role'],
-                    'activated' => $row['activated']
-                );
-                array_push($array, $current);
-            }
+            array_push($array, $error);
             return $array;
-        }
-        else {
-            $error = "No records found";
-            return $error;
         }
     }
 }

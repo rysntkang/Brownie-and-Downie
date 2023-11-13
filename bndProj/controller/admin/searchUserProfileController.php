@@ -6,8 +6,8 @@ class SearchUserProfileController extends UserProfileEntity
         $profile = new UserProfileEntity();
         $profile->set_profileName($profileName);
 
-        $error = $profile->search();
-        return $error;
+        $array = $profile->search();
+        return $array;
     }
 }
 

@@ -12,6 +12,7 @@ $userId = $_SESSION['currentUserId'];
 
 $viewAvailable = new ViewAvailableWorkslotController();
 $array = $viewAvailable->viewAvailableWorkSlot($userProfileId);
+
 $allDates = [];
 foreach($array as $a) {
     $currentDate = $a['date'];
@@ -116,28 +117,39 @@ if(isset($_POST["submitBid"]))
         if(isset($_POST["searchDate"])) {
             $date = $_POST["selectDate"];
             $searchByRoleDate = new SearchByRoleDateWorkSlotController();
-            $searchedArray = $searchByRoleDate->searchByRoleDateWorkslot($userProfileId, $date);
+            $array = $searchByRoleDate->searchByRoleDateWorkslot($userProfileId, $date);
 
-            echo '<table class="table">';
-            echo '  <tr>';
-            echo '      <th>Date</th>';
-            echo '      <th>Status</th>';
-            echo '      <th>Action</th>';
-            echo '  </tr>';
-
-            foreach($searchedArray as $workslot) {
-                echo '  <tr>';
-                echo '      <td>' . $workslot['date'] . '</td>';
-                echo '      <td>Available</td>';
-                echo '      <td>';
-                echo '          <form method="POST">';
-                echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
-                echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
-                echo '          </form>';
-                echo '      </td>';
-                echo '  </tr>';
+            if($array[0] != "Success")
+            {
+                echo "<script>";
+                echo "alert('$array[0]');";
+                echo "document.location = 'index.php?page=viewAndSearchAvailableBidsBoundary';";
+                echo "</script>";
             }
-            echo '</table>';
+            else
+            {
+                echo '<table class="table">';
+                echo '  <tr>';
+                echo '      <th>Date</th>';
+                echo '      <th>Status</th>';
+                echo '      <th>Action</th>';
+                echo '  </tr>';
+
+                for($i = 1; $i < count($array); $i++) {
+                    $workslot = $array[$i];
+                    echo '  <tr>';
+                    echo '      <td>' . $workslot['date'] . '</td>';
+                    echo '      <td>Available</td>';
+                    echo '      <td>';
+                    echo '          <form method="POST">';
+                    echo '              <input type="hidden" name="workslotDate" value="' . $workslot['date'] . '"/>';
+                    echo '              <button class="btn btn-success" style="height:40px" value="' . $workslot['workslotId'] . '" name="submitBid">Submit Bid</button>';
+                    echo '          </form>';
+                    echo '      </td>';
+                    echo '  </tr>';
+                }
+                echo '</table>';
+            }
         }
         else {
             echo '<table class="table">';

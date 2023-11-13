@@ -84,16 +84,15 @@ if(isset($_POST["updateUser"]))
         <?php
         if(isset($_POST["search"]))
         {
-            $userIdOrName = $_POST["search"];
+            $username = $_POST["search"];
         
-            //$result = SearchUserController::searchUser($userIdOrName);
             $searchUser = new SearchUserController();
-            $result = $searchUser->searchUser($userIdOrName);
-            if(gettype($result) == 'string')
+            $array = $searchUser->searchUser($username);
+
+            if ($array[0] != "Success")
             {
-                // echo "<script>alert('$result');</script>";
                 echo '<script>';
-                echo "alert('$result');";
+                echo "alert('$array[0]');";
                 echo 'document.location = "index.php?page=viewUserAccountBoundary";';
                 echo '</script>';
             }
@@ -109,8 +108,9 @@ if(isset($_POST["updateUser"]))
                 echo '      <th class="text-center">Address</th>';
                 echo '      <th class="text-center" colspan="2">Actions</th>';
                 echo '  </tr>';
-                foreach($result as $row)
+                for($i = 1; $i < count($array); $i++)
                 {
+                    $row = $array[$i];
                     echo '  <tr>';
                     echo '      <td>' . $row['userId'] . '</td>';
                     echo '      <td>' . $row['username'] . '</td>';
@@ -145,7 +145,7 @@ if(isset($_POST["updateUser"]))
         }else
         {
             $viewUser = new ViewUserController();
-            $result = $viewUser->viewUser();
+            $array = $viewUser->viewUser();
             echo '<table class ="table">';
             echo '  <tr>';
             echo '      <th class="text-center">User ID</th>';
@@ -156,7 +156,7 @@ if(isset($_POST["updateUser"]))
             echo '      <th class="text-center">Address</th>';
             echo '      <th class="text-center" colspan="2">Actions</th>';
             echo '  </tr>';
-            foreach($result as $row)
+            foreach($array as $row)
             {
                 echo '  <tr>';
                 echo '      <td>' . $row['userId'] . '</td>';

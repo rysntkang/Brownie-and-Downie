@@ -12,11 +12,11 @@ if(isset($_POST["suspendUserProfile"]))
     $userProfileId = $_POST["suspendUserProfile"];
 
     $suspend = new SuspendUserProfileController();
-    $result = $suspend->suspendUserProfile($userProfileId);
+    $error = $suspend->suspendUserProfile($userProfileId);
 
-    if($result != "Success")
+    if($error != "Success")
     {
-        echo "<script>alert('$result');</script>";
+        echo "<script>alert('$error');</script>";
     }
 }
 
@@ -79,13 +79,14 @@ if(isset($_POST["updateUserProfile"]))
         if(isset($_POST["search"]))
         {
             $profileName = $_POST["search"];
-
+            
             $searchUserProfile = new SearchUserProfileController();
-            $result = $searchUserProfile->searchUserProfile($profileName);
-            if(gettype($result) == "string")
+            $array = $searchUserProfile->searchUserProfile($profileName);
+
+            if ($array[0] != "Success")
             {
                 echo '<script>';
-                echo "alert('$result');";
+                echo "alert('$array[0]');";
                 echo 'document.location = "index.php?page=viewUserProfileBoundary";';
                 echo '</script>';
             }
@@ -99,8 +100,9 @@ if(isset($_POST["updateUserProfile"]))
                 echo '      <th class="text-center">Role</th>';
                 echo '      <th class="text-center" colspan="2">Actions</th>';
                 echo '  </tr>';
-                foreach($result as $row)
+                for($i = 1; $i < count($array); $i++)
                 {
+                    $row = $array[$i];
                     echo '  <tr>';
                     echo '      <td>' . $row['userProfileId'] . '</td>';
                     echo '      <td>' . $row['profileName'] . '</td>';
@@ -130,7 +132,7 @@ if(isset($_POST["updateUserProfile"]))
         else
         {
             $viewUserProfile = new ViewUserProfileController();
-            $result = $viewUserProfile->viewUserProfile();
+            $array = $viewUserProfile->viewUserProfile();
 
             echo '<table class ="table">';
             echo '  <tr>';
@@ -140,7 +142,7 @@ if(isset($_POST["updateUserProfile"]))
             echo '      <th class="text-center">Role</th>';
             echo '      <th class="text-center" colspan="2">Actions</th>';
             echo '  </tr>';
-            foreach($result as $row)
+            foreach($array as $row)
             {
                 echo '  <tr>';
                 echo '      <td>' . $row['userProfileId'] . '</td>';

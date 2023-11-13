@@ -246,11 +246,14 @@ class WorkslotEntity extends Dbh
                 FROM workslot 
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
                 LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
-                WHERE date LIKE '%$this->date%';";
+                WHERE date LIKE '%$this->date%'
+                ORDER BY date DESC, role ASC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
         {
+            $error = "Success";
+            array_push($array, $error);
             while ($row = $result->fetch_assoc())
             {
                 $current = array(
@@ -265,7 +268,8 @@ class WorkslotEntity extends Dbh
         }
         else {
             $error = "No records found";
-            return $error;
+            array_push($array, $error);
+            return $array;
         }
     }
 
@@ -286,6 +290,8 @@ class WorkslotEntity extends Dbh
 
         if ($result->num_rows > 0)
         {
+            $error = "Success";
+            array_push($array, $error);
             while ($row = $result->fetch_assoc())
             {
                 $current = array(
@@ -300,7 +306,8 @@ class WorkslotEntity extends Dbh
         }
         else {
             $error = "No records found";
-            return $error;
+            array_push($array, $error);
+            return $array;
         }
     }
 }
