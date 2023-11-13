@@ -3,7 +3,7 @@ include "../../../dbConnection.php";
 include "../../../entities/bidEntity.php";
 include "../../../controller/staff/viewStaffBidController.php";
 
-$userId = $_SESSION['currentUserId'];
+$userId_bids = $_SESSION['currentUserId'];
 ?>
 <style>
     .table {
@@ -52,7 +52,7 @@ $userId = $_SESSION['currentUserId'];
     <div class="row">
         <?php
         $viewBid = new ViewStaffBidController();
-        $array = $viewBid->viewStaffBid($userId);
+        $array = $viewBid->viewStaffBid($userId_bids);
 
         echo '<table class="table">';
         echo '  <tr>';

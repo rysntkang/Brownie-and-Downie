@@ -12,11 +12,11 @@ $userId = $_SESSION['currentUserId'];
 
 $viewAvailable = new ViewAvailableWorkslotController();
 $array = $viewAvailable->viewAvailableWorkSlot($userProfileId);
-$dates = [];
+$allDates = [];
 foreach($array as $a) {
-    $date = $a['date'];
-    if(!in_array($date, $dates, true)) {
-        array_push($dates, $date);
+    $currentDate = $a['date'];
+    if(!in_array($currentDate, $allDates, true)) {
+        array_push($allDates, $currentDate);
     }
 }
 
@@ -24,9 +24,10 @@ if(isset($_POST["submitBid"]))
 {
     $workslotId = $_POST["submitBid"];
     $workslotDate = $_POST["workslotDate"];
+    $approval = 0;
 
     $submitBid = new CreateBidController();
-    $result = $submitBid->createBid($workslotId, $workslotDate, $userProfileId, $userId);
+    $result = $submitBid->createBid($workslotId, $workslotDate, $userProfileId, $userId, $approval);
 
     if($result != "Success")
     {
@@ -35,7 +36,6 @@ if(isset($_POST["submitBid"]))
     else
     {
         echo "<script>alert('Bid successfully submitted');</script>";
-        // header("location:index.php?page=viewAndSearchAvailableBidsBoundary");
     }
 }
 ?>
@@ -96,8 +96,8 @@ if(isset($_POST["submitBid"]))
                         <br>
                         <select class="form-select" id="date" name="selectDate">
                             <?php
-                            foreach($dates as $date) {
-                                echo '<option value=' . $date . '>' . $date . '</option>';
+                            foreach($allDates as $currentDate) {
+                                echo '<option value=' . $currentDate . '>' . $currentDate . '</option>';
                             }
                             ?>
                         </select>

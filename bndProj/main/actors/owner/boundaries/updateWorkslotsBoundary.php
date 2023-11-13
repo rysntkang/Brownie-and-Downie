@@ -71,7 +71,7 @@ if(isset($_POST["updateWorkslot"]))
                             $array = $roles->viewUserProfile();
                             foreach($array as $row)
                             {
-                                if($row['profileName'] == 'Cafe Staff')
+                                if($row['profileName'] == 'Cafe Staff' && $row['activated'] == TRUE)
                                 {
                                     if($row['role'] == $role)
                                     {

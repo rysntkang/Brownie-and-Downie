@@ -104,9 +104,12 @@ if(isset($_POST["createUser"]))
                         $array = $userProfile->viewUserProfile();
                         foreach($array as $row)
                         {
-                        ?>
-                        <option value=<?=$row['userProfileId']?>><?=$row['role']?></option>
-                        <?php
+                            if($row['activated'] == TRUE)
+                            {
+                                ?>
+                                <option value=<?=$row['userProfileId']?>><?=$row['role']?></option>
+                                <?php
+                            }
                         }
                         ?>
                     </select>

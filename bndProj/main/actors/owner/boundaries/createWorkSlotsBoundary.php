@@ -75,7 +75,7 @@ if(isset($_POST["createWorkslot"]))
                             $array = $roles->viewUserProfile();
                             foreach($array as $row)
                             {
-                                if($row['profileName'] == 'Cafe Staff')
+                                if($row['profileName'] == 'Cafe Staff' && $row['activated'] == TRUE)
                                 {
                                     ?>
                                     <option value=<?=$row['userProfileId']?>><?=$row['role']?></option>

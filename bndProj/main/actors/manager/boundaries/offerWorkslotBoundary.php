@@ -16,9 +16,10 @@ $users = $viewUsers->viewByRoleUser($workslotUserProfileId);
 if(isset($_POST["offer"]))
 {
     $userId = $_POST["chosenUser"];
+    $accepted = 0;
     
     $offer = new CreateOfferController();
-    $result = $offer->createOffer($workslotId, $workslotDate, $workslotUserProfileId, $userId);
+    $result = $offer->createOffer($workslotId, $workslotDate, $workslotUserProfileId, $userId, $accepted);
 
     if($result != "Success")
     {
@@ -26,8 +27,8 @@ if(isset($_POST["offer"]))
     }
     else
     {
-        echo "<script>alert('Offer submitted');</script>";
-        header("location:index.php?page=viewAndOfferWorkslotBoundary");
+        echo "<script>alert('Offer successfully submitted');</script>";
+        // header("location:index.php?page=viewAndOfferWorkslotBoundary");
     }
 }
 ?>
