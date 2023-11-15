@@ -115,6 +115,24 @@ class BidEntity extends Dbh
         return $resultCheck;
     }
 
+    protected function slotAlreadyAssigned()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT userId_workslot FROM workslot WHERE workslotId = $this->workslotId_bids";
+        $result = $conn->query($sql);
+
+        if ($result->fetch_assoc()['userId_workslot'] == NULL)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
+
     protected function create()
     {
         $error;
@@ -213,6 +231,11 @@ class BidEntity extends Dbh
 
         if ($this->approval == 1)
         {
+            if ($this->slotAlreadyAssigned() == true) {
+                $error = "Slot has already been assigned!";
+                return $error;
+            }
+
             if($this->checkMaxShift() == false) {
                 $error = "User has been allocated maximum number of shifts!";
                 return $error;

@@ -92,7 +92,7 @@ class UserEntity extends Dbh
 	{
 		$error;
 		$conn = $this->connectDB();
-        $sql = "SELECT userId, username, userProfileId, maxShift, activated FROM user WHERE username = '$this->username' AND password = '$this->password'";
+        $sql = "SELECT userId, username, userProfileId, activated FROM user WHERE username = '$this->username' AND password = '$this->password'";
         $result = $conn->query($sql);
         
 		if ($result->num_rows > 0)
@@ -104,7 +104,6 @@ class UserEntity extends Dbh
 				$_SESSION['currentUserId'] = $users["userId"];
 				$_SESSION['currentUsername'] = $users["username"];
 				$_SESSION['currentUserProfileId'] = $users["userProfileId"];
-                $_SESSION['currentMaxShift'] = $users['maxShift'];
 
 				$error = "Success";
 				return $error;
