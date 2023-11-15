@@ -57,7 +57,7 @@ class WorkslotEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT workslot.workslotId, workslot.Date, workslot.userProfileId_workslot, userprofile.role, user.username
+        $sql = "SELECT workslot.workslotId, workslot.Date, workslot.userProfileId_workslot, userprofile.role, user.username, user.firstName, user.lastName
                 FROM workslot
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
                 LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
@@ -73,7 +73,9 @@ class WorkslotEntity extends Dbh
                     'date' => $row['Date'],
                     'userProfileId_workslot' => $row['userProfileId_workslot'],
                     'role' => $row['role'],
-                    'username' => $row['username']
+                    'username' => $row['username'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName']
                 );
                 array_push($array, $current);
             }
@@ -86,7 +88,7 @@ class WorkslotEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT workslot.workslotId, workslot.Date, workslot.userProfileId_workslot, userprofile.role, user.username
+        $sql = "SELECT workslot.workslotId, workslot.Date, workslot.userProfileId_workslot, userprofile.role, user.username, user.firstName, user.lastName
                 FROM workslot
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
                 LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
@@ -103,7 +105,9 @@ class WorkslotEntity extends Dbh
                     'date' => $row['Date'],
                     'userProfileId_workslot' => $row['userProfileId_workslot'],
                     'role' => $row['role'],
-                    'username' => $row['username']
+                    'username' => $row['username'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName']
                 );
                 array_push($array, $current);
             }
@@ -219,8 +223,19 @@ class WorkslotEntity extends Dbh
     {
         $error;
         $conn = $this->connectDB();
-        $sql = "DELETE FROM workslot WHERE workslotId = '$this->workslotId'";
-        $result = $conn->query($sql);
+
+        $sql = "DELETE FROM offer WHERE workslotId_offer = '$this->workslotId';";
+        $sql .= "DELETE FROM bids WHERE workslotId_bids = '$this->workslotId';";  
+        $sql .= "DELETE FROM workslot WHERE workslotId = '$this->workslotId';";
+        if ($conn->multi_query($sql))
+        {
+            do {
+                if ($result = $conn->store_result()) {
+                    $result->free();
+                }
+            } while ($conn->more_results() && $conn->next_result());
+        }
+        $conn->close();
 
         $error = "Success";
         return $error;
@@ -242,7 +257,7 @@ class WorkslotEntity extends Dbh
         $error;
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username 
+        $sql = "SELECT workslot.workslotId, workslot.Date, userprofile.role, user.username, user.firstName, user.lastName
                 FROM workslot 
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
                 LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
@@ -260,7 +275,9 @@ class WorkslotEntity extends Dbh
                     'workslotId' => $row['workslotId'],
                     'date' => $row['Date'],
                     'role' => $row['role'],
-                    'username' => $row['username']
+                    'username' => $row['username'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName']
                 );
                 array_push($array, $current);
             }

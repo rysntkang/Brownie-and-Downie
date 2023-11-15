@@ -99,6 +99,7 @@ if(isset($_POST["updateWorkslot"]))
                     $date = $array[$i]['date'];
                     $role = $array[$i]['role'];
                     $username_workslot = $array[$i]['username'];
+                    $name = $array[$i]['firstName'] . ' ' . $array[$i]['lastName'];
 
                     if(!isset($sorted[$date]))
                     {
@@ -108,7 +109,8 @@ if(isset($_POST["updateWorkslot"]))
                     $details = array(
                         'workslotId' => $workslotId,
                         'username' => $username_workslot,
-                        'role' => $role
+                        'role' => $role,
+                        'name' => $name
                     );
 
                     array_push($sorted[$date], $details);
@@ -122,7 +124,7 @@ if(isset($_POST["updateWorkslot"]))
                     foreach($workslots as $workslot) {
                         echo '<tr>';
                         echo '<td>' . $workslot['role'] . '</td>';
-                        echo '<td>' . $workslot['username'] . '</td>';
+                        echo '<td>' . $workslot['name'] . '</td>';
                         echo '<td>';
                         echo '<form method="POST">';
                         echo '<input type="hidden" name="updateDate" value="' . $date . '"/>';
@@ -150,6 +152,7 @@ if(isset($_POST["updateWorkslot"]))
                 $date = $array[$i]['date'];
                 $role = $array[$i]['role'];
                 $username_workslot = $array[$i]['username'];
+                $name = $array[$i]['firstName'] . ' ' . $array[$i]['lastName'];
 
                 if(!isset($sorted[$date]))
                 {
@@ -159,7 +162,8 @@ if(isset($_POST["updateWorkslot"]))
                 $details = array(
                     'workslotId' => $workslotId,
                     'username' => $username_workslot,
-                    'role' => $role
+                    'role' => $role,
+                    'name' => $name
                 );
 
                 array_push($sorted[$date], $details);
@@ -173,7 +177,7 @@ if(isset($_POST["updateWorkslot"]))
                 foreach($workslots as $workslot) {
                     echo '<tr>';
                     echo '<td>' . $workslot['role'] . '</td>';
-                    echo '<td>' . $workslot['username'] . '</td>';
+                    echo '<td>' . $workslot['name'] . '</td>';
                     echo '<td>';
                     echo '<form method="POST">';
                     echo '<input type="hidden" name="updateDate" value="' . $date . '"/>';

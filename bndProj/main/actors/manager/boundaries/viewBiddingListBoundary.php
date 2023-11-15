@@ -94,7 +94,7 @@ if(isset($_POST["reject"]))
             echo '  <tr>';
             echo '      <td>' . $bid['date'] . '</td>';
             echo '      <td>' . $bid['role'] . '</td>';
-            echo '      <td>' . $bid['username'] . '</td>';
+            echo '      <td>' . $bid['firstName'] . ' ' . $bid['lastName'] . '</td>';
             echo '      <td>';
             echo '          <form method="POST">';
             echo '              <input type="hidden" name="workslotId" value="' . $bid['workslotId_bids'] . '"/>';

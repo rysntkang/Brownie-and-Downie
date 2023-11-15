@@ -201,17 +201,23 @@ class OfferEntity extends Dbh
         if($this->accepted == 1)
         {
             if ($this->slotAlreadyAssigned() == true) {
-                $error = "Slot has already been assigned!";
+                $error = "Slot has already been assigned! Rejecting offer!";
+                $sql = "UPDATE offer SET accepted = '2' WHERE offerId = '$this->offerId'";
+                $result = $conn->query($sql);
                 return $error;
             }
 
             if($this->checkMaxShift() == false) {
-                $error = "User has been allocated maximum number of shifts!";
+                $error = "User has been allocated maximum number of shifts! Rejecting offer!";
+                $sql = "UPDATE offer SET accepted = '2' WHERE offerId = '$this->offerId'";
+                $result = $conn->query($sql);
                 return $error;
             }
     
             if($this->checkAlreadyAssigned() == false) {
-                $error = "User has already been assigned a workslot on this day!";
+                $error = "User has already been assigned a workslot on this day! Rejecting offer!";
+                $sql = "UPDATE offer SET accepted = '2' WHERE offerId = '$this->offerId'";
+                $result = $conn->query($sql);
                 return $error;
             }
     

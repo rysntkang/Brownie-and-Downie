@@ -195,13 +195,13 @@ class BidEntity extends Dbh
     {
         $array = [];
         $conn = $this->connectDB();
-        $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, bids.userId_bids, userprofile.role, user.username, bids.approval
+        $sql = "SELECT bids.bidId, bids.workslotId_bids, bids.date, bids.userId_bids, userprofile.role, user.username, bids.approval, user.firstName, user.lastName
                 FROM bids
                 LEFT OUTER JOIN userprofile ON bids.userprofileId_bids = userprofile.userProfileId
                 LEFT OUTER JOIN user ON bids.userId_bids = user.userId
                 WHERE approval = 0
                 AND date > CURRENT_DATE
-                ORDER BY date DESC, role ASC;";
+                ORDER BY date ASC, role ASC, bidId ASC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -215,7 +215,9 @@ class BidEntity extends Dbh
                     'userId_bids' => $row['userId_bids'],
                     'role' => $row['role'],
                     'username' => $row['username'],
-                    'approval' => $row['approval']
+                    'approval' => $row['approval'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName']
                 );
                 array_push($array, $current);
             }
@@ -232,22 +234,29 @@ class BidEntity extends Dbh
         if ($this->approval == 1)
         {
             if ($this->slotAlreadyAssigned() == true) {
-                $error = "Slot has already been assigned!";
+                $error = "Slot has already been assigned! Rejecting other bids pertaining to workslot!";
+                $sql = "UPDATE bids SET approval = '2' WHERE workslotId_bids = '$this->workslotId_bids' AND approval = '0';";
+                $result = $conn->query($sql);
                 return $error;
             }
 
             if($this->checkMaxShift() == false) {
-                $error = "User has been allocated maximum number of shifts!";
+                $error = "User has been allocated maximum number of shifts! Rejecting bid!";
+                $sql = "UPDATE bids SET approval = '2' WHERE bidId = '$this->bidId'";
+                $result = $conn->query($sql);
                 return $error;
             }
     
             if($this->checkAlreadyAssigned() == false) {
-                $error = "User has already been assigned a workslot on this day!";
+                $error = "User has already been assigned a workslot on this day! Rejecting bid!";
+                $sql = "UPDATE bids SET approval = '2' WHERE bidId = '$this->bidId'";
+                $result = $conn->query($sql);
                 return $error;
             }
     
             $sql = "UPDATE workslot SET userId_workslot = '$this->userId_bids' WHERE workslotId = '$this->workslotId_bids';";
             $sql .= "UPDATE bids SET approval = '$this->approval' WHERE bidId = '$this->bidId';";
+            $sql .= "UPDATE bids SET approval = '2' WHERE workslotId_bids = '$this->workslotId_bids' AND approval = '0';";
             if ($conn->multi_query($sql))
             {
                 do {

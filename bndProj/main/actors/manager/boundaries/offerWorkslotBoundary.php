@@ -101,7 +101,7 @@ if(isset($_POST["offer"]))
                     <select class="form-select" id="chosenUser" name="chosenUser">
                         <?php
                         foreach($users as $user) {
-                            echo '<option value=' . $user['userId'] . '>' . $user['username'] . '</option>';
+                            echo '<option value=' . $user['userId'] . '>' . $user['firstName'] . ' ' . $user['lastName'] . '</option>';
                         }
                         ?>
                     </select>

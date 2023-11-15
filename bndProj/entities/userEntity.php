@@ -141,7 +141,7 @@ class UserEntity extends Dbh
     {
         $resultCheck;
         $conn = $this->connectDB();
-        $sql = "SELECT userId FROM user WHERE username = '$this->username' and userId != '$this->userId'";
+        $sql = "SELECT userId FROM user WHERE username = '$this->username' and userId <> '$this->userId'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -177,7 +177,7 @@ class UserEntity extends Dbh
 	{
 		$resultCheck;
 		$conn = $this->connectDB();
-		$sql = "SELECT userId FROM user WHERE mobileNumber = '$mobileNumber' and userId != '$this->userId'";
+		$sql = "SELECT userId FROM user WHERE mobileNumber = '$mobileNumber' and userId <> '$this->userId'";
 		$result = $conn->query($sql);
 
         if ($result->num_rows > 0)
@@ -190,6 +190,24 @@ class UserEntity extends Dbh
         }
         return $resultCheck;
 	}
+
+    protected function upcomingWorkslot()
+    {
+        $resultCheck;
+        $conn = $this->connectDB();
+        $sql = "SELECT workslotId FROM workslot WHERE userId_workslot = '$this->userId' AND date >= CURRENT_DATE";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+		{
+			$resultCheck = false;
+		}
+        else
+        {
+            $resultCheck = true;
+        }
+        return $resultCheck;
+    }
 
 	protected function create()
     {
@@ -289,6 +307,12 @@ class UserEntity extends Dbh
     {
         $error;
         $conn = $this->connectDB();
+
+        if($this->upcomingWorkslot() == false) {
+            $error = "Unable to suspend! User has upcoming workslots!";
+            return $error;
+        }
+
         $sql = "UPDATE user SET activated = NOT activated WHERE userId = '$this->userId'";
         $result = $conn->query($sql);
 

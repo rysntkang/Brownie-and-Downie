@@ -64,12 +64,13 @@ include "../../../controller/owner/searchWorkslotController.php";
             {
                 $sorted = array();
 
-                for ($i = 0; $i < sizeof($array); $i++)
+                for ($i = 1; $i < sizeof($array); $i++)
                 {
                     $workslotId = $array[$i]['workslotId'];
                     $date = $array[$i]['date'];
                     $role = $array[$i]['role'];
                     $username_workslot = $array[$i]['username'];
+                    $name = $array[$i]['firstName'] . ' ' . $array[$i]['lastName'];
 
                     if(!isset($sorted[$date]))
                     {
@@ -79,7 +80,8 @@ include "../../../controller/owner/searchWorkslotController.php";
                     $details = array(
                         'workslotId' => $workslotId,
                         'username' => $username_workslot,
-                        'role' => $role
+                        'role' => $role,
+                        'name' => $name
                     );
 
                     array_push($sorted[$date], $details);
@@ -93,7 +95,7 @@ include "../../../controller/owner/searchWorkslotController.php";
                     foreach($workslots as $workslot) {
                         echo '<tr>';
                         echo '<td>' . $workslot['role'] . '</td>';
-                        echo '<td>' . $workslot['username'] . '</td>';
+                        echo '<td>' . $workslot['name'] . '</td>';
                         echo '</tr>';
                     }
                 }
@@ -112,6 +114,7 @@ include "../../../controller/owner/searchWorkslotController.php";
                 $date = $array[$i]['date'];
                 $role = $array[$i]['role'];
                 $username_workslot = $array[$i]['username'];
+                $name = $array[$i]['firstName'] . ' ' . $array[$i]['lastName'];
 
                 if(!isset($sorted[$date]))
                 {
@@ -121,7 +124,8 @@ include "../../../controller/owner/searchWorkslotController.php";
                 $details = array(
                     'workslotId' => $workslotId,
                     'username' => $username_workslot,
-                    'role' => $role
+                    'role' => $role,
+                    'name' => $name
                 );
 
                 array_push($sorted[$date], $details);
@@ -135,7 +139,7 @@ include "../../../controller/owner/searchWorkslotController.php";
                 foreach($workslots as $workslot) {
                     echo '<tr>';
                     echo '<td>' . $workslot['role'] . '</td>';
-                    echo '<td>' . $workslot['username'] . '</td>';
+                    echo '<td>' . $workslot['name'] . '</td>';
                     echo '</tr>';
                 }
             }
