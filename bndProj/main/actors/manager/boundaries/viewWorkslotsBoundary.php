@@ -53,10 +53,11 @@ include "../../../controller/owner/searchWorkslotController.php";
             $dateSearch = $_POST["search"];
             $searchWorkslot = new SearchWorkslotController();
             $array = $searchWorkslot->searchWorkslot($dateSearch);
-            if(gettype($array) == 'string')
+
+            if($array[0] != "Success")
             {
                 echo "<script>";
-                echo "alert('$array');";
+                echo "alert('$array[0]');";
                 echo "document.location = 'index.php?page=viewWorkslotsBoundary';";
                 echo "</script>";
             }

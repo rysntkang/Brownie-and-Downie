@@ -93,7 +93,7 @@ class WorkslotEntity extends Dbh
                 LEFT OUTER JOIN userprofile ON workslot.userprofileId_workslot = userprofile.userProfileId
                 LEFT OUTER JOIN user ON workslot.userId_workslot = user.userId
                 WHERE date >= CURRENT_DATE
-                ORDER BY date ASC, role ASC;";
+                ORDER BY date DESC, role ASC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
